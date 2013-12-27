@@ -54,6 +54,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -149,6 +150,9 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
 
     private static final String OPENGL_TRACES_KEY = "enable_opengl_traces";
 
+    private static final String ENABLE_QUICKBOOT_KEY = "enable_quickboot";
+    private static final String QUICKBOOT_PACKAGE_NAME = "com.qapp.quickboot";
+
     private static final String ROOT_ACCESS_KEY = "root_access";
     private static final String ROOT_ACCESS_PROPERTY = "persist.sys.root_access";
 
@@ -193,6 +197,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private CheckBoxPreference mAdbOverNetwork;
     private CheckBoxPreference mKeepScreenOn;
     private CheckBoxPreference mBtHciSnoopLog;
+    private CheckBoxPreference mQuickBoot;
     private CheckBoxPreference mAllowMockLocation;
     private PreferenceScreen mPassword;
 
@@ -300,6 +305,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mAdbOverNetwork = findAndInitCheckboxPref(ADB_TCPIP);
         mKeepScreenOn = findAndInitCheckboxPref(KEEP_SCREEN_ON);
         mBtHciSnoopLog = findAndInitCheckboxPref(BT_HCI_SNOOP_LOG);
+        mQuickBoot = findAndInitCheckboxPref(ENABLE_QUICKBOOT_KEY);
         mAllowMockLocation = findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
         mPassword = (PreferenceScreen) findPreference(LOCAL_BACKUP_PASSWORD);
         mAllPrefs.add(mPassword);
@@ -312,6 +318,12 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             disableForUser(mEnableTerminal);
             disableForUser(mPassword);
             disableForUser(mDevelopmentShortcut);
+            disableForUser(mQuickBoot);
+        }
+
+        if (!isPackageInstalled(getActivity(), QUICKBOOT_PACKAGE_NAME)) {
+        PreferenceCategory mCategory = (PreferenceCategory) findPreference("debug_debugging_category");
+            mCategory.removePreference(mQuickBoot);
         }
 
         mDebugAppPref = findPreference(DEBUG_APP_KEY);
@@ -567,6 +579,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
                 Settings.Secure.ALLOW_MOCK_LOCATION, 0) != 0);
     	updateCheckBox(mChamberUnlocked, Settings.Secure.getInt(cr,
                 Settings.Secure.CHAMBER_OF_SECRETS, 0) != 0);
+        updateCheckBox(mQuickBoot, Settings.Global.getInt(cr,
+                Settings.Global.ENABLE_QUICKBOOT, 0) != 0);
         updateRuntimeValue();
         updateHdcpValues();
         updatePasswordSummary();
@@ -1440,6 +1454,10 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             Settings.Secure.putInt(getActivity().getContentResolver(),
                     Settings.Secure.CHAMBER_OF_SECRETS,
                     mChamberUnlocked.isChecked() ? 1 : 0);
+        } else if (preference == mQuickBoot) {
+            Settings.Global.putInt(getActivity().getContentResolver(),
+                    Settings.Global.ENABLE_QUICKBOOT,
+                    mQuickBoot.isChecked() ? 1 : 0);
         } else if (preference == mDebugAppPref) {
             startActivityForResult(new Intent(getActivity(), AppPicker.class), RESULT_DEBUG_APP);
         } else if (preference == mWaitForDebugger) {

@@ -80,6 +80,12 @@
             android:title="@string/debug_debugging_category">
 
         <CheckBoxPreference
+           android:key="enable_quickboot"
+           android:title="@string/enable_quickboot_title"
+           android:summary="@string/enable_quickboot_summary"
+           android:defaultValue="false" />
+
+        <CheckBoxPreference
             android:key="enable_adb"
             android:title="@string/enable_adb"
             android:summary="@string/enable_adb_summary"/>
