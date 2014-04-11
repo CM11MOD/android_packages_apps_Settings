@@ -17,6 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Wi-Fi SSID string limits -->
     <string name="wifi_ssid_input_limit">SSID exceeds maximum length</string>
+    <!-- Wi-Fi P2P string limits -->
+    <string name="p2p_device_name_input_limit">P2P name exceeds maximum length</string>
 
     <string name="increasing_ring_title">Ascending ringtone</string>
     <!-- Sound settings screen, the caption of the checkbox for making incoming calls increase in volume -->
