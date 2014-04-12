@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.admin.DevicePolicyManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -78,6 +79,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.slim.ImageHelper;
 import com.android.internal.widget.ActionBarView;
 import com.android.internal.widget.ActionBarContainer;
+import com.android.settings.ActivityPicker;
 import com.android.settings.accessibility.AccessibilitySettings;
 import com.android.settings.accessibility.CaptionPropertiesFragment;
 import com.android.settings.accessibility.ToggleAccessibilityServicePreferenceFragment;
@@ -1395,6 +1397,19 @@ public class Settings extends PreferenceActivity
         boolean revert = false;
         if (header.id == R.id.account_add) {
             revert = true;
+        }
+
+        // a temp hack while we prepare to switch
+        // to the new theme chooser.
+        if (header.id == R.id.theme_settings) {
+            try {
+                Intent intent = new Intent();
+                intent.setClassName("com.tmobile.themechooser", "com.tmobile.themechooser.ThemeChooser");
+                startActivity(intent);
+                return;
+            } catch(ActivityNotFoundException e) {
+                // Do nothing, we will launch the submenu
+            }
         }
 
         super.onHeaderClick(header, position);
