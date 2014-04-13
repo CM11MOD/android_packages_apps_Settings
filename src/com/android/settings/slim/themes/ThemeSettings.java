@@ -52,7 +52,7 @@ public class ThemeSettings extends SettingsPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.theme_settings);
+        addPreferencesFromResource(R.xml.slim_theme_settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
