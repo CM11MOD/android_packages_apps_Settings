@@ -58,6 +58,11 @@
             android:entryValues="@array/shake_secure_timeout_values"
             android:persistent="false"/>
 
+        <PreferenceScreen
+            android:fragment="com.android.settings.slim.KeyguardShakeEvents"
+            android:key="shake_events"
+            android:title="@string/shake_events_title" />
+
         <CheckBoxPreference
             android:key="lock_before_unlock"
             android:title="@string/lock_before_unlock_title"

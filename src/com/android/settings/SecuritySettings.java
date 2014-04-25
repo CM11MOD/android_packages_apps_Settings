@@ -107,6 +107,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
     private static final String CATEGORY_ADDITIONAL = "additional_options";
     private static final String KEY_SHAKE_TO_SECURE = "shake_to_secure";
     private static final String KEY_SHAKE_AUTO_TIMEOUT = "shake_auto_timeout";
+    private static final String KEY_SHAKE_EVENTS = "shake_events";
     private static final int CONFIRM_EXISTING_FOR_TEMPORARY_INSECURE = 126;
     private static final int DLG_SHAKE_WARN = 0;
 
@@ -127,6 +128,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
     private LockPatternUtils mLockPatternUtils;
     private ListPreference mLockAfter;
 
+    private Preference mShakeEvents;
     private CheckBoxPreference mShakeToSecure;
     private ListPreference mShakeTimer;
     private CheckBoxPreference mBiometricWeakLiveliness;
@@ -361,9 +363,10 @@ public class SecuritySettings extends RestrictedSettingsFragment
     
         mSecurityCategory = (PreferenceGroup)
                 root.findPreference(KEY_SECURITY_CATEGORY);
-        /*if (mSecurityCategory != null) {
-            shouldEnableTargets();
-        }*/
+        if (mSecurityCategory != null) {
+            mShakeEvents = findPreference(KEY_SHAKE_EVENTS);
+            //shouldEnableTargets();
+        }
 
     // don't display visible pattern if biometric and backup is not pattern
     if (resid == R.xml.security_settings_biometric_weak &&
