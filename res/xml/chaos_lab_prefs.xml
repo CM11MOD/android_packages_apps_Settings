@@ -53,4 +53,10 @@
         android:fragment="com.android.settings.omnirom.CircleAppSidebar"
         android:icon="@drawable/ic_interface_app_sidebar" 
         android:title="@string/app_circle_bar_title" />
+
+    <PreferenceScreen
+        android:key="shake_events"
+        android:fragment="com.android.settings.slim.ShakeEvents"
+        android:icon="@drawable/ic_settings_sync"
+        android:title="@string/shake_events_title" />
 </PreferenceScreen>
