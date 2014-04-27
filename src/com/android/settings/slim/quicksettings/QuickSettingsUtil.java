@@ -63,6 +63,7 @@ import static com.android.internal.util.slim.QSConstants.TILE_ONTHEGO;
 import static com.android.internal.util.slim.QSConstants.TILE_BATTERYSAVER;
 import static com.android.internal.util.slim.QSConstants.TILE_EQUALIZER;
 import static com.android.internal.util.slim.QSConstants.TILE_CPUFREQ;
+import static com.android.internal.util.slim.QSConstants.TILE_WEATHER;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -196,6 +197,9 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_CPUFREQ, R.string.title_tile_cpufreq,
                 "com.android.systemui:drawable/ic_qs_cpufreq"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_WEATHER, R.string.title_tile_weather,
+                "com.android.systemui:drawable/weather_preferences"));        
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_CONTACT, R.string.title_tile_contact,
                 "com.android.systemui:drawable/ic_qs_default_user"));
