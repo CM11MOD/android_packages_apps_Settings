@@ -434,6 +434,7 @@ public class Settings extends PreferenceActivity
         com.android.settings.applications.AppOpsSummary.class.getName(),
         com.android.settings.chameleonos.labs.LabSettings.class.getName(),
         com.android.settings.omni.BatterySaverSettings.class.getName(),
+        ThemeSettings.class.getName()
     };
 
     @Override
