@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -58,11 +59,14 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
             "notification_wallpaper_landscape";
     private static final String PREF_NOTIFICATION_WALLPAPER_ALPHA =
             "notification_wallpaper_alpha";
+    private static final String STATUS_BAR_CUSTOM_HEADER = 
+            "custom_status_bar_header";
 
     private static final int DLG_PICK_COLOR = 0;
 
     private ListPreference mNotificationWallpaper;
     private ListPreference mNotificationWallpaperLandscape;
+    private CheckBoxPreference mStatusBarCustomHeader;
     SeekBarPreference mWallpaperAlpha;
 
     private File mImageTmp;
@@ -108,6 +112,11 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
         mWallpaperAlpha = (SeekBarPreference) findPreference(PREF_NOTIFICATION_WALLPAPER_ALPHA);
         mWallpaperAlpha.setInitValue((int) (transparency * 100));
         mWallpaperAlpha.setOnPreferenceChangeListener(this);
+
+        mStatusBarCustomHeader = (CheckBoxPreference) findPreference(STATUS_BAR_CUSTOM_HEADER);
+        mStatusBarCustomHeader.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
+        mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
 
         updateCustomBackgroundSummary();
     }
@@ -283,6 +292,11 @@ public class NotificationDrawerStyle extends SettingsPreferenceFragment implemen
                     updateCustomBackgroundSummary();
                     break;
             }
+            return true;
+        } else if (preference == mStatusBarCustomHeader) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
             return true;
         }
         return false;
