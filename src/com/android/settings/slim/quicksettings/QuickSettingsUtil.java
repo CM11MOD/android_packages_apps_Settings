@@ -253,6 +253,11 @@ public class QuickSettingsUtil {
             removeTile(TILE_ONTHEGO);
         }
 
+        // Don't show the Torch tile if not supported
+        if (!DeviceUtils.deviceSupportsFastcharge()) {
+            removeTile(TILE_FCHARGE);
+        }
+
     }
 
     public static ArrayList<String> getAllDynamicTiles(Context context) {
