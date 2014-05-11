@@ -28,6 +28,12 @@ limitations under the License.
         android:defaultValue="false" />
 
     <CheckBoxPreference
+        android:key="floating_mode"
+        android:title="@string/floating_mode_title"
+        android:summary="@string/floating_mode_summary"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
         android:key="halo_pause"
         android:title="@string/halo_pause_title"
         android:dependency="halo_enabled"
@@ -157,4 +163,5 @@ limitations under the License.
             android:defaultValue="#999999"
             android:dependency="halo_colors" />
         </PreferenceCategory>
+
 </PreferenceScreen>

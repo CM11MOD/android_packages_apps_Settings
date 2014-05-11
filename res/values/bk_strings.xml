@@ -342,6 +342,10 @@
     <string name="halo_notification_count_individual">Per app</string>
     <string name="halo_notification_count_both">Both</string>
 
+    <!-- HALO floating mode -->
+    <string name="floating_mode_title">Allow floating windows</string>
+    <string name="floating_mode_summary">Controls whether open halo notifications on floating window mode</string>
+
     <string name="halo_msgbox_animation_title">Message box animation</string>
     <string name="halo_msgbox_animation_summary">Halo message box animation for incoming notifications</string>
     <string name="halo_msgbox_animation_none">None</string>
