@@ -62,6 +62,7 @@ import static com.android.internal.util.slim.QSConstants.TILE_INTERNALMEMORY;
 import static com.android.internal.util.slim.QSConstants.TILE_ONTHEGO;
 import static com.android.internal.util.slim.QSConstants.TILE_BATTERYSAVER;
 import static com.android.internal.util.slim.QSConstants.TILE_EQUALIZER;
+import static com.android.internal.util.slim.QSConstants.TILE_CPUFREQ;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -193,6 +194,9 @@ public class QuickSettingsUtil {
                 TILE_BATTERYSAVER, R.string.title_tile_batterysaver,
                 "com.android.systemui:drawable/ic_qs_battery_saver_on"));
         registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_CPUFREQ, R.string.title_tile_cpufreq,
+                "com.android.systemui:drawable/ic_qs_cpufreq"));
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_CONTACT, R.string.title_tile_contact,
                 "com.android.systemui:drawable/ic_qs_default_user"));
     }
@@ -256,6 +260,11 @@ public class QuickSettingsUtil {
         // Don't show the Torch tile if not supported
         if (!DeviceUtils.deviceSupportsFastcharge()) {
             removeTile(TILE_FCHARGE);
+        }
+
+        // Don't show the Torch tile if not supported
+        if (!DeviceUtils.deviceSupportsCPUFreq()) {
+            removeTile(TILE_CPUFREQ);
         }
 
     }
