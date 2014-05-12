@@ -722,6 +722,7 @@
         <item>@string/shortcut_action_profile</item>
         <item>@string/shortcut_action_screenrecord</item>
         <item>@string/shortcut_action_onthego</item>
+        <item>@string/shortcut_action_mobiledata</item>
     </string-array>
 
     <string-array name="shortcut_action_power_menu_values" translatable="false">
@@ -738,6 +739,7 @@
         <item>**profile**</item>
         <item>**screenrecord**</item>
         <item>**onthego**</item>
+        <item>**mobiledata**</item>
     </string-array>
 
     <!-- MediaScanner behavior on boot -->
