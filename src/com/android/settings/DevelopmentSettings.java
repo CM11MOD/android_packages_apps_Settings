@@ -1507,7 +1507,6 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        String value = (String) newValue;
         if (SELECT_RUNTIME_KEY.equals(preference.getKey())) {
             final String oldRuntimeValue = VMRuntime.getRuntime().vmLibrary();
             final String newRuntimeValue = newValue.toString();
@@ -1580,6 +1579,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             writeAppProcessLimitOptions(newValue);
             return true;
         } else if (preference == mMsob) {
+            String value = (String) newValue;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.MEDIA_SCANNER_ON_BOOT,
                     Integer.valueOf(value));
