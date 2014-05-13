@@ -247,7 +247,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
 
         mPeekPickupTimeout = (ListPreference) prefSet.findPreference(KEY_PEEK_PICKUP_TIMEOUT);
         int peekTimeout = Settings.System.getIntForUser(getContentResolver(),
-                Settings.System.PEEK_PICKUP_TIMEOUT, 0, UserHandle.USER_CURRENT);
+                Settings.System.PEEK_PICKUP_TIMEOUT, 10000, UserHandle.USER_CURRENT);
         mPeekPickupTimeout.setValue(String.valueOf(peekTimeout));
         mPeekPickupTimeout.setSummary(mPeekPickupTimeout.getEntry());
         mPeekPickupTimeout.setOnPreferenceChangeListener(this);
@@ -324,11 +324,12 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
             mNotificationsHeight.setMaxValue(max);
             return true;
         } else if (preference == mPeekPickupTimeout) {
+            int index = mPeekPickupTimeout.findIndexOfValue((String) newValue);
             int peekTimeout = Integer.valueOf((String) newValue);
             Settings.System.putIntForUser(getContentResolver(),
                 Settings.System.PEEK_PICKUP_TIMEOUT,
                     peekTimeout, UserHandle.USER_CURRENT);
-            updatePeekTimeoutOptions(newValue);
+            mPeekPickupTimeout.setSummary(mPeekPickupTimeout.getEntries()[index]);
             return true;
         }
         return false;
@@ -377,13 +378,5 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
 
     private boolean is24Hour() {
         return DateFormat.is24HourFormat(mContext);
-    }
-
-    private void updatePeekTimeoutOptions(Object newValue) {
-        int index = mPeekPickupTimeout.findIndexOfValue((String) newValue);
-        int value = Integer.valueOf((String) newValue);
-        Settings.Secure.putInt(getActivity().getContentResolver(),
-                Settings.System.PEEK_PICKUP_TIMEOUT, value);
-        mPeekPickupTimeout.setSummary(mPeekPickupTimeout.getEntries()[index]);
     }
 }
