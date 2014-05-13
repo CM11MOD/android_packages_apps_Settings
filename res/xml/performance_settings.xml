@@ -65,4 +65,13 @@
             android:targetClass="com.aosb.gps.GPSCountryChangerInterface" />
     </PreferenceScreen>
 
+    <PreferenceScreen
+        android:key="@+id/hosts"
+        android:title="@string/hosts_title">
+        <intent 
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.dirtyunicorns.hfm"
+            android:targetClass="com.dirtyunicorns.hfm.MainActivity" />
+    </PreferenceScreen>
+
 </PreferenceScreen>
