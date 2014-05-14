@@ -193,7 +193,7 @@
         </activity>
 
         <activity
-            android:name="com.android.settings.beanstalk.SystemappRemover"
+            android:name="com.android.settings.slim.SystemappRemover"
             android:label="@string/sizer_title"
             android:parentActivityName="Settings" >
             <meta-data
@@ -1813,7 +1813,7 @@
 
         <activity android:name=".profiles.ProfileGroupConfig" />
 
-        <activity android:name=".profiles.WifiTriggers" />
+        <activity android:name=".profiles.WifiTriggerAPPreference" />
 
         <activity android:name=".profiles.NFCProfileWriter" />
 
@@ -1852,9 +1852,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".notificationlight.NotificationLightSettings" />
+        <activity android:name=".slim.notificationlight.NotificationLightSettings" />
 
-        <activity android:name=".notificationlight.BatteryLightSettings" />
+        <activity android:name=".slim.notificationlight.BatteryLightSettings" />
 
         <activity android:name="Settings$AnimationInterfaceSettingsActivity"
                 android:label="@string/interface_animation_title"
@@ -1900,7 +1900,7 @@
 
         <activity android:name=".slim.LockscreenUI"/>
 
-        <activity android:name=".slim.LockscreenWidget"/>
+        <activity android:name=".slim.LockscreenWidgets"/>
 
         <activity android:name=".slim.LockscreenTargets"/>
 
