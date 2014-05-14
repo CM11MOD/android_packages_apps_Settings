@@ -1919,14 +1919,6 @@
         </activity>
 
         <activity
-            android:name=".slim.DensityChanger"
-            android:label="@string/lcd_density_wizard" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".pa.PiePreference"
             android:label="@string/pa_pie_controls_title" >
             <intent-filter>
