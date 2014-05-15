@@ -1324,4 +1324,5 @@ public class Settings extends PreferenceActivity
     public static class PAPieSettingsActivity extends Settings { /* empty */ }
     public static class AnimationInterfaceSettingsActivity extends Settings { /* empty */ }
     public static class ShakeEventsSettingsActivity extends Settings { /* empty */ }
+    public static class ThemeSettingsActivity extends Settings { /* empty */ }
 }
