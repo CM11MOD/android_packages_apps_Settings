@@ -882,11 +882,17 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="notification_peek_title">Notification peek</string>
     <string name="notification_peek_summary">Show latest notification after picking up your device</string>
     <string name="peek_pickup_timeout_title">Peek pickup timeout</string>
+    <string name="peek_wake_timeout_title">Peek wake timeout</string>
     <string name="peek_pickup_10s">10 seconds (default)</string>
     <string name="peek_pickup_30s">30 seconds</string>
     <string name="peek_pickup_45s">45 seconds</string>
     <string name="peek_pickup_60s">1 minute</string>
     <string name="peek_pickup_120s">2 minutes</string>
+    <string name="peek_wake_3seconds">3 seconds</string>
+    <string name="peek_wake_5seconds">5 seconds (default)</string>
+    <string name="peek_wake_10seconds">10 seconds</string>
+    <string name="peek_wake_20seconds">20 seconds</string>
+    <string name="peek_wake_30seconds">30 seconds</string>
 
     <!-- Pie control -->
     <string name="general_category_title">General</string>

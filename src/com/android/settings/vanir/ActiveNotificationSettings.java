@@ -68,6 +68,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
 
     //peek
     private static final String KEY_PEEK_PICKUP_TIMEOUT = "peek_pickup_timeout";
+    private static final String KEY_PEEK_WAKE_TIMEOUT = "peek_wake_timeout";
 
     private ContentResolver mResolver;
     private Context mContext;
@@ -94,6 +95,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
     private int mMaximumBacklight;
 
     private ListPreference mPeekPickupTimeout;
+    private ListPreference mPeekWakeTimeout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -246,11 +248,18 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
         }
 
         mPeekPickupTimeout = (ListPreference) prefSet.findPreference(KEY_PEEK_PICKUP_TIMEOUT);
-        int peekTimeout = Settings.System.getIntForUser(getContentResolver(),
+        int peekPickupTimeout = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.PEEK_PICKUP_TIMEOUT, 10000, UserHandle.USER_CURRENT);
-        mPeekPickupTimeout.setValue(String.valueOf(peekTimeout));
+        mPeekPickupTimeout.setValue(String.valueOf(peekPickupTimeout));
         mPeekPickupTimeout.setSummary(mPeekPickupTimeout.getEntry());
         mPeekPickupTimeout.setOnPreferenceChangeListener(this);
+
+        mPeekWakeTimeout = (ListPreference) prefSet.findPreference(KEY_PEEK_WAKE_TIMEOUT);
+        int peekWakeTimeout = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.PEEK_WAKE_TIMEOUT, 5000, UserHandle.USER_CURRENT);
+        mPeekWakeTimeout.setValue(String.valueOf(peekWakeTimeout));
+        mPeekWakeTimeout.setSummary(mPeekWakeTimeout.getEntry());
+        mPeekWakeTimeout.setOnPreferenceChangeListener(this);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -330,6 +339,14 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
                 Settings.System.PEEK_PICKUP_TIMEOUT,
                     peekTimeout, UserHandle.USER_CURRENT);
             mPeekPickupTimeout.setSummary(mPeekPickupTimeout.getEntries()[index]);
+            return true;
+        } else if (preference == mPeekWakeTimeout) {
+            int index = mPeekWakeTimeout.findIndexOfValue((String) newValue);
+            int peekWakeTimeout = Integer.valueOf((String) newValue);
+            Settings.System.putIntForUser(getContentResolver(),
+                Settings.System.PEEK_WAKE_TIMEOUT,
+                    peekWakeTimeout, UserHandle.USER_CURRENT);
+            mPeekWakeTimeout.setSummary(mPeekWakeTimeout.getEntries()[index]);
             return true;
         }
         return false;
