@@ -100,6 +100,7 @@ import com.android.settings.profiles.ProfilesSettings;
 import com.android.settings.slim.BatteryIconStyle;
 import com.android.settings.slim.DisplayRotation;
 import com.android.settings.slim.quicksettings.QuickSettingsTiles;
+import com.android.settings.slim.ShakeEvents;
 import com.android.settings.slim.QuietHours;
 import com.android.settings.slim.themes.ThemeEnabler;
 import com.android.settings.tts.TextToSpeechSettings;
@@ -408,8 +409,8 @@ public class Settings extends PreferenceActivity
         QuietHours.class.getName(),
         QuickSettingsTiles.class.getName(),
         ApnSettings.class.getName(),
+        ShakeEvents.class.getName(),
         BatteryIconStyle.class.getName(),
-        DisplayRotation.class.getName(),
         DisplayRotation.class.getName(),
         HomeSettings.class.getName(),
         HardwareKeysSettings.class.getName(),
@@ -429,7 +430,7 @@ public class Settings extends PreferenceActivity
         com.android.settings.aokp.Installer.class.getName(),
         com.android.settings.applications.AppOpsSummary.class.getName(),
         com.android.settings.chameleonos.labs.LabSettings.class.getName(),
-        com.android.settings.omni.BatterySaverSettings.class.getName(),
+        com.android.settings.omni.BatterySaverSettings.class.getName()
     };
 
     @Override
@@ -1305,4 +1306,5 @@ public class Settings extends PreferenceActivity
     public static class ASSRamBarActivity extends Settings { /* empty */ }
     public static class PAPieSettingsActivity extends Settings { /* empty */ }
     public static class AnimationInterfaceSettingsActivity extends Settings { /* empty */ }
+    public static class ShakeEventsSettingsActivity extends Settings { /* empty */ }
 }
