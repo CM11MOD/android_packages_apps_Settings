@@ -917,15 +917,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="persist_file_xposed_notinstalled">XposedInstaller is not installed</string>
     <string name="enable_persist_installer">To Unlock: \"enable persistence\"</string>
 
-    <!-- Xposed Hooks-->
-    <string name="xposed_category_title">Xposed</string>
-    <string name="xposed_framework_modules_title">Framework &amp; Modules</string>
-    <string name="xposed_framework_modules_summary">Xposed framework installer and module manager. Check here first!</string>
-    <string name="xposed_per_app_title">Per App Settings</string>
-    <string name="xposed_per_app__summary">Customize DPI, UI layout, and more per app settings to your liking here</string>
-    <string name="xposed_warning_title">Warning:</string>
-    <string name="xposed_warning_summary">These mods may adversely affect performance and stability. Use at your own risk!</string>
-
     <string name="hosts_title">Host File Manager</string>
 
     <!-- Sound themes -->
