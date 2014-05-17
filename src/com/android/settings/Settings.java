@@ -142,6 +142,9 @@ public class Settings extends PreferenceActivity
 
     private static final String VOICE_WAKEUP_PACKAGE_NAME = "com.cyanogenmod.voicewakeup";
 
+    // Package name of the xposed frameworks
+    public static final String XPOSED_PACKAGE_NAME = "de.robv.android.xposed.installer";
+
     static final int DIALOG_ONLY_ONE_HOME = 1;
 
     private static boolean sShowNoHomeNotice = false;
@@ -677,6 +680,10 @@ public class Settings extends PreferenceActivity
                 if (!UserHandle.MU_ENABLED
                         || !UserManager.supportsMultipleUsers()
                         || Utils.isMonkeyRunning()) {
+                    target.remove(i);
+                }
+            } else if (id == R.id.xposed_framework) {
+                if (!isXposedInstalled()) {
                     target.remove(i);
                 }
             } else if (id == R.id.nfc_payment_settings) {
@@ -1215,6 +1222,16 @@ public class Settings extends PreferenceActivity
 
     public static void requestHomeNotice() {
         sShowNoHomeNotice = true;
+    }
+
+    private boolean isXposedInstalled() {
+        final PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(XPOSED_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
     }
 
     /*

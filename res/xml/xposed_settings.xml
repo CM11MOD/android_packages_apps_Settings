@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2013 Slimroms
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/interface_settings_xposed_title"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+
+    <PreferenceCategory
+        android:key="xposed_options"
+        android:title="@string/xposed_category_title" >
+
+        <PreferenceScreen
+            android:key="xposed_warning"
+            android:title="@string/xposed_warning_title"
+            android:summary="@string/xposed_warning_summary" >
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="xposed_framework_modules"
+            android:title="@string/xposed_framework_modules_title"
+            android:summary="@string/xposed_framework_modules_summary" >
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="de.robv.android.xposed.installer"
+                    android:targetClass="de.robv.android.xposed.installer.XposedInstallerActivity" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="xposed__per_app_settings"
+            android:title="@string/xposed_per_app_title"
+            android:summary="@string/xposed_per_app__summary" >
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="de.robv.android.xposed.mods.appsettings"
+                    android:targetClass="de.robv.android.xposed.mods.appsettings.XposedModActivity" />
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -112,6 +112,13 @@
         android:fragment="com.android.settings.aokp.animations.AnimationInterfaceSettings">
     </header>
 
+    <!-- Xposed Frameworks -->
+    <header
+        android:id="@+id/xposed_framework"
+        android:icon="@drawable/ic_settings_xposed"
+        android:fragment="com.android.settings.slim.XposedHook"
+        android:title="@string/interface_settings_xposed_title" />
+
     <!-- Additional SlimKat controls -->
     <header android:title="@string/header_category_rom_settings" />
 
