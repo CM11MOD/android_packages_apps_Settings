@@ -65,6 +65,7 @@ import static com.android.internal.util.slim.QSConstants.TILE_BATTERYSAVER;
 import static com.android.internal.util.slim.QSConstants.TILE_EQUALIZER;
 import static com.android.internal.util.slim.QSConstants.TILE_CPUFREQ;
 import static com.android.internal.util.slim.QSConstants.TILE_WEATHER;
+import static com.android.internal.util.slim.QSConstants.TILE_SCREENCAST;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -300,6 +301,8 @@ public class QuickSettingsUtil {
             return context.getResources().getString(R.string.dynamic_tile_bugreport);
         } else if (tile.equals(TILE_EQUALIZER)) {
             return context.getResources().getString(R.string.dynamic_tile_equalizer);
+        } else if (tile.equals(TILE_SCREENCAST)) {
+            return context.getResources().getString(R.string.dynamic_tile_screencast);
         }
         return null;
     }
