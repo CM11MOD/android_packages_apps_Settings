@@ -1361,4 +1361,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Quick ribbon -->
     <string name="quick_settings_ribbon_title">Quick ribbon</string>
     <string name="quick_settings_ribbon_summary">Enable ribbon widget below status bar</string>
+    <string name="quick_settings_label_title">Ribbon label</string>
+    <string name="quick_settings_label_summary">Enable ribbon tile label below widget</string>
 </resources>

@@ -85,6 +85,13 @@
             android:summary="@string/quick_settings_ribbon_summary"
             android:defaultValue="false" />
 
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="qs_quick_access_label"
+            android:title="@string/quick_settings_label_title"
+            android:summary="@string/quick_settings_label_summary"
+            android:dependency="qs_quick_access"
+            android:defaultValue="false" />
+
         <PreferenceScreen
             android:key="tile_picker"
             android:title="@string/tile_picker_title"
