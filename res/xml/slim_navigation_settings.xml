@@ -37,9 +37,4 @@
             <extra android:name="fragment" android:value="com.android.settings.slim.fragments.PowerMenuFragment" />
     </PreferenceScreen>
 
-    <PreferenceScreen
-        android:key="shake_events"
-        android:fragment="com.android.settings.slim.ShakeEvents"
-        android:title="@string/shake_events_title" />
-
 </PreferenceScreen>

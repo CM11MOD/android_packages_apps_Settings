@@ -56,24 +56,18 @@
             android:title="@string/lock_before_unlock_title"
             android:summary="@string/lock_before_unlock_summary" />
 
-        <PreferenceScreen
-            android:fragment="com.android.settings.slim.KeyguardShakeEvents"
-            android:key="shake_events"
-            android:title="@string/shake_events_title" />
-
-        <ListPreference
+        <CheckBoxPreference
             android:key="shake_to_secure"
-            android:entries="@array/shake_secure_entries"
-            android:entryValues="@array/shake_secure_values"
             android:title="@string/shake_to_secure_title"
             android:summary="@string/shake_to_secure_summary" />
 
         <ListPreference
-            android:key="shake_auto_timeout"
-            android:title="@string/shake_secure_timeout_title"
-            android:entries="@array/shake_secure_timeout_entries"
-            android:entryValues="@array/shake_secure_timeout_values"
-            android:persistent="false"/>
+			android:key="shake_auto_timeout"
+			android:title="@string/shake_secure_timeout_title"
+			android:dependency="shake_to_secure"
+			android:entries="@array/shake_secure_timeout_entries"
+			android:entryValues="@array/shake_secure_timeout_values"
+			android:persistent="false"/>
 
         <PreferenceScreen
             android:fragment="com.android.settings.OwnerInfoSettings"
