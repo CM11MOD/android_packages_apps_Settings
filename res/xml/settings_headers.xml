@@ -117,7 +117,7 @@
         android:id="@+id/xposed_framework"
         android:icon="@drawable/ic_settings_xposed"
         android:fragment="com.android.settings.slim.XposedHook"
-        android:title="@string/interface_settings_xposed_title" />
+        android:title="@string/xposed_category_title" />
 
     <!-- Additional SlimKat controls -->
     <header android:title="@string/header_category_rom_settings" />

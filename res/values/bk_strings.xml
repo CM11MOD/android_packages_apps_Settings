@@ -918,8 +918,7 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="enable_persist_installer">To Unlock: \"enable persistence\"</string>
 
     <!-- Xposed Hooks-->
-    <string name="interface_settings_xposed_title">Xposed Framework</string>
-    <string name="xposed_category_title">Xposed</string>
+    <string name="xposed_category_title">Xposed Framework</string>
     <string name="xposed_framework_modules_title">Framework &amp; Modules</string>
     <string name="xposed_framework_modules_summary">Xposed framework installer and module manager. Check here first!</string>
     <string name="xposed_per_app_title">Per App Settings</string>
