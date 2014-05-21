@@ -42,15 +42,32 @@ public class XposedHook extends SettingsPreferenceFragment {
 
     // Package name of the app settings
     public static final String APP_SETTINGS_PACKAGE_NAME = "de.robv.android.xposed.mods.appsettings";
+    // Intent for launching the omniswitch settings actvity
+    public static Intent INTENT_APP_SETTINGS = new Intent(Intent.ACTION_MAIN)
+            .setClassName(APP_SETTINGS_PACKAGE_NAME, APP_SETTINGS_PACKAGE_NAME + ".XposedModActivity");
+
+    private static final String PER_APP_SETTINGS = "xposed_per_app_settings";
+    private Preference mXposedFramework;
+    private Preference mPerAppSettings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.xposed_settings);
+
+        PreferenceScreen prefSet = getPreferenceScreen();
+        ContentResolver resolver = getActivity().getContentResolver();
+
+        mPerAppSettings = (Preference)
+                prefSet.findPreference(PER_APP_SETTINGS);
         updateSettings();
     }
 
     private void updateSettings() {
+        mPerAppSettings.setEnabled(isAppSettingInstalled());
+        mPerAppSettings.setSummary(isAppSettingInstalled() ?
+                getResources().getString(R.string.xposed_per_app_summary) :
+                getResources().getString(R.string.appsetting_not_installed_message));
     }
 
     @Override
@@ -60,11 +77,40 @@ public class XposedHook extends SettingsPreferenceFragment {
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mPerAppSettings){
+            if (!isAppSettingInstalled()) {
+                AppSettingNotInstalledWarning();
+                return false;
+            } else {
+                startActivity(INTENT_APP_SETTINGS);
+                return true;
+            }
+        }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
     
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
         return false;
+    }
+
+    private void AppSettingNotInstalledWarning() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getResources().getString(R.string.appsetting_not_installed_title))
+                .setMessage(getResources().getString(R.string.appsetting_not_installed_message))
+                .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                }).show();
+    }
+
+    private boolean isAppSettingInstalled() {
+        final PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(APP_SETTINGS_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
     }
 }
