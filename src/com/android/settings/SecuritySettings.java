@@ -365,7 +365,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
                 root.findPreference(KEY_SECURITY_CATEGORY);
         if (mSecurityCategory != null) {
             mShakeEvents = findPreference(KEY_SHAKE_EVENTS);
-            //shouldEnableTargets();
+            shouldEnableTargets();
         }
 
     // don't display visible pattern if biometric and backup is not pattern
@@ -553,15 +553,16 @@ public class SecuritySettings extends RestrictedSettingsFragment
         return mLockPatternUtils;
     }
 
-    /*private void shouldEnableTargets() {
-        final boolean shakeToSecure = Settings.Secure.get0Int(
+    private void shouldEnableTargets() {
+        final int shakeSecureMode = Settings.Secure.getInt(
                 getContentResolver(),
-                Settings.Secure.LOCK_SHAKE_TEMP_SECURE, 0) == 1;
+                Settings.Secure.LOCK_SHAKE_TEMP_SECURE, 0);
+        final boolean shakeToSecure = shakeSecureMode != 0;
         final boolean lockBeforeUnlock = Settings.Secure.getInt(
                 getContentResolver(),
                 Settings.Secure.LOCK_BEFORE_UNLOCK, 0) == 1;
 
-        final boolean shouldEnableTargets = (shakeToSecure || lockBeforeUnlock)
+        /*final boolean shouldEnableTargets = (shakeToSecure || lockBeforeUnlock)
                 || !lockPatternUtils().isSecure();
         if (mLockInterface != null && mLockTargets != null) {
             if (!DeviceUtils.isPhone(getActivity())) {
@@ -572,8 +573,9 @@ public class SecuritySettings extends RestrictedSettingsFragment
             }
             mLockInterface.setEnabled(shouldEnableTargets);
             mLockTargets.setEnabled(shouldEnableTargets);
-        }
-    }*/
+        }*/
+        mShakeEvents.setEnabled(shakeSecureMode != 1 || !lockPatternUtils().isSecure());
+    }
 
     private boolean isNonMarketAppsAllowed() {
         return Settings.Global.getInt(getContentResolver(),
@@ -913,6 +915,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
             // Setting the mBiometricWeakLiveliness checked value to false is handled when onResume
             // is called by grabbing the value from lockPatternUtils.  We can't set it here
             // because mBiometricWeakLiveliness could be null
+            return;
         } else if (requestCode == CONFIRM_EXISTING_FOR_TEMPORARY_INSECURE &&
                 resultCode == Activity.RESULT_OK) {
             // Enable shake to secure
@@ -920,7 +923,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
                     Settings.Secure.LOCK_SHAKE_TEMP_SECURE, 1);
             if (mShakeToSecure != null) {
                 mShakeToSecure.setChecked(true);
-                /*shouldEnableTargets();*/
+                shouldEnableTargets();
             }
             return;
         }
@@ -969,7 +972,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
             } else {
                 Settings.Secure.putInt(getContentResolver(),
                         Settings.Secure.LOCK_SHAKE_TEMP_SECURE, 0);
-                /*shouldEnableTargets();*/
+                shouldEnableTargets();
             }
         } else if (preference == mShakeTimer) {
             int shakeTime = Integer.parseInt((String) value);
