@@ -26,6 +26,13 @@
             android:summary="@string/allow_rotate_summary"
             android:defaultValue="false" />
 
+        <Preference
+            android:key="lockscreen_wallpaper_settings"
+            android:title="@string/lockscreen_wallpaper_settings_title">
+            <intent android:targetPackage="com.android.wallpapercropper"
+                    android:targetClass="com.android.wallpapercropper.LockWallpaperPickerActivity" />
+        </Preference>
+
        <CheckBoxPreference
             android:key="see_through"
             android:title="@string/see_through_title"
