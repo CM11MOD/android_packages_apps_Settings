@@ -57,7 +57,7 @@ import com.android.settings.widget.SeekBarPreference2;
 import java.util.ArrayList;
 
 public class DisplaySettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener, OnPreferenceClickListener {
+        Preference.OnPreferenceChangeListener {
     private static final String TAG = "DisplaySettings";
 
     /** If there is no setting in the provider, use this. */
@@ -65,7 +65,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_SCREEN_TIMEOUT = "screen_timeout";
-    private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_LIGHT_OPTIONS = "category_light_options";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_NOTIFICATION_LIGHT = "notification_light";
@@ -87,7 +86,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String PREF_ENABLED = "1";
     private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
 
-    private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
     private static final int SCREEN_TIMEOUT_NEVER  = Integer.MAX_VALUE;
 
     private static final String ROTATION_ANGLE_0 = "0";
@@ -152,10 +150,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
         disableUnusableTimeouts(mScreenTimeoutPreference);
         updateTimeoutPreferenceDescription(currentTimeout);
-
-        mFontSizePref = (FontDialogPreference) findPreference(KEY_FONT_SIZE);
-        mFontSizePref.setOnPreferenceChangeListener(this);
-        mFontSizePref.setOnPreferenceClickListener(this);
 
         mAdaptiveBacklight = (CheckBoxPreference) findPreference(KEY_ADAPTIVE_BACKLIGHT);
         if (!isAdaptiveBacklightSupported()) {
@@ -369,22 +363,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     }
 
-    @Override
-    public Dialog onCreateDialog(int dialogId) {
-        if (dialogId == DLG_GLOBAL_CHANGE_WARNING) {
-            return Utils.buildGlobalChangeWarningDialog(getActivity(),
-                    R.string.global_font_change_title,
-                    new Runnable() {
-                        public void run() {
-                            mFontSizePref.click();
-                        }
-                    });
-        }
-        return null;
-    }
-
     private void updateState() {
-        readFontSizePreference(mFontSizePref);
         updateScreenSaverSummary();
     }
 
@@ -392,31 +371,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (mScreenSaverPreference != null) {
             mScreenSaverPreference.setSummary(
                     DreamSettings.getSummaryTextWithDreamName(getActivity()));
-        }
-    }
-
-    /**
-     * Reads the current font size and sets the value in the summary text
-     */
-    public void readFontSizePreference(Preference pref) {
-        try {
-            mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
-        } catch (RemoteException e) {
-            Log.w(TAG, "Unable to retrieve font size");
-        }
-
-        // report the current size in the summary text
-        final Resources res = getResources();
-        String fontDesc = FontDialogPreference.getFontSizeDescription(res, mCurConfig.fontScale);
-        pref.setSummary(getString(R.string.summary_font_size, fontDesc));
-    }
-
-    public void writeFontSizePreference(Object objValue) {
-        try {
-            mCurConfig.fontScale = Float.parseFloat(objValue.toString());
-            ActivityManagerNative.getDefault().updatePersistentConfiguration(mCurConfig);
-        } catch (RemoteException e) {
-            Log.w(TAG, "Unable to save font size");
         }
     }
 
@@ -513,9 +467,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                 Log.e(TAG, "could not persist screen timeout setting", e);
             }
         }
-        if (KEY_FONT_SIZE.equals(key)) {
-            writeFontSizePreference(objValue);
-        }
         if (KEY_POWER_CRT_MODE.equals(key)) {
             int value = Integer.parseInt((String) objValue);
             int index = mCrtMode.findIndexOfValue((String) objValue);
@@ -540,19 +491,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
 
         return true;
-    }
-
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        if (preference == mFontSizePref) {
-            if (Utils.hasMultipleUsers(getActivity())) {
-                showDialog(DLG_GLOBAL_CHANGE_WARNING);
-                return true;
-            } else {
-                mFontSizePref.click();
-            }
-        }
-        return false;
     }
 
     /**
