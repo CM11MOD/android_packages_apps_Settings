@@ -372,11 +372,19 @@ public class SecuritySettings extends RestrictedSettingsFragment
     if (resid == R.xml.security_settings_biometric_weak &&
             mLockPatternUtils.getKeyguardStoredPasswordQuality() !=
             DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-        if (mSecurityCategory != null && mVisiblePattern != null &&
-                mVisibleErrorPattern != null && mVisibleDots != null) {
-            mSecurityCategory.removePreference(mVisiblePattern);
-            mSecurityCategory.removePreference(mVisibleErrorPattern);
-            mSecurityCategory.removePreference(mVisibleDots);
+        if (mSecurityCategory != null) {
+            if (mVisiblePattern != null) {
+                mSecurityCategory.removePreference(mVisiblePattern);
+            }
+            if (mVisibleErrorPattern != null) {
+                mSecurityCategory.removePreference(mVisibleErrorPattern);
+            }
+            if (mVisibleDots != null) {
+                mSecurityCategory.removePreference(mVisibleDots);
+            }
+            if (mVisibleGesture != null) {
+                mSecurityCategory.removePreference(mVisibleGesture);
+            }
         }
     }
 
