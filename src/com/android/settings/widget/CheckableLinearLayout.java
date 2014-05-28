@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import com.android.settings.R;
 
 /*
-* This class is useful for using inside of ListView that needs to have checkable items.
-*/
+ * This class is useful for using inside of ListView that needs to have checkable items.
+ */
 public class CheckableLinearLayout extends LinearLayout implements Checkable {
     private CheckBox mCheckBox;
 
