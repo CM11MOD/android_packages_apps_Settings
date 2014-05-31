@@ -278,6 +278,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="battery_stats_title">Statistics</string>
 
     <!-- Button shorcut actions -->
+    <string name="shortcut_action_vol_up">Volume Up</string>
+    <string name="shortcut_action_vol_down">Volume Down</string>
     <string name="shortcut_action_keyguard_camera">Keyguard camera</string>
     <string name="shortcut_action_navbar">Navigation bar</string>
     <string name="shortcut_action_pie">Pie controls</string>
