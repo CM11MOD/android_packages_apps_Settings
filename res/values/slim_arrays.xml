@@ -69,6 +69,8 @@
         <item>@string/shortcut_action_power</item>
         <item>@string/shortcut_action_assist</item>
         <item>@string/shortcut_action_theme_switch</item>
+        <item>@string/shortcut_action_vol_up</item>
+        <item>@string/shortcut_action_vol_down</item>
     </string-array>
 
     <string-array name="shortcut_action_launcher_values" translatable="false">
@@ -89,6 +91,8 @@
         <item>**power**</item>
         <item>**assist**</item>
         <item>**theme_switch**</item>
+        <item>**vol_up**</item>
+        <item>**vol_down**</item>
     </string-array>
 
     <!-- Wi-Fi settings. Presented as a list dialog to the user to choose the Wi-Fi region code. -->
