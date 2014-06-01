@@ -144,6 +144,18 @@
         </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="power_key"
+        android:title="@string/hardware_keys_power_key_title" >
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="enable_fast_torch"
+            android:title="@string/fast_torch_title"
+            android:summary="@string/fast_torch_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="volume_keys"
         android:title="@string/hardware_keys_volume_keys_title" >
 
