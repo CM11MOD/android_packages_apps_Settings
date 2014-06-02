@@ -65,6 +65,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
     private static final String KEY_REVERSE_DEFAULT_APP_PICKER = "reverse_default_app_picker";
     private static final String RECENT_PANEL_LEFTY_MODE = "recent_panel_lefty_mode";
+    private static final String RECENT_PANEL_SHOW_TOPMOST = "recent_panel_show_topmost";
     private static final String RECENT_PANEL_SCALE = "recent_panel_scale";
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
@@ -75,6 +76,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mUseAltResolver;
     private CheckBoxPreference mReverseDefaultAppPicker;
     private CheckBoxPreference mRecentPanelLeftyMode;
+    private CheckBoxPreference mRecentsShowTopmost;
     private ListPreference mRecentPanelScale;
     private ListPreference mRecentPanelExpandedMode;
     private CheckBoxPreference mMultiPane;
@@ -102,13 +104,14 @@ public class UserInterface extends SettingsPreferenceFragment implements
 
         mRecentClearAll = (CheckBoxPreference) prefSet.findPreference(RECENT_MENU_CLEAR_ALL);
         mRecentClearAll.setChecked(Settings.System.getInt(resolver,
-            Settings.System.SHOW_CLEAR_RECENTS_BUTTON, 1) == 1);
+                Settings.System.SHOW_CLEAR_RECENTS_BUTTON, 1) == 1);
         mRecentClearAll.setOnPreferenceChangeListener(this);
 
         mRecentClearAllPosition = (ListPreference) prefSet.findPreference(RECENT_MENU_CLEAR_ALL_LOCATION);
-        String recentClearAllPosition = Settings.System.getString(resolver, Settings.System.CLEAR_RECENTS_BUTTON_LOCATION);
+        String recentClearAllPosition = Settings.System.getString(resolver,
+                Settings.System.CLEAR_RECENTS_BUTTON_LOCATION);
         if (recentClearAllPosition != null) {
-             mRecentClearAllPosition.setValue(recentClearAllPosition);
+            mRecentClearAllPosition.setValue(recentClearAllPosition);
         }
         mRecentClearAllPosition.setOnPreferenceChangeListener(this);
 
@@ -117,6 +120,11 @@ public class UserInterface extends SettingsPreferenceFragment implements
         final boolean recentLeftyMode = Settings.System.getInt(getContentResolver(),
                 Settings.System.RECENT_PANEL_GRAVITY, Gravity.RIGHT) == Gravity.LEFT;
         mRecentPanelLeftyMode.setChecked(recentLeftyMode);
+
+        mRecentsShowTopmost = (CheckBoxPreference) findPreference(RECENT_PANEL_SHOW_TOPMOST);
+        mRecentsShowTopmost.setChecked(Settings.System.getInt(resolver,
+                Settings.System.RECENT_PANEL_SHOW_TOPMOST, 0) == 1);
+        mRecentsShowTopmost.setOnPreferenceChangeListener(this);
 
         mMultiPane = (CheckBoxPreference) prefSet.findPreference(FORCE_MULTI_PANE);
         mMultiPane.setOnPreferenceChangeListener(this);
@@ -132,7 +140,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
         mRecentPanelExpandedMode = (ListPreference) findPreference(RECENT_PANEL_EXPANDED_MODE);
         mRecentPanelExpandedMode.setOnPreferenceChangeListener(this);
         final int recentExpandedMode = Settings.System.getInt(getContentResolver(),
-        Settings.System.RECENT_PANEL_EXPANDED_MODE, 0);
+                Settings.System.RECENT_PANEL_EXPANDED_MODE, 0);
         mRecentPanelExpandedMode.setValue(recentExpandedMode + "");
 
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
@@ -184,10 +192,12 @@ public class UserInterface extends SettingsPreferenceFragment implements
             mRecentPanelLeftyMode.setEnabled(false);
             mRecentPanelScale.setEnabled(false);
             mRecentPanelExpandedMode.setEnabled(false);
+            mRecentsShowTopmost.setEnabled(false);
         } else {
             mRecentPanelLeftyMode.setEnabled(true);
             mRecentPanelScale.setEnabled(true);
             mRecentPanelExpandedMode.setEnabled(true);
+            mRecentsShowTopmost.setEnabled(true);
         }
     }
 
@@ -246,6 +256,9 @@ public class UserInterface extends SettingsPreferenceFragment implements
             int value = Integer.parseInt((String) newValue);
             Settings.System.putInt(getContentResolver(),
             Settings.System.RECENT_PANEL_EXPANDED_MODE, value);
+        } else if (preference == mRecentsShowTopmost) {
+            boolean value = (Boolean) newValue;
+			Settings.System.putInt(resolver, Settings.System.RECENT_PANEL_SHOW_TOPMOST, value ? 1 : 0);
         } else if (preference == mMultiPane) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.FORCE_MULTI_PANE, value ? 1 : 0);
