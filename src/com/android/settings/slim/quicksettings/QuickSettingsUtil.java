@@ -62,7 +62,6 @@ import static com.android.internal.util.slim.QSConstants.TILE_CAMERA;
 import static com.android.internal.util.slim.QSConstants.TILE_INTERNALMEMORY;
 import static com.android.internal.util.slim.QSConstants.TILE_ONTHEGO;
 import static com.android.internal.util.slim.QSConstants.TILE_BATTERYSAVER;
-import static com.android.internal.util.slim.QSConstants.TILE_EQUALIZER;
 import static com.android.internal.util.slim.QSConstants.TILE_WEATHER;
 import static com.android.internal.util.slim.QSConstants.TILE_SCREENCAST;
 
@@ -290,8 +289,6 @@ public class QuickSettingsUtil {
             return context.getResources().getString(R.string.dynamic_tile_alarm);
         } else if (tile.equals(TILE_BUGREPORT)) {
             return context.getResources().getString(R.string.dynamic_tile_bugreport);
-        } else if (tile.equals(TILE_EQUALIZER)) {
-            return context.getResources().getString(R.string.dynamic_tile_equalizer);
         } else if (tile.equals(TILE_SCREENCAST)) {
             return context.getResources().getString(R.string.dynamic_tile_screencast);
         }
