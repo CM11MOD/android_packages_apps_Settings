@@ -147,7 +147,13 @@
         android:key="power_key"
         android:title="@string/hardware_keys_power_key_title" >
 
-        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+        <CheckBoxPreference
+            android:key="power_end_call"
+            android:title="@string/power_end_call_title"
+            android:summary="@string/power_end_call_summary"
+            android:persistent="false"/>
+
+        <CheckBoxPreference
             android:key="enable_fast_torch"
             android:title="@string/fast_torch_title"
             android:summary="@string/fast_torch_summary"

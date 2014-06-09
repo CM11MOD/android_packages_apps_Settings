@@ -444,6 +444,8 @@
     <string name="hardware_keys_action_launch_camera">Launch Camera</string>
     <string name="fast_torch_title">Fast Torch</string>
     <string name="fast_torch_summary">enable torch by long pressing power from a screen off state</string>
+    <string name="power_end_call_title">End call</string>
+    <string name="power_end_call_summary">Pressing the power button will end the current call</string>
     <string name="home_wake_title">Home button wake</string>
     <string name="home_wake_summary">Pressing the home button will wake your device</string>
     <string name="camera_wake_title">Camera button wake</string>

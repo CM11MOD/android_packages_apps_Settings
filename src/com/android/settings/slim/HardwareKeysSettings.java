@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,6 +38,8 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 
 import com.android.internal.util.slim.AppHelper;
 import com.android.internal.util.slim.ButtonsConstants;
@@ -84,12 +87,15 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private static final String KEYS_APP_SWITCH_PRESS = "keys_app_switch_press";
     private static final String KEYS_APP_SWITCH_LONG_PRESS = "keys_app_switch_long_press";
     private static final String KEYS_APP_SWITCH_DOUBLE_TAP = "keys_app_switch_double_tap";
+    private static final String KEY_POWER_END_CALL = "power_end_call";
+    private static final String FAST_TORCH = "enable_fast_torch";
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
     private static final String KEY_BLUETOOTH_INPUT_SETTINGS = "bluetooth_input_settings";
 
     private static final String CATEGORY_VOLUME = "volume_keys";
+    private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_BACKLIGHT = "key_backlight";
 
     private static final int DLG_SHOW_WARNING_DIALOG = 0;
@@ -122,6 +128,8 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private Preference mAppSwitchPressAction;
     private Preference mAppSwitchLongPressAction;
     private Preference mAppSwitchDoubleTapAction;
+    private CheckBoxPreference mPowerEndCall;
+    private CheckBoxPreference mFastTorch;
 
     private CheckBoxPreference mSwapVolumeButtons;
 
@@ -172,6 +180,7 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
         int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
 
+        boolean hasPowerKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER);
         boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
         boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
         boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
@@ -190,6 +199,8 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefs.findPreference(CATEGORY_ASSIST);
         PreferenceCategory keysAppSwitchCategory =
                 (PreferenceCategory) prefs.findPreference(CATEGORY_APPSWITCH);
+        PreferenceCategory powerCategory =
+                (PreferenceCategory) prefs.findPreference(CATEGORY_POWER);
 
         mEnableCustomBindings = (CheckBoxPreference) prefs.findPreference(
                 KEYS_ENABLE_CUSTOM);
@@ -223,6 +234,25 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
                 KEYS_APP_SWITCH_LONG_PRESS);
         mAppSwitchDoubleTapAction = (Preference) prefs.findPreference(
                 KEYS_APP_SWITCH_DOUBLE_TAP);
+
+        // Power button ends calls.
+        mPowerEndCall = (CheckBoxPreference) prefs.findPreference(
+                KEY_POWER_END_CALL);
+
+        mFastTorch = (CheckBoxPreference) prefs.findPreference(
+                FAST_TORCH);
+
+        if (hasPowerKey) {
+            if (!Utils.isVoiceCapable(getActivity())) {
+                powerCategory.removePreference(mPowerEndCall);
+                mPowerEndCall = null;
+            }
+            if (!DeviceUtils.deviceSupportsTorch(getActivity().getApplicationContext())) {
+                powerCategory.removePreference(mFastTorch);
+            }
+        } else {
+            prefs.removePreference(powerCategory);
+        }
 
         if (hasBackKey) {
             // Back key
@@ -473,6 +503,9 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
             return true;
+        } else if (preference == mPowerEndCall) {
+            handleTogglePowerButtonEndsCallPreferenceClick();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -503,6 +536,16 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+        // Power button ends calls.
+        if (mPowerEndCall != null) {
+            final int incallPowerBehavior = Settings.Secure.getInt(getContentResolver(),
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
+            final boolean powerButtonEndsCall =
+                    (incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
+            mPowerEndCall.setChecked(powerButtonEndsCall);
+        }
     }
 
     @Override
@@ -629,4 +672,10 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
         }
     }
 
+    private void handleTogglePowerButtonEndsCallPreferenceClick() {
+        Settings.Secure.putInt(getContentResolver(),
+                Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR, (mPowerEndCall.isChecked()
+                        ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP
+                        : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
+    }
 }
