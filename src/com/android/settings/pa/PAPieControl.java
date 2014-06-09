@@ -313,21 +313,21 @@ public class PAPieControl extends SettingsPreferenceFragment
             boolean hasNavBarByDefault = getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar);
 
-            boolean pieOn = Settings.System.getBoolean(resolver, 
-                Settings.System.PIE_CONTROLS, true);
+            int pieOn = Settings.System.getInt(resolver, 
+                Settings.System.PIE_CONTROLS, 0);
             int navbarOn = Settings.System.getInt(resolver,
                 Settings.System.NAVIGATION_BAR_SHOW, 1);
             int pieGravity = Settings.System.getInt(resolver,
                 Settings.System.PIE_GRAVITY, 2);
 
             if (hasNavBarByDefault && navbarOn == 1) {
-                if (pieOn && pieGravity == 3) {
+                if (pieOn == 1 && pieGravity == 3) {
                     Settings.System.putInt(resolver,
                         Settings.System.NAVIGATION_BAR_SHOW, 0);
                 }
             }
             
-            if (hasNavBarByDefault && !pieOn) {
+            if (hasNavBarByDefault && pieOn == 0) {
                 Settings.System.putInt(resolver,
                     Settings.System.NAVIGATION_BAR_SHOW, 1);
             }

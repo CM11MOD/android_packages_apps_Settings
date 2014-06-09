@@ -35,7 +35,8 @@
         <Preference
             android:fragment="com.android.settings.pa.PieColor"
             android:key="pie_color"
-            android:title="@string/pie_color_title" />
+            android:title="@string/pie_color_title"
+            android:dependency="pa_pie_controls" />
 
     <PreferenceCategory
         android:key="general_ui"
@@ -47,7 +48,8 @@
             android:title="@string/pie_gravity_title"
             android:summary="@string/pie_gravity_summary"
             android:entries="@array/entries_pie_gravity"
-            android:entryValues="@array/values_pie_gravity" />
+            android:entryValues="@array/values_pie_gravity"
+            android:dependency="pa_pie_controls" />
 
         <ListPreference
             android:key="pa_pie_trigger"
@@ -55,12 +57,14 @@
             android:title="@string/pie_trigger_title"
             android:summary="@string/pie_trigger_summary"
             android:entries="@array/entries_pie_trigger"
-            android:entryValues="@array/values_pie_trigger" />
+            android:entryValues="@array/values_pie_trigger"
+            android:dependency="pa_pie_controls" />
 
         <CheckBoxPreference
             android:key="pa_pie_center"
             android:title="@string/pie_center_title"
-            android:summary="@string/pie_center_summary" />
+            android:summary="@string/pie_center_summary"
+            android:dependency="pa_pie_controls" />
 
         <!--<CheckBoxPreference
             android:key="pa_pie_stick"
@@ -73,7 +77,8 @@
             android:title="@string/pie_angle_title"
             android:summary="@string/pie_angle_summary"
             android:entries="@array/entries_pie_angle"
-            android:entryValues="@array/values_pie_angle" />
+            android:entryValues="@array/values_pie_angle"
+            android:dependency="pa_pie_controls" />
 
         <ListPreference
             android:key="pa_pie_size"
@@ -81,7 +86,8 @@
             android:title="@string/pie_size_title"
             android:summary="@string/pie_size_summary"
             android:entries="@array/entries_pie_size"
-            android:entryValues="@array/values_pie_size" />
+            android:entryValues="@array/values_pie_size"
+            android:dependency="pa_pie_controls" />
 
         <ListPreference
             android:key="pa_pie_gap"
@@ -89,7 +95,8 @@
             android:title="@string/pie_gap_title"
             android:summary="@string/pie_gap_summary"
             android:entries="@array/entries_pie_gap"
-            android:entryValues="@array/values_pie_gap" />
+            android:entryValues="@array/values_pie_gap"
+            android:dependency="pa_pie_controls" />
 
         <CheckBoxPreference
             android:key="pa_pie_notifications"
@@ -110,7 +117,8 @@
             android:title="@string/pie_mode_title"
             android:summary="@string/pie_mode_summary"
             android:entries="@array/entries_pie_mode"
-            android:entryValues="@array/values_pie_mode" />
+            android:entryValues="@array/values_pie_mode"
+            android:dependency="pa_pie_controls" />
 
     <PreferenceCategory
         android:key="pa_pie_layout_title"
@@ -119,12 +127,14 @@
         <CheckBoxPreference
             android:key="pa_pie_menu"
             android:title="@string/pie_menu_title"
-            android:summary="@string/pie_menu_summary" />
+            android:summary="@string/pie_menu_summary"
+            android:dependency="pa_pie_controls" />
 
         <CheckBoxPreference
             android:key="pa_pie_search"
             android:title="@string/pie_search_title"
-            android:summary="@string/pie_search_summary" />
+            android:summary="@string/pie_search_summary"
+            android:dependency="pa_pie_controls" />
 
         <CheckBoxPreference
             android:key="pa_pie_power"
