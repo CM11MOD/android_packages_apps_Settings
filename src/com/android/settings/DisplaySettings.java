@@ -49,6 +49,8 @@ import com.android.internal.view.RotationPolicy;
 import com.android.settings.DreamSettings;
 import com.android.settings.slim.DisplayRotation;
 import com.android.settings.Utils;
+import com.android.settings.hardware.DisplayColor;
+import com.android.settings.hardware.DisplayGamma;
 
 import org.cyanogenmod.hardware.AdaptiveBacklight;
 import org.cyanogenmod.hardware.TapToWake;
@@ -86,6 +88,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String FILE_TOUCHWAKE_TIMEOUT = "/sys/devices/virtual/misc/touchwake/delay";
     private static final String PREF_ENABLED = "1";
     private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
+    private static final String KEY_DISPLAY_COLOR = "color_calibration";
+    private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
     private static final int SCREEN_TIMEOUT_NEVER  = Integer.MAX_VALUE;
@@ -265,6 +269,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mCrtMode.setOnPreferenceChangeListener(this);
         } else if (animationOptions != null) {
             prefSet.removePreference(animationOptions);
+        }
+
+        if (!DisplayColor.isSupported()) {
+            getPreferenceScreen().removePreference(findPreference(KEY_DISPLAY_COLOR));
+        }
+        if (!DisplayGamma.isSupported()) {
+            getPreferenceScreen().removePreference(findPreference(KEY_DISPLAY_GAMMA));
         }
 
         mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);

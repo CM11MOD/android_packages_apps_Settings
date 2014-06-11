@@ -17,6 +17,7 @@
 package com.android.settings;
 
 import com.android.settings.bluetooth.DockEventReceiver;
+import com.android.settings.hardware.VibratorIntensity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -85,6 +86,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final String KEY_DTMF_TONE = Settings.System.DTMF_TONE_WHEN_DIALING;
     private static final String KEY_SOUND_EFFECTS = Settings.System.SOUND_EFFECTS_ENABLED;
     private static final String KEY_HAPTIC_FEEDBACK = Settings.System.HAPTIC_FEEDBACK_ENABLED;
+    private static final String KEY_VIBRATION_INTENSITY = "vibration_intensity";
     private static final String KEY_EMERGENCY_TONE = "emergency_tone";
     private static final String KEY_SOUND_SETTINGS = "sound_settings";
     private static final String KEY_VIBRATION_DURATION = "vibration_duration";
@@ -274,10 +276,13 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         if (mVib == null || !mVib.hasVibrator()) {
             removePreference(KEY_VIBRATE);
             removePreference(KEY_HAPTIC_FEEDBACK);
+            removePreference(KEY_VIBRATION_INTENSITY);
             removePreference(KEY_VIBRATION_DURATION);
             removePreference(KEY_POWER_NOTIFICATIONS_VIBRATE);
             removePreference(KEY_CONVERT_SOUND_TO_VIBRATE);
             removePreference(KEY_VIBRATE_DURING_CALLS);
+        } else if (!VibratorIntensity.isSupported()) {
+            removePreference(KEY_VIBRATION_INTENSITY);
         } else {
             mPowerSoundsVibrate.setChecked(Settings.Global.getInt(getContentResolver(),
                     Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 0) != 0);
