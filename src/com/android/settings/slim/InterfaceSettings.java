@@ -133,6 +133,12 @@ public class InterfaceSettings extends SettingsPreferenceFragment {
     private static void killRunningApps() {
         ActivityManager am = (ActivityManager) mActivity.getSystemService(
                 Context.ACTIVITY_SERVICE);
+        String defaultKeyboard = Settings.Secure.getStringForUser(mActivity.getContentResolver(),
+                Settings.Secure.DEFAULT_INPUT_METHOD, UserHandle.USER_CURRENT);
+        if (defaultKeyboard.contains("/")) {
+            defaultKeyboard = defaultKeyboard.split("/")[0];
+        }
+        am.forceStopPackage(defaultKeyboard);
         for (ActivityManager.RunningAppProcessInfo pid : am.getRunningAppProcesses()) {
             am.killBackgroundProcesses(pid.processName);
         }
