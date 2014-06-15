@@ -1381,6 +1381,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="hover_hide_button_summary">Hide the HOVER-Button in the StatusBar</string>
     <string name="hover_active_title">Activate HOVER</string>
     <string name="hover_active_summary">This activates HOVER, as replacement of the button in StatusBar</string>
+    <string name="hover_require_fullscreen_mode_title">Require Expanded Desktop</string>
+    <string name="hover_require_fullscreen_mode_summary">Only show up when StatusBar is hidden</string>
     <string name="hover_exclude_low_priority_title">Exclude low priority</string>
     <string name="hover_exclude_low_priority_summary">Exclude notifications marked as low priority</string>
     <string name="hover_exclude_non_clearable_title">Exclude non-clearable</string>
