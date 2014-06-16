@@ -967,6 +967,11 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="recents_style_aosp">AOSP</string>
     <string name="recents_style_aosp_mod">AOSP mod</string>
     <string name="recents_style_slim">Slim recents panel</string>
+    <string name="recents_style_omni">OmniSwitch</string>
+    <string name="omniswitch_warning_title">Warning</string>
+    <string name="omniswitch_not_installed_summary">OmniSwitch is not installed</string>
+    <string name="omniswitch_not_installed_message">OmniSwitch is not installed</string>
+    <string name="omniswitch_enabled_message">Please turn OmniSwitch on and configure it to start on boot.</string>
 
     <!-- allow multiuser -->
     <string name="multiuser_preference_title">Multiuser support</string>

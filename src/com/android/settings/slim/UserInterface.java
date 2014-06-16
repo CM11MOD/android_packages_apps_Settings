@@ -17,6 +17,8 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -70,6 +72,11 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
 
+    public static final String OMNISWITCH_PACKAGE_NAME = "org.omnirom.omniswitch";
+
+    public static Intent INTENT_OMNISWITCH_SETTINGS = new Intent(Intent.ACTION_MAIN)
+			.setClassName(OMNISWITCH_PACKAGE_NAME, OMNISWITCH_PACKAGE_NAME + ".SettingsActivity");
+
     private ListPreference mRecentStyle;
     private CheckBoxPreference mRecentClearAll;
     private ListPreference mRecentClearAllPosition;
@@ -96,11 +103,11 @@ public class UserInterface extends SettingsPreferenceFragment implements
         updateRamBar();
 
         mRecentStyle = (ListPreference) prefSet.findPreference(RECENTS_STYLE);
-        mRecentStyle.setOnPreferenceChangeListener(this);
         mRecentStyle.setValue(Integer.toString(Settings.System.getInt(getActivity()
                 .getContentResolver(), Settings.System.RECENTS_STYLE,
                 0)));
         mRecentStyle.setSummary(mRecentStyle.getEntry());
+        mRecentStyle.setOnPreferenceChangeListener(this);
 
         mRecentClearAll = (CheckBoxPreference) prefSet.findPreference(RECENT_MENU_CLEAR_ALL);
         mRecentClearAll.setChecked(Settings.System.getInt(resolver,
@@ -188,16 +195,33 @@ public class UserInterface extends SettingsPreferenceFragment implements
             mUseAltResolver.setEnabled(true);
         }
 
-        if (recentStyle == 0) {
-            mRecentPanelLeftyMode.setEnabled(false);
-            mRecentPanelScale.setEnabled(false);
-            mRecentPanelExpandedMode.setEnabled(false);
-            mRecentsShowTopmost.setEnabled(false);
-        } else {
-            mRecentPanelLeftyMode.setEnabled(true);
-            mRecentPanelScale.setEnabled(true);
-            mRecentPanelExpandedMode.setEnabled(true);
-            mRecentsShowTopmost.setEnabled(true);
+        switch (recentStyle) {
+            case 0:
+            case 3:
+                mRecentClearAll.setEnabled(true);
+                mRamBar.setEnabled(true);
+                mRecentPanelLeftyMode.setEnabled(false);
+                mRecentPanelScale.setEnabled(false);
+                mRecentPanelExpandedMode.setEnabled(false);
+                mRecentsShowTopmost.setEnabled(false);
+                break;
+            case 1:
+                mRecentClearAll.setEnabled(false);
+                mRamBar.setEnabled(false);
+                mRecentPanelLeftyMode.setEnabled(true);
+                mRecentPanelScale.setEnabled(true);
+                mRecentPanelExpandedMode.setEnabled(true);
+                mRecentsShowTopmost.setEnabled(true);
+                break;
+            case 2:
+                if (!isOmniSwitchInstalled()) return;
+                mRecentClearAll.setEnabled(false);
+                mRamBar.setEnabled(false);
+                mRecentPanelLeftyMode.setEnabled(false);
+                mRecentPanelScale.setEnabled(false);
+                mRecentPanelExpandedMode.setEnabled(false);
+                mRecentsShowTopmost.setEnabled(false);
+                break;
         }
     }
 
@@ -226,11 +250,22 @@ public class UserInterface extends SettingsPreferenceFragment implements
         if (preference == mRecentStyle) {
             int recentStyle = Integer.valueOf((String) newValue);
             int index = mRecentStyle.findIndexOfValue((String) newValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+
+            if (recentStyle == 2 && !isOmniSwitchInstalled()) {
+                openOmniSwitchNotInstalledWarning();
+                return true;
+            }
+
+            Settings.System.putInt(resolver,
                     Settings.System.RECENTS_STYLE, recentStyle);
             mRecentStyle.setSummary(mRecentStyle.getEntries()[index]);
             updatePreference();
             Helpers.restartSystemUI();
+
+            if (recentStyle == 2) {
+                openOmniSwitchEnabledWarning();
+            }
+            return true;
         } else if (preference == mRecentClearAll) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.SHOW_CLEAR_RECENTS_BUTTON, value ? 1 : 0);
@@ -264,5 +299,36 @@ public class UserInterface extends SettingsPreferenceFragment implements
             Settings.System.putInt(resolver, Settings.System.FORCE_MULTI_PANE, value ? 1 : 0);
         }
         return true;
+    }
+
+    private void openOmniSwitchNotInstalledWarning() {
+        new AlertDialog.Builder(getActivity())
+        .setTitle(getResources().getString(R.string.omniswitch_warning_title))
+        .setMessage(getResources().getString(R.string.omniswitch_not_installed_message))
+        .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+        }).show();
+    }
+
+    private void openOmniSwitchEnabledWarning() {
+        new AlertDialog.Builder(getActivity())
+        .setTitle(getResources().getString(R.string.omniswitch_warning_title))
+        .setMessage(getResources().getString(R.string.omniswitch_enabled_message))
+        .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                                startActivity(INTENT_OMNISWITCH_SETTINGS);
+                        }
+        }).show();
+    }
+
+    private boolean isOmniSwitchInstalled() {
+        final PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(OMNISWITCH_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
     }
 }

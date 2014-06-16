@@ -1114,12 +1114,14 @@
         <item>@string/recents_style_aosp</item>
         <item>@string/recents_style_aosp_mod</item>
         <item>@string/recents_style_slim</item>
+        <item>@string/recents_style_omni</item>
     </string-array>
 
     <string-array name="recent_panel_style_values" translatable="false">
         <item>0</item>
-        <item>2</item>
+        <item>3</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
     <!-- Recent panel -->
