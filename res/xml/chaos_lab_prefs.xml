@@ -36,6 +36,12 @@
         android:icon="@drawable/ic_settings_halo" 
         android:title="@string/halo_settings_title" />
 
+    <!-- HOVER -->
+    <PreferenceScreen
+        android:fragment="com.android.settings.pa.Hover"
+        android:icon="@drawable/ic_settings_hover"
+        android:title="@string/hover_enabled_title" />
+
     <PreferenceScreen
         android:key="app_sidebar"
         android:fragment="com.android.settings.chameleonos.AppSidebar"
