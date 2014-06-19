@@ -180,14 +180,6 @@
             android:targetClass="com.cyanogenmod.settings.device.DeviceSettings" />
     </header>
 
-    <!-- Other device controls -->
-    <header
-        android:id="@+id/more_device_settings"
-        android:icon="@drawable/ic_settings_advanced"
-        android:breadCrumbTitle="@string/more_device_settings_title"
-        android:fragment="com.android.settings.cyanogenmod.MoreDeviceSettings"
-        android:title="@string/more_device_controls_title" />
-
     <!-- DEVICE -->
     <header android:id="@+id/device_section"
         android:title="@string/header_category_device" />
