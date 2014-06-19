@@ -198,6 +198,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
         switch (recentStyle) {
             case 0:
             case 3:
+            case 4:
                 mRecentClearAll.setEnabled(true);
                 mRamBar.setEnabled(true);
                 mRecentPanelLeftyMode.setEnabled(false);
