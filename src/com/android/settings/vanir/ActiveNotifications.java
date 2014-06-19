@@ -2,17 +2,14 @@ package com.android.settings;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.UserHandle;
-import android.os.UserManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceScreen;
@@ -123,7 +120,7 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
 
         mLockNotif = (CheckBoxPreference) prefs.findPreference(KEY_LOCKSCREEN_NOTIFICATIONS);
         mLockNotif.setChecked((Settings.System.getInt(cr,
-                Settings.System.LOCKSCREEN_NOTIFICATIONS, 0) == 1));
+                Settings.System.LOCKSCREEN_NOTIFICATIONS, 1) == 1));
 
         mNotificationPeek = (CheckBoxPreference) findPreference(KEY_NOTIFICATION_PEEK);
         mNotificationPeek.setChecked((Settings.System.getInt(cr,

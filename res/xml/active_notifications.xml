@@ -24,19 +24,19 @@
 
     <CheckBoxPreference
         android:key="ad_enable"
-        android:persistent="false"
+        android:persistent="true"
         android:title="@string/ad_settings_title"
         android:summary="@string/ad_enable_summary" />
 
     <CheckBoxPreference
         android:key="lock_enable"
-        android:persistent="false"
+        android:persistent="true"
         android:title="@string/lockscreen_notifications_title"
         android:summary="@string/lock_summary"/> 
 
     <CheckBoxPreference
         android:key="notification_peek"
-        android:persistent="false"
+        android:persistent="true"
         android:title="@string/notification_peek_title"
         android:summary="@string/notification_peek_summary" />
 
