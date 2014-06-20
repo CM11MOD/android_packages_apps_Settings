@@ -49,6 +49,11 @@
         android:title="@string/app_sidebar_title" />
 
     <PreferenceScreen
+        android:key="heads_up"
+        android:fragment="com.android.settings.headsup.HeadsUpDoNotDisturbSettings"
+        android:title="@string/category_heads_up" />
+
+    <PreferenceScreen
         android:key="edge_swipe_navigation"
         android:fragment="com.android.settings.cyanogenmod.EdgeSwipeNavigation"
         android:icon="@drawable/ic_bars"
