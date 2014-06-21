@@ -430,6 +430,7 @@ public class Settings extends PreferenceActivity
         com.android.settings.applications.AppOpsSummary.class.getName(),
         com.android.settings.chameleonos.labs.LabSettings.class.getName(),
         com.android.settings.omni.BatterySaverSettings.class.getName(),
+        com.android.settings.pa.Halo.class.getName(),
         com.android.settings.pa.Hover.class.getName(),
     };
 
@@ -1307,5 +1308,6 @@ public class Settings extends PreferenceActivity
     public static class PAPieSettingsActivity extends Settings { /* empty */ }
     public static class AnimationInterfaceSettingsActivity extends Settings { /* empty */ }
     public static class ShakeEventsSettingsActivity extends Settings { /* empty */ }
+    public static class HaloActivity extends Settings { /* empty */ }
     public static class HoverSettingsActivity extends Settings { /* empty */ }
 }
