@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import com.android.settings.R;
