@@ -19,10 +19,13 @@ package com.android.settings.chameleonos.labs;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+
+import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
 
 /**
  * Settings for new features that we want to test out with our users should go
@@ -33,11 +36,16 @@ import com.android.settings.SettingsPreferenceFragment;
 public class LabSettings extends SettingsPreferenceFragment
         implements OnSharedPreferenceChangeListener {
 
+    private SystemSettingSwitchPreference mSwitchPreference;
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.chaos_lab_prefs);
+
+        mSwitchPreference = (SystemSettingSwitchPreference)
+                findPreference(Settings.System.HEADS_UP_NOTIFICATION);
 
         initUI();
     }
@@ -48,6 +56,10 @@ public class LabSettings extends SettingsPreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
+        boolean headsUpEnabled = Settings.System.getIntForUser(
+                getActivity().getContentResolver(),
+                Settings.System.HEADS_UP_NOTIFICATION, 0, UserHandle.USER_CURRENT) == 1;
+        mSwitchPreference.setChecked(headsUpEnabled);
     }
 
     @Override

@@ -1959,6 +1959,8 @@
 
         <activity android:name=".chameleonos.labs.gestureanywhere.GestureAnywhereCreateGestureActivity" />
 
+        <activity android:name=".headsup.HeadsUpSettings" />
+
         <activity
             android:name=".aokp.Weather"
             android:label="@string/title_weather" >
