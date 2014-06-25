@@ -66,9 +66,9 @@
         android:icon="@drawable/ic_settings_sync"
         android:title="@string/shake_events_title" />
 
-     <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+    <Preference
         android:key="heads_up_enabled"
         android:fragment="com.android.settings.headsup.HeadsUpSettings"
-        android:title="@string/category_heads_up"
-        android:summary="@string/summary_heads_up" />
+        android:title="@string/category_heads_up"/>
+
 </PreferenceScreen>

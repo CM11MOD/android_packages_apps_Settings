@@ -25,8 +25,6 @@ import android.preference.PreferenceScreen;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
-import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
-
 /**
  * Settings for new features that we want to test out with our users should go
  * here.  If a feature is to be accepted into ChaOS permanently we can move
@@ -36,7 +34,7 @@ import com.android.settings.cyanogenmod.SystemSettingSwitchPreference;
 public class LabSettings extends SettingsPreferenceFragment
         implements OnSharedPreferenceChangeListener {
 
-    private SystemSettingSwitchPreference mSwitchPreference;
+    private Preference mHeadsUp;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -44,8 +42,7 @@ public class LabSettings extends SettingsPreferenceFragment
 
         addPreferencesFromResource(R.xml.chaos_lab_prefs);
 
-        mSwitchPreference = (SystemSettingSwitchPreference)
-                findPreference(Settings.System.HEADS_UP_NOTIFICATION);
+        mHeadsUp = findPreference(Settings.System.HEADS_UP_NOTIFICATION);
 
         initUI();
     }
@@ -56,10 +53,10 @@ public class LabSettings extends SettingsPreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
-        boolean headsUpEnabled = Settings.System.getIntForUser(
-                getActivity().getContentResolver(),
-                Settings.System.HEADS_UP_NOTIFICATION, 0, UserHandle.USER_CURRENT) == 1;
-        mSwitchPreference.setChecked(headsUpEnabled);
+        boolean headsUpEnabled = Settings.System.getInt(
+                getContentResolver(), Settings.System.HEADS_UP_NOTIFICATION, 0) == 1;
+        mHeadsUp.setSummary(headsUpEnabled
+                ? R.string.summary_heads_up_enabled : R.string.summary_heads_up_disabled);
     }
 
     @Override
