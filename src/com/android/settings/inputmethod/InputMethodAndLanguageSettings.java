@@ -53,6 +53,8 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 
+import org.cyanogenmod.hardware.HighTouchSensitivity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,6 +69,7 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
     private static final String KEY_INPUT_METHOD_SELECTOR = "input_method_selector";
     private static final String KEY_USER_DICTIONARY_SETTINGS = "key_user_dictionary_settings";
     private static final String KEY_STYLUS_GESTURES = "stylus_gestures";
+    private static final String KEY_HIGH_TOUCH_SENSITIVITY = "high_touch_sensitivity";
     private static final String KEY_POINTER_SETTINGS_CATEGORY = "pointer_settings_category";
     private static final String KEY_STYLUS_ICON_ENABLED = "stylus_icon_enabled";
     private static final String KEY_TRACKPAD_SETTINGS = "gesture_pad_settings";
@@ -82,9 +85,10 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
         "auto_replace", "auto_caps", "auto_punctuate",
     };
 
+    private CheckBoxPreference mStylusIconEnabled;
+    private CheckBoxPreference mHighTouchSensitivity;
     private int mDefaultInputMethodSelectorVisibility = 0;
     private ListPreference mShowInputMethodSelectorPref;
-    private CheckBoxPreference mStylusIconEnabled;
     private PreferenceCategory mKeyboardSettingsCategory;
     private PreferenceCategory mHardKeyboardCategory;
     private PreferenceCategory mGameControllerCategory;
@@ -190,6 +194,13 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
             } else {
                 mStylusIconEnabled.setOnPreferenceChangeListener(this);
             }
+        }
+
+        // High touch sensitivity
+        mHighTouchSensitivity = (CheckBoxPreference) findPreference(KEY_HIGH_TOUCH_SENSITIVITY);
+        if (!isHighTouchSensitivitySupported()) {
+            getPreferenceScreen().removePreference(mHighTouchSensitivity);
+            mHighTouchSensitivity = null;
         }
 
         // Spell Checker
@@ -383,6 +394,8 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                         chkPref.isChecked() ? 1 : 0);
                 return true;
             }
+        } else if (preference == mHighTouchSensitivity) {
+            return HighTouchSensitivity.setEnabled(mHighTouchSensitivity.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -610,6 +623,15 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                     Settings.System.VIBRATE_INPUT_DEVICES, 1) > 0);
         } else {
             getPreferenceScreen().removePreference(mGameControllerCategory);
+        }
+    }
+
+    private static boolean isHighTouchSensitivitySupported() {
+        try {
+            return HighTouchSensitivity.isSupported();
+        } catch (NoClassDefFoundError e) {
+            // Hardware abstraction framework not installed
+        return false;
         }
     }
 
