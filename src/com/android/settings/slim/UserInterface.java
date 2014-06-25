@@ -54,6 +54,8 @@ import com.android.settings.R;
 import com.android.settings.util.CMDProcessor;
 import com.android.settings.util.Helpers;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+
 
 public class UserInterface extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
@@ -70,6 +72,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String RECENT_PANEL_SHOW_TOPMOST = "recent_panel_show_topmost";
     private static final String RECENT_PANEL_SCALE = "recent_panel_scale";
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
+    private static final String RECENT_PANEL_BG_COLOR =	"recent_panel_bg_color";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
     private static final String BUBBLE_MODE = "bubble_mode";
     private static final String PREF_RECENTS_SWIPE_FLOATING = "recents_swipe";
@@ -88,6 +91,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mRecentsShowTopmost;
     private ListPreference mRecentPanelScale;
     private ListPreference mRecentPanelExpandedMode;
+    private ColorPickerPreference mRecentPanelBgColor;
     private ListPreference mBubbleMode;
     private CheckBoxPreference mMultiPane;
     private CheckBoxPreference mRecentsSwipe;
@@ -153,6 +157,12 @@ public class UserInterface extends SettingsPreferenceFragment implements
         final int recentExpandedMode = Settings.System.getInt(getContentResolver(),
                 Settings.System.RECENT_PANEL_EXPANDED_MODE, 0);
         mRecentPanelExpandedMode.setValue(recentExpandedMode + "");
+
+        // Recent panel background color
+        int intColor;
+        String hexColor;
+        mRecentPanelBgColor = (ColorPickerPreference) findPreference(RECENT_PANEL_BG_COLOR);
+        mRecentPanelBgColor.setOnPreferenceChangeListener(this);
 
         mBubbleMode = (ListPreference) prefSet.findPreference(BUBBLE_MODE);
         int bubble_mode = Settings.System.getInt(getContentResolver(),
@@ -226,6 +236,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelLeftyMode.setEnabled(false);
                 mRecentPanelScale.setEnabled(false);
                 mRecentPanelExpandedMode.setEnabled(false);
+                mRecentPanelBgColor.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(true);
                 break;
@@ -235,6 +246,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelLeftyMode.setEnabled(true);
                 mRecentPanelScale.setEnabled(true);
                 mRecentPanelExpandedMode.setEnabled(true);
+                mRecentPanelBgColor.setEnabled(true);
                 mRecentsShowTopmost.setEnabled(true);
                 mRecentsSwipe.setEnabled(false);
                 break;
@@ -245,6 +257,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelLeftyMode.setEnabled(false);
                 mRecentPanelScale.setEnabled(false);
                 mRecentPanelExpandedMode.setEnabled(false);
+                mRecentPanelBgColor.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(false);
                 break;
@@ -328,6 +341,15 @@ public class UserInterface extends SettingsPreferenceFragment implements
             int value = Integer.parseInt((String) newValue);
             Settings.System.putInt(getContentResolver(),
             Settings.System.RECENT_PANEL_EXPANDED_MODE, value);
+        } else if (preference == mRecentPanelBgColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+            Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.RECENT_PANEL_BG_COLOR,
+            intHex);
+            return true;
         } else if (preference == mRecentsShowTopmost) {
             boolean value = (Boolean) newValue;
 			Settings.System.putInt(resolver, Settings.System.RECENT_PANEL_SHOW_TOPMOST, value ? 1 : 0);
