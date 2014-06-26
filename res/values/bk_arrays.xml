@@ -896,4 +896,20 @@
         <item>15</item>
     </string-array>
 
+    <!-- Button Backlight settings. The way the backlight of the buttons is supposed to light up. -->
+    <string-array name="button_backlight_entries">
+        <item>@string/button_backlight_auto</item>
+        <item>@string/button_backlight_off</item>
+        <item>@string/button_backlight_on</item>
+        <item>@string/button_backlight_force_off</item>
+        <item>@string/button_backlight_force_on</item>
+    </string-array>
+
+    <string-array name="button_backlight_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -91,12 +92,16 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private static final String FAST_TORCH = "enable_fast_torch";
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
+    private static final String KEY_BUTTON_BACKLIGHT_MODE = "button_backlight_mode";
     private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
     private static final String KEY_BLUETOOTH_INPUT_SETTINGS = "bluetooth_input_settings";
 
     private static final String CATEGORY_VOLUME = "volume_keys";
     private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_BACKLIGHT = "key_backlight";
+
+    // If there's no setting, keep this as a fallback
+    private static final int FALLBACK_BUTTON_BACKLIGHT_VALUE = 0;
 
     private static final int DLG_SHOW_WARNING_DIALOG = 0;
     private static final int DLG_SHOW_ACTION_DIALOG  = 1;
@@ -132,6 +137,7 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mFastTorch;
 
     private CheckBoxPreference mSwapVolumeButtons;
+    private ListPreference mButtonBacklightPref;
 
     private boolean mCheckPreferences;
     private Map<String, String> mKeySettings = new HashMap<String, String>();
@@ -373,6 +379,17 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
         if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
             prefs.removePreference(backlight);
         }
+
+        if (!backlight.isButtonSupported() && !backlight.isKeyboardSupported()) {
+            prefs.removePreference(findPreference(KEY_BUTTON_BACKLIGHT_MODE));
+        } else {
+            mButtonBacklightPref = (ListPreference) findPreference(KEY_BUTTON_BACKLIGHT_MODE);
+            final int currentButtonBacklight = Settings.System.getInt(getContentResolver(),
+                    Settings.System.BUTTON_BACKLIGHT_MODE, FALLBACK_BUTTON_BACKLIGHT_VALUE);
+            mButtonBacklightPref.setValueIndex(currentButtonBacklight);
+            mButtonBacklightPref.setOnPreferenceChangeListener(this);
+            updateButtonBacklight(currentButtonBacklight);
+        }
         
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
                 getPreferenceScreen(), KEY_BLUETOOTH_INPUT_SETTINGS);
@@ -490,6 +507,10 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
             boolean value = (Boolean) newValue;
             Settings.System.putInt(getContentResolver(), Settings.System.HARDWARE_KEY_REBINDING,
                     value ? 1 : 0);
+            return true;
+        } else if (preference == mButtonBacklightPref) {
+            int value = Integer.parseInt((String) newValue);
+            updateButtonBacklight(value);
             return true;
         }
         return false;
@@ -677,5 +698,11 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
                 Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR, (mPowerEndCall.isChecked()
                         ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP
                         : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
+    }
+
+    private void updateButtonBacklight(int value) {
+        mButtonBacklightPref.setSummary(mButtonBacklightPref.getEntries()[value]);
+        Settings.System.putInt(getContentResolver(),
+        Settings.System.BUTTON_BACKLIGHT_MODE, value);
     }
 }

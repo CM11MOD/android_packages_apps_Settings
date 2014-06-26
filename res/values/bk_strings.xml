@@ -1020,8 +1020,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="trigger_width_size_12_dp">12dp</string>
     <string name="trigger_width_size_15_dp">15dp</string>
 
-
-
     <!-- Toggle switch title for enabling battery saver connections. [CHAR LIMIT=32] -->
     <string name="data_usage_enable_batterysaver">Battery saver</string>
     
@@ -1390,4 +1388,12 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="hover_exclude_non_clearable_summary">Exclude not dismissable notifications</string>
     <string name="hover_exclude_topmost_title">Exclude topmost app</string>
     <string name="hover_exclude_topmost_summary">Exclude notifications from the app running in foreground</string>
+
+    <!-- Button backlight mode -->
+    <string name="button_backlight_mode">Button Backlight</string>
+    <string name="button_backlight_auto">Auto</string>
+    <string name="button_backlight_off">Off</string>
+    <string name="button_backlight_on">On</string>
+    <string name="button_backlight_force_off">Force Off</string>
+    <string name="button_backlight_force_on">Force On</string>
 </resources>

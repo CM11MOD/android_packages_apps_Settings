@@ -17,6 +17,13 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference
+        android:key="button_backlight_mode"
+        android:title="@string/button_backlight_mode"
+        android:entries="@array/button_backlight_entries"
+        android:entryValues="@array/button_backlight_values"
+        android:persistent="true" />
+
     <com.android.settings.cyanogenmod.ButtonBacklightBrightness
         android:key="button_backlight"
         android:title="@string/button_backlight_title"
