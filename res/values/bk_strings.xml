@@ -1394,8 +1394,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="hover_exclude_low_priority_summary">Exclude notifications marked as low priority</string>
     <string name="hover_exclude_non_clearable_title">Exclude non-clearable</string>
     <string name="hover_exclude_non_clearable_summary">Exclude not dismissable notifications</string>
-    <string name="hover_exclude_topmost_title">Exclude topmost app</string>
-    <string name="hover_exclude_topmost_summary">Exclude notifications from the app running in foreground</string>
 
     <!-- Button backlight mode -->
     <string name="button_backlight_mode">Button Backlight</string>
