@@ -79,7 +79,7 @@
 
     <PreferenceCategory
         android:key="bubble_mode_cat"
-        android:title="@string/bubble_mode_title">
+        android:title="@string/recents_style_aosb">
 
         <ListPreference
             android:key="bubble_mode"

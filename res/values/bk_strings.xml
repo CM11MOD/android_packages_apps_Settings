@@ -976,7 +976,7 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="omniswitch_enabled_message">Please turn OmniSwitch on and configure it to start on boot.</string>
 
     <!-- Bubble Recents -->
-    <string name="bubble_recent_title">About Bubble</string>
+    <string name="bubble_recent_title">AOSB Bubble add on</string>
     <string name="bubble_recent_summary">that enables dynamic callback to check last call detail on a single click OR open the contact card when you click it twice (double tap), switch between the modes set CallLogs OR Starred contacts in recents.</string>
     <string name="bubble_mode_title">Recent Bubble Mode</string>
     <string name="bubble_recent_disable">Disable Recent Bubble</string>
