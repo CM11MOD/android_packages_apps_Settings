@@ -71,6 +71,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String RECENT_PANEL_SCALE = "recent_panel_scale";
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
+    private static final String BUBBLE_MODE = "bubble_mode";
 
     public static final String OMNISWITCH_PACKAGE_NAME = "org.omnirom.omniswitch";
 
@@ -86,6 +87,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mRecentsShowTopmost;
     private ListPreference mRecentPanelScale;
     private ListPreference mRecentPanelExpandedMode;
+    private ListPreference mBubbleMode;
     private CheckBoxPreference mMultiPane;
 
     private Preference mRamBar;
@@ -150,6 +152,13 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 Settings.System.RECENT_PANEL_EXPANDED_MODE, 0);
         mRecentPanelExpandedMode.setValue(recentExpandedMode + "");
 
+        mBubbleMode = (ListPreference) prefSet.findPreference(BUBBLE_MODE);
+        int bubble_mode = Settings.System.getInt(getContentResolver(),
+                Settings.System.BUBBLE_RECENT, 0);
+        mBubbleMode.setValue(String.valueOf(bubble_mode));
+        mBubbleMode.setSummary(mBubbleMode.getEntry());
+        mBubbleMode.setOnPreferenceChangeListener(this);
+
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setOnPreferenceChangeListener(this);
         mUseAltResolver.setChecked(Settings.System.getInt(resolver,
@@ -195,10 +204,15 @@ public class UserInterface extends SettingsPreferenceFragment implements
             mUseAltResolver.setEnabled(true);
         }
 
+        if (recentStyle !=5) {
+            mBubbleMode.setEnabled(false);
+        }
+
         switch (recentStyle) {
             case 0:
             case 3:
             case 4:
+            case 5:
                 mRecentClearAll.setEnabled(true);
                 mRamBar.setEnabled(true);
                 mRecentPanelLeftyMode.setEnabled(false);
@@ -266,6 +280,13 @@ public class UserInterface extends SettingsPreferenceFragment implements
             if (recentStyle == 2) {
                 openOmniSwitchEnabledWarning();
             }
+            return true;
+        } else if (preference == mBubbleMode) {
+            int BubbleMode = Integer.valueOf((String) newValue);
+            int index = mBubbleMode.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.BUBBLE_RECENT, BubbleMode);
+            mBubbleMode.setSummary(mBubbleMode.getEntries()[index]);
             return true;
         } else if (preference == mRecentClearAll) {
             boolean value = (Boolean) newValue;
