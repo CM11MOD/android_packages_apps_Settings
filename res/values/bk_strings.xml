@@ -1432,4 +1432,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="notification_swipe_summary">Swipe left to launch notification in floating window.</string>
     <string name="recents_swipe_title">Recents swipe</string>
     <string name="recents_swipe_summary">Swipe left/down in recents panel to launch in floating window.</string>
+
+    <!-- NavBar IME Cursor Longpress Action-->
+    <string name="ime_cursor_longpress_action_title">Navigation bar IME cursor longpress action</string>
+    <string name="ime_cursor_longpress_action_summary">Switch between UP/DOWN and HOME/END as longpress action for navigation bar IME cursors</string>
+    <string name="ime_navigation_up_down">up / down</string>
+    <string name="ime_navigation_home_end">home / end</string>
 </resources>
