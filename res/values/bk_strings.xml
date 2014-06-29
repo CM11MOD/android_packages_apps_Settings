@@ -965,9 +965,9 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="recents_style_title">Recents layout switcher</string>
     <string name="recents_style_summary">Switch between aosp and Slim style</string>
     <string name="recents_style_aosp">AOSP</string>
-    <string name="recents_style_aosp_mod">AOSP mod</string>
-    <string name="recents_style_aosp_large">HTC VIEW</string>
-    <string name="recents_style_aosb">AOSB mod</string>
+    <string name="recents_style_aosp_mod">AOSP (mod)</string>
+    <string name="recents_style_aosp_large">HTC Reflection View</string>
+    <string name="recents_style_aosb">HTC Reflection View (mod)</string>
     <string name="recents_style_slim">Slim recents panel</string>
     <string name="recents_style_omni">OmniSwitch</string>
     <string name="omniswitch_warning_title">Warning</string>
