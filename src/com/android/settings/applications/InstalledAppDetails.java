@@ -150,6 +150,7 @@ public class InstalledAppDetails extends Fragment
     private Button mBlacklistButton;
     private CompoundButton mNotificationSwitch;
     private CompoundButton mPrivacyGuardSwitch;
+    private CompoundButton mHeadsUpSwitch;
 
     private PackageMoveObserver mPackageMoveObserver;
     private AppOpsManager mAppOps;
@@ -483,6 +484,17 @@ public class InstalledAppDetails extends Fragment
         }
     }
 
+    private void initHeadsUpButton() {
+        boolean enabled = mPm.getHeadsUpSetting(mAppEntry.info.packageName);
+        mHeadsUpSwitch.setChecked(enabled);
+        if (isThisASystemPackage() || !mNotificationSwitch.isChecked()) {
+            mHeadsUpSwitch.setEnabled(false);
+        } else {
+            mHeadsUpSwitch.setEnabled(true);
+            mHeadsUpSwitch.setOnCheckedChangeListener(this);
+        }
+    }
+
     private void initPrivacyGuardButton() {
         if (mPrivacyGuardSwitch == null) {
             return;
@@ -578,6 +590,7 @@ public class InstalledAppDetails extends Fragment
         mEnableCompatibilityCB = (CheckBox)view.findViewById(R.id.enable_compatibility_cb);
         
         mNotificationSwitch = (CompoundButton) view.findViewById(R.id.notification_switch);
+        mHeadsUpSwitch = (CompoundButton) view.findViewById(R.id.heads_up_switch);
         mPrivacyGuardSwitch = (CompoundButton) view.findViewById(R.id.privacy_guard_switch);
 
         mBlacklistDialogView = inflater.inflate(R.layout.blacklist_dialog, null);
@@ -1037,6 +1050,7 @@ public class InstalledAppDetails extends Fragment
         // only setup the privacy guard setting if we didn't get uninstalled
         if (!mMoveInProgress) {
             initPrivacyGuardButton();
+            initHeadsUpButton();
         }
 
         return true;
@@ -1365,6 +1379,10 @@ public class InstalledAppDetails extends Fragment
                         new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                            // Give access to heads up check box.
+                            if (getOwner().mHeadsUpSwitch != null) {
+                                getOwner().mHeadsUpSwitch.setEnabled(true);
+                            }
                         }
                     })
                     .create();
@@ -1538,8 +1556,14 @@ public class InstalledAppDetails extends Fragment
         try {
             final boolean enable = mNotificationSwitch.isChecked();
             mNotificationManager.setNotificationsEnabledForPackage(mAppEntry.info.packageName, mAppEntry.info.uid, enabled);
+            if (mHeadsUpSwitch != null) {
+                mHeadsUpSwitch.setEnabled(enable);
+            }
         } catch (android.os.RemoteException ex) {
             mNotificationSwitch.setChecked(!enabled); // revert
+            if (mHeadsUpSwitch != null) {
+                mHeadsUpSwitch.setEnabled(!enabled);
+            }
         }
     }
 
@@ -1703,6 +1727,8 @@ public class InstalledAppDetails extends Fragment
             } else {
                 setNotificationsEnabled(true);
             }
+        } else if (buttonView == mHeadsUpSwitch) {
+            mPm.setHeadsUpSetting(packageName, isChecked);
         } else if (buttonView == mPrivacyGuardSwitch) {
             if (isChecked) {
                 showDialogInner(DLG_PRIVACY_GUARD, 0);
