@@ -319,9 +319,6 @@ public class Settings extends PreferenceActivity
 
         startPopulatingSearchData();
 
-        mActionBar = getActionBar();
-        mActionBar.setDisplayShowCustomEnabled(true);
-
         mAuthenticatorHelper = new AuthenticatorHelper();
         mAuthenticatorHelper.updateAuthDescriptions(this);
         mAuthenticatorHelper.onAccountsUpdated(this, null);
@@ -370,6 +367,9 @@ public class Settings extends PreferenceActivity
                 actionBar.setHomeButtonEnabled(false);
             }
         }
+
+        mActionBar = getActionBar();
+        mActionBar.setDisplayShowCustomEnabled(true);
     }
 
     @Override
