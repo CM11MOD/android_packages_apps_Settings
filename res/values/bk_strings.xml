@@ -1401,6 +1401,9 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="hover_long_fadeout_7seconds">7 seconds</string>
     <string name="hover_long_fadeout_10seconds">10 seconds</string>
     <string name="hover_long_fadeout_15seconds">15 seconds</string>
+    <!-- Hover no notif in insecure lockscreen -->
+    <string name="hover_exclude_from_insecure_lock_screen_title">Exclude insecure lockscreen</string>
+    <string name="hover_exclude_from_insecure_lock_screen_summary">Check to exclude hover notifications from insecure lockscreen</string>
 
     <!-- Button backlight mode -->
     <string name="button_backlight_mode">Button Backlight</string>

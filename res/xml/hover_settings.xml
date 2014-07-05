@@ -67,4 +67,10 @@
         android:dependency="hover_enabled"
         android:defaultValue="false" />
 
+    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+        android:key="hover_exclude_from_insecure_lock_screen"
+        android:title="@string/hover_exclude_from_insecure_lock_screen_title"
+        android:summary="@string/hover_exclude_from_insecure_lock_screen_summary"
+        android:defaultValue="false" />
+
 </PreferenceScreen>
