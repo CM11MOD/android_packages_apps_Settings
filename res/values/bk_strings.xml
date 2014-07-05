@@ -1412,4 +1412,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="button_backlight_on">On</string>
     <string name="button_backlight_force_off">Force Off</string>
     <string name="button_backlight_force_on">Force On</string>
+
+    <!-- Swipe to float for notification and recents-->
+    <string name="notification_swipe_title">Notification swipe</string>
+    <string name="notification_swipe_summary">Swipe left to launch notification in floating window.</string>
+    <string name="recents_swipe_title">Recents swipe</string>
+    <string name="recents_swipe_summary">Swipe left/down in recents panel to launch in floating window.</string>
 </resources>

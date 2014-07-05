@@ -72,6 +72,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
     private static final String BUBBLE_MODE = "bubble_mode";
+    private static final String PREF_RECENTS_SWIPE_FLOATING = "recents_swipe";
 
     public static final String OMNISWITCH_PACKAGE_NAME = "org.omnirom.omniswitch";
 
@@ -89,6 +90,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private ListPreference mRecentPanelExpandedMode;
     private ListPreference mBubbleMode;
     private CheckBoxPreference mMultiPane;
+    private CheckBoxPreference mRecentsSwipe;
 
     private Preference mRamBar;
 
@@ -159,6 +161,12 @@ public class UserInterface extends SettingsPreferenceFragment implements
         mBubbleMode.setSummary(mBubbleMode.getEntry());
         mBubbleMode.setOnPreferenceChangeListener(this);
 
+        // Recents swipe
+        mRecentsSwipe = (CheckBoxPreference) prefSet.findPreference(PREF_RECENTS_SWIPE_FLOATING);
+        mRecentsSwipe.setOnPreferenceChangeListener(this);
+        mRecentsSwipe.setChecked((Settings.System.getInt(resolver,
+                Settings.System.RECENTS_SWIPE_FLOATING, 0) == 1));
+
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setOnPreferenceChangeListener(this);
         mUseAltResolver.setChecked(Settings.System.getInt(resolver,
@@ -219,6 +227,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelScale.setEnabled(false);
                 mRecentPanelExpandedMode.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
+                mRecentsSwipe.setEnabled(true);
                 break;
             case 1:
                 mRecentClearAll.setEnabled(false);
@@ -227,6 +236,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelScale.setEnabled(true);
                 mRecentPanelExpandedMode.setEnabled(true);
                 mRecentsShowTopmost.setEnabled(true);
+                mRecentsSwipe.setEnabled(false);
                 break;
             case 2:
                 if (!isOmniSwitchInstalled()) return;
@@ -236,6 +246,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelScale.setEnabled(false);
                 mRecentPanelExpandedMode.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
+                mRecentsSwipe.setEnabled(false);
                 break;
         }
     }
@@ -294,6 +305,10 @@ public class UserInterface extends SettingsPreferenceFragment implements
         } else if (preference == mRecentClearAllPosition) {
             String value = (String) newValue;
             Settings.System.putString(resolver, Settings.System.CLEAR_RECENTS_BUTTON_LOCATION, value);
+        } else if (preference == mRecentsSwipe) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.RECENTS_SWIPE_FLOATING, value ? 1 : 0);
         } else if (preference == mUseAltResolver) {
             boolean value = (Boolean) newValue;
 			Settings.System.putInt(resolver, Settings.System.ACTIVITY_RESOLVER_USE_ALT, value ? 1 : 0);

@@ -124,6 +124,12 @@
             android:summary="@string/summary_collapse_panel"
             android:defaultValue="false" />
 
+        <CheckBoxPreference
+            android:key="notification_swipe"
+            android:title="@string/notification_swipe_title"
+            android:summary="@string/notification_swipe_summary"
+            android:defaultValue="false" />
+
     <PreferenceCategory
         android:title="@string/noti_reminder_category" />
 
