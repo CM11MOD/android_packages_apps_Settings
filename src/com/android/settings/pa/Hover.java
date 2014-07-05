@@ -45,6 +45,11 @@ import com.android.settings.util.Helpers;
 public class Hover extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
+    private static final String TAG = "HoverSettings";
+    private static final String PREF_HOVER_LONG_FADE_OUT_DELAY = "hover_long_fade_out_delay";
+
+    ListPreference mHoverLongFadeOutDelay;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,13 @@ public class Hover extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.hover_settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        mHoverLongFadeOutDelay = (ListPreference) prefSet.findPreference(PREF_HOVER_LONG_FADE_OUT_DELAY);
+        int hoverLongFadeOutDelay = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.SHOW_HOVER_TIME, 5000, UserHandle.USER_CURRENT);
+        mHoverLongFadeOutDelay.setValue(String.valueOf(hoverLongFadeOutDelay));
+        mHoverLongFadeOutDelay.setSummary(mHoverLongFadeOutDelay.getEntry());
+        mHoverLongFadeOutDelay.setOnPreferenceChangeListener(this);
 
         //
 
@@ -75,7 +87,16 @@ public class Hover extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        return true;
+        if (preference == mHoverLongFadeOutDelay) {
+            int index = mHoverLongFadeOutDelay.findIndexOfValue((String) newValue);
+            int hoverLongFadeOutDelay = Integer.valueOf((String) newValue);
+            Settings.System.putIntForUser(getContentResolver(),
+                Settings.System.SHOW_HOVER_TIME,
+                    hoverLongFadeOutDelay, UserHandle.USER_CURRENT);
+            mHoverLongFadeOutDelay.setSummary(mHoverLongFadeOutDelay.getEntries()[index]);
+            return true;
+        }
+        return false;
     }
 
     @Override
