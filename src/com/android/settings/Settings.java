@@ -38,12 +38,9 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
-import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -178,8 +175,6 @@ public class Settings extends PreferenceActivity
 
     private boolean mAttached;
 
-    private SettingsSearchFilterAdapter mSearchAdapter;
-
     // Show only these settings for restricted users
     private int[] SETTINGS_FOR_RESTRICTED = {
             R.id.wireless_section,
@@ -277,8 +272,6 @@ public class Settings extends PreferenceActivity
             }
         });
 
-        new PopulateSearchSettingsTask().execute();
-
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         mSearchBar.setLayoutParams(layout);
@@ -286,35 +279,10 @@ public class Settings extends PreferenceActivity
         mSearchBar.setThreshold(1);
         mSearchBar.setSingleLine(true);
         mSearchBar.setOnItemClickListener(this);
+        mSearchBar.setAdapter(new SettingsSearchFilterAdapter(this));
 
         mSearchItem.setVisible(!mDisableSearchIcon);
         return true;
-    }
-
-    private class PopulateSearchSettingsTask extends
-            AsyncTask<Void, Void, ArrayList<SearchInfo>> {
-        @Override
-        protected ArrayList<SearchInfo> doInBackground(Void... param) {
-            return SearchPopulator.loadSearchData(Settings.this);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<SearchInfo> infos) {
-            mSearchAdapter = new SettingsSearchFilterAdapter(Settings.this,
-                    R.layout.settings_search_complete_view, infos);
-            mSearchBar.setAdapter(mSearchAdapter);
-        }
-    };
-
-    private class SearchNotifier extends ResultReceiver {
-        public SearchNotifier(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            new PopulateSearchSettingsTask().execute();
-        }
     }
 
     @Override
@@ -326,8 +294,6 @@ public class Settings extends PreferenceActivity
         if (getIntent().hasExtra(EXTRA_DISABLE_SEARCH)) {
             mDisableSearchIcon = getIntent().getBooleanExtra(EXTRA_DISABLE_SEARCH, false);
         }
-
-        startPopulatingSearchData();
 
         mAuthenticatorHelper = new AuthenticatorHelper();
         mAuthenticatorHelper.updateAuthDescriptions(this);
@@ -639,12 +605,6 @@ public class Settings extends PreferenceActivity
                 }
             }
         }
-    }
-
-    private void startPopulatingSearchData() {
-        Intent i = new Intent(this, SearchPopulator.class);
-        i.putExtra(SearchPopulator.EXTRA_NOTIFIER, new SearchNotifier(new Handler()));
-        startService(i);
     }
 
     @Override
