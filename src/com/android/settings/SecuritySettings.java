@@ -412,9 +412,6 @@ public class SecuritySettings extends RestrictedSettingsFragment
         mLockBeforeUnlock.setOnPreferenceChangeListener(this);
     }
 
-        // Append the rest of the settings
-        addPreferencesFromResource(R.xml.security_settings_misc);
-
         // Do not display SIM lock for devices without an Icc card
         TelephonyManager tm = TelephonyManager.getDefault();
         if (!mIsPrimary || !tm.hasIccCard()) {
@@ -474,8 +471,6 @@ public class SecuritySettings extends RestrictedSettingsFragment
             }
         }
 
-        // App security settings
-        addPreferencesFromResource(R.xml.security_settings_app_cyanogenmod);
         mSmsSecurityCheck = (ListPreference) root.findPreference(KEY_SMS_SECURITY_CHECK_PREF);
 
         // Determine options based on device telephony support
