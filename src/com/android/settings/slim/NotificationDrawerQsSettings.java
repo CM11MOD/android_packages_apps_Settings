@@ -91,14 +91,12 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
     private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
     private static final String CLOCK_SHORTCUT = "clock_shortcut";
     private static final String CALENDAR_SHORTCUT = "calendar_shortcut";
-    private static final String PREF_NOTIFICAITION_SWIPE = "notification_swipe";
 
     private PreferenceScreen mPhoneDrawer;
     private PreferenceScreen mTabletDrawer;
 
     ListPreference mHideLabels;
     SeekBarPreference mNotificationAlpha;
-    CheckBoxPreference mNotificationSwipe;
     CheckBoxPreference mReminder;
     ListPreference mReminderInterval;
     ListPreference mReminderMode;
@@ -226,12 +224,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
                 Settings.System.QS_COLLAPSE_PANEL, 0) == 1);
         mCollapsePanel.setOnPreferenceChangeListener(this);
 
-        // Notification swipe
-        mNotificationSwipe = (CheckBoxPreference) findPreference(PREF_NOTIFICAITION_SWIPE);
-        mNotificationSwipe.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_NOTIFICATION_SWIPE_FLOATING, 0) == 1));
-        mNotificationSwipe.setOnPreferenceChangeListener(this);
-
         mClockShortcut = (AppSelectListPreference)prefs.findPreference(CLOCK_SHORTCUT);
         mClockShortcut.setOnPreferenceChangeListener(this);
 
@@ -328,10 +320,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
                     Settings.System.QS_COLLAPSE_PANEL,
                     (Boolean) newValue ? 1 : 0);
             return true;
-        } else if (preference == mNotificationSwipe) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_NOTIFICATION_SWIPE_FLOATING,
-                    (Boolean) newValue ? 1 : 0);
         } else if (preference == mHeadsUpSnoozeTime) {
             int headsUpSnoozeTime = Integer.valueOf((String) newValue);
             Settings.System.putInt(getContentResolver(),

@@ -155,8 +155,8 @@
             android:summary="@string/summary_collapse_panel"
             android:defaultValue="false" />
 
-        <CheckBoxPreference
-            android:key="notification_swipe"
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="status_bar_notification_swipe_floating"
             android:title="@string/notification_swipe_title"
             android:summary="@string/notification_swipe_summary"
             android:defaultValue="false" />

@@ -164,8 +164,8 @@ public class UserInterface extends SettingsPreferenceFragment implements
         // Recents swipe
         mRecentsSwipe = (CheckBoxPreference) prefSet.findPreference(PREF_RECENTS_SWIPE_FLOATING);
         mRecentsSwipe.setOnPreferenceChangeListener(this);
-        mRecentsSwipe.setChecked((Settings.System.getInt(resolver,
-                Settings.System.RECENTS_SWIPE_FLOATING, 0) == 1));
+        mRecentsSwipe.setChecked(Settings.System.getInt(resolver,
+                Settings.System.RECENTS_SWIPE_FLOATING, 0) == 1);
 
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setOnPreferenceChangeListener(this);
