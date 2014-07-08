@@ -1438,4 +1438,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="ime_cursor_longpress_action_summary">Switch between UP/DOWN and HOME/END as longpress action for navigation bar IME cursors</string>
     <string name="ime_navigation_up_down">up / down</string>
     <string name="ime_navigation_home_end">home / end</string>
+
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Proximity wake-up</string>
+    <string name="proximity_wake_summary">Use proximity sensor to help decide whether to wake device up</string>
 </resources>
