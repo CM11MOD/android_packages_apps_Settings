@@ -376,7 +376,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         }
 
         if (mTapToWake != null) {
-            mTapToWake.setChecked(TapToWake.isEnabled());
+            final SharedPreferences prefs =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+            mTapToWake.setChecked(prefs.getBoolean(KEY_TAP_TO_WAKE, true));
         }
 
         updateDisplayRotationPreferenceDescription();
@@ -522,6 +524,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mColorEnhancement) {
             return ColorEnhancement.setEnabled(mColorEnhancement.isChecked());
         } else if (preference == mTapToWake) {
+            final SharedPreferences prefs =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+            prefs.edit().putBoolean(KEY_TAP_TO_WAKE, mTapToWake.isChecked()).commit();
             return TapToWake.setEnabled(mTapToWake.isChecked());
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
