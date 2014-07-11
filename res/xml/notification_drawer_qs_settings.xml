@@ -73,12 +73,6 @@
         android:fragment="com.android.settings.aokp.Weather"
         android:title="@string/title_weather"/>
 
-    <!-- Weather -->
-    <PreferenceScreen
-        android:key="@+id/aicp_weather"
-        android:title="@string/weather_settings_title"
-        android:fragment="com.android.settings.aicp.Weather" />
-
      <Preference
          android:fragment="com.android.settings.slim.NotificationDrawerStyle"
          android:key="notification_style"
