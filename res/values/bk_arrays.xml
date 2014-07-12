@@ -395,15 +395,21 @@
     </string-array>
 
     <string-array name="weather_statusbar_location_entries" translatable="false">
-        <item>@string/above_carrier_text</item>
-        <item>@string/weather_panel</item>
         <item>@string/disabled</item>
+        <item>@string/above_carrier_text</item>
+        <item>@string/weather_header_title</item>
+        <item>@string/weather_panel</item>
+        <item>@string/weather_notification_title</item>
+        <item>@string/weather_both_aicp_view</item>
     </string-array>
 
     <string-array name="weather_statusbar_location_values" translatable="false">
         <item>0</item>
         <item>1</item>
+        <item>3</item>
         <item>2</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string-array name="weather_action_entries" translatable="false">

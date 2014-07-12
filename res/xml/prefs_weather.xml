@@ -7,15 +7,25 @@
         android:summary="@string/weather_enable_summary" />
 
     <ListPreference
+        android:key="statusbar_location"
         android:entries="@array/weather_statusbar_location_entries"
         android:entryValues="@array/weather_statusbar_location_values"
-        android:dependency="enable_weather"
-        android:key="statusbar_location"
         android:title="@string/weather_statusbar_style" />
+
+    <PreferenceCategory
+        android:key="aicp_weather_panel"
+        android:title="@string/weather_settings_title"/>
+
+    <PreferenceScreen
+        android:key="weather_start"
+        android:title="@string/weather_settings_title" />
+
+    <PreferenceCategory
+        android:key="aokp_weather_panel"
+        android:title="@string/weather_panel"/>
 
     <CheckBoxPreference
         android:key="use_custom_location"
-        android:dependency="enable_weather"
         android:title="@string/weather_use_custom_location"
         android:summary="@string/weather_use_custom_location_summary" />
 
@@ -28,15 +38,13 @@
 
     <CheckBoxPreference
         android:key="use_celcius"
-        android:dependency="enable_weather"
         android:title="@string/weather_use_celcius"
         android:summary="@string/weather_use_celcius_summary" />
 
     <ListPreference
+        android:key="refresh_interval"
         android:entries="@array/weather_interval_entries"
         android:entryValues="@array/weather_interval_values"
-        android:dependency="enable_weather"
-        android:key="refresh_interval"
         android:title="@string/weather_refresh_interval" />
 
 </PreferenceScreen>

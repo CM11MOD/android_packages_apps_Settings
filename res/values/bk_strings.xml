@@ -652,6 +652,13 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Forecase unavailable -->
     <string name="weather_3200"></string>
 
+    <!-- AICP weather panel -->
+    <string name="weather_settings_title">AICP weather panel</string>
+    <string name="weather_alert_title">Warning!</string>
+    <string name="weather_alert_message">Phone will now reboot\nto apply changes!</string>
+    <string name="weather_header_title">AICP Weather header</string>
+    <string name="weather_notification_title">Weather notification Panel</string>
+    <string name="weather_both_aicp_view">Both header and notificatiion panel</string>
 
     <!-- Gesture swipe navigation -->
     <string name="edge_swipe_title">Gesture navigation</string>

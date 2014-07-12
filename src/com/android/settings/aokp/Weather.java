@@ -5,21 +5,30 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +47,13 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
 
     public static final String TAG = "Weather";
 
+    private static final String WEATHER_START = "weather_start";
+    // Package name of the weather app
+    public static final String WEATHER_PACKAGE_NAME = "org.codefirex.cfxweather";
+    // Intent for launching the weather main actvity
+    public static Intent INTENT_WEATHER = new Intent(Intent.ACTION_MAIN)
+            .setClassName(WEATHER_PACKAGE_NAME, WEATHER_PACKAGE_NAME + ".WeatherActivity");
+
     SwitchPreference mEnableWeather;
     CheckBoxPreference mUseCustomLoc;
     CheckBoxPreference mUseCelcius;
@@ -48,6 +64,8 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
     private ShortcutPickerHelper mPicker;
     private Preference mPreference;
     private String mString;
+    private Preference mWeather;
+    private Context Context;
 
     SharedPreferences prefs;
 
@@ -58,8 +76,12 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_weather);
         addPreferencesFromResource(R.xml.prefs_weather);
+        PreferenceScreen prefSet = getPreferenceScreen();
 
         prefs = getActivity().getSharedPreferences("weather", Context.MODE_WORLD_WRITEABLE);
+
+        mWeather = (Preference)
+                prefSet.findPreference(WEATHER_START);
 
         mWeatherSyncInterval = (ListPreference) findPreference("refresh_interval");
         mWeatherSyncInterval.setOnPreferenceChangeListener(this);
@@ -69,7 +91,7 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
         mStatusBarLocation = (ListPreference) findPreference("statusbar_location");
         mStatusBarLocation.setOnPreferenceChangeListener(this);
         mStatusBarLocation.setValue(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUSBAR_WEATHER_STYLE, 2) + "");
+                Settings.System.STATUSBAR_WEATHER_STYLE, 0) + "");
 
         mCustomWeatherLoc = (EditTextPreference) findPreference("custom_location");
         mCustomWeatherLoc.setOnPreferenceChangeListener(this);
@@ -88,13 +110,25 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
         mUseCelcius.setChecked(WeatherPrefs.getUseCelcius(mContext));
 
         setHasOptionsMenu(true);
+        update();
 
         if (!Settings.Secure.isLocationProviderEnabled(
                 getContentResolver(), LocationManager.NETWORK_PROVIDER)
                 && !mUseCustomLoc.isChecked()) {
             showDialog(LOC_WARNING);
         }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        update();
+    }
+
+    @Override
+    public void onPause() {
+        update();
+        super.onPause();
     }
 
     @Override
@@ -125,6 +159,19 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
                                 }).create();
         }
         return null;
+    }
+
+    private void update() {
+        int statusbarloc = Settings.System.getInt(getContentResolver(),
+            Settings.System.STATUSBAR_WEATHER_STYLE, 0);
+
+        if (statusbarloc == 4 || statusbarloc == 5) {
+            Settings.System.putBoolean(getContentResolver(),
+                Settings.System.SYSTEMUI_WEATHER_NOTIFICATION, true);
+        } else {
+            Settings.System.putBoolean(getContentResolver(),
+                Settings.System.SYSTEMUI_WEATHER_NOTIFICATION, false);
+        }
     }
 
     @Override
@@ -159,6 +206,8 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
         } else if (preference == mUseCelcius) {
             return WeatherPrefs.setUseCelcius(mContext,
                     ((CheckBoxPreference) preference).isChecked());
+        } else if (preference == mWeather) {
+            startActivity(INTENT_WEATHER);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -187,18 +236,14 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
             } else {
                 getActivity().startService(i);
             }
-
             return true;
-
         } else if (preference == mWeatherSyncInterval) {
             int newVal = Integer.parseInt((String) newValue);
             preference.setSummary(newValue
                     + getResources().getString(R.string.weather_refresh_interval_minutes));
-
             return WeatherPrefs.setRefreshInterval(mContext, newVal);
 
         } else if (preference == mCustomWeatherLoc) {
-
             String newVal = (String) newValue;
 
             Intent i = new Intent(getActivity().getApplicationContext(),
@@ -208,14 +253,16 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
             return WeatherPrefs.setCustomLocation(mContext, newVal);
 
          } else if (preference == mStatusBarLocation) {
-
-             String newVal = (String) newValue;
-             return Settings.System.putInt(getActivity().getContentResolver(),
+            String newVal = (String) newValue;
+                Settings.System.putInt(getActivity().getContentResolver(),
                      Settings.System.STATUSBAR_WEATHER_STYLE,
                      Integer.parseInt(newVal));
 
+            update();
+            Helpers.restartSystemUI();
+
+            return true;
          }
          return false;
     }
-
 }
