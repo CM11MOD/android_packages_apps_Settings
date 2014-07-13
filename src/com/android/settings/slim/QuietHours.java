@@ -63,6 +63,7 @@ public class QuietHours extends SettingsPreferenceFragment implements
     private static final String KEY_QUIET_HOURS_STILL = "quiet_hours_still";
     private static final String KEY_QUIET_HOURS_DIM = "quiet_hours_dim";
     private static final String KEY_QUIET_HOURS_HAPTIC = "quiet_hours_haptic";
+    private static final String KEY_QUIET_HOURS_SYSTEM = "quiet_hours_system";
     private static final CharSequence KEY_QUIET_HOURS_RINGER = "quiet_hours_ringer";
     private static final String KEY_LOOP_BYPASS_RINGTONE = "loop_bypass_ringtone";
     private static final String KEY_AUTO_SMS = "auto_sms";
@@ -84,6 +85,7 @@ public class QuietHours extends SettingsPreferenceFragment implements
     private CheckBoxPreference mQuietHoursStill;
     private CheckBoxPreference mQuietHoursDim;
     private CheckBoxPreference mQuietHoursHaptic;
+    private CheckBoxPreference mQuietHoursSystem;
     private CheckBoxPreference mRingtoneLoop;
     private ListPreference mAutoEnable;
     private ListPreference mAutoSms;
@@ -136,6 +138,8 @@ public class QuietHours extends SettingsPreferenceFragment implements
                 (CheckBoxPreference) prefSet.findPreference(KEY_QUIET_HOURS_STILL);
             mQuietHoursHaptic =
                 (CheckBoxPreference) prefSet.findPreference(KEY_QUIET_HOURS_HAPTIC);
+            mQuietHoursSystem =
+                (CheckBoxPreference) prefSet.findPreference(KEY_QUIET_HOURS_SYSTEM);
             mQuietHoursDim =
                 (CheckBoxPreference) findPreference(KEY_QUIET_HOURS_DIM);
             mRingtoneLoop =
@@ -181,6 +185,9 @@ public class QuietHours extends SettingsPreferenceFragment implements
                     Settings.System.QUIET_HOURS_HAPTIC, 0);
             mQuietHoursHaptic.setChecked(hapticMode == 1 || hapticMode == 2);
             mQuietHoursHaptic.setOnPreferenceChangeListener(this);
+            final int systemMode = Settings.System.getInt(resolver,
+                    Settings.System.QUIET_HOURS_SYSTEM, 0);
+            mQuietHoursSystem.setChecked(systemMode == 1 || systemMode == 2);
             mRingtoneLoop.setOnPreferenceChangeListener(this);
             mAutoEnable.setValue(mPrefs.getString(KEY_QUIET_HOURS_AUTO, "0"));
             mAutoEnable.setOnPreferenceChangeListener(this);
@@ -342,6 +349,11 @@ public class QuietHours extends SettingsPreferenceFragment implements
                     (Boolean) newValue ? mPrefsMode : 0);
             QuietHoursController.getInstance(mContext).checkModes();
             return true;
+        } else if (preference == mQuietHoursSystem) {
+            Settings.System.putInt(resolver, Settings.System.QUIET_HOURS_SYSTEM,
+                    (Boolean) newValue ? mPrefsMode : 0);
+            QuietHoursController.getInstance(mContext).checkModes();
+            return true;
         } else if (preference == mRingtoneLoop) {
             mRingtoneLoop.setSummary((Boolean) newValue
                     ? R.string.quiet_hours_bypass_ringtone_loop_summary_on
@@ -417,6 +429,7 @@ public class QuietHours extends SettingsPreferenceFragment implements
         mQuietHoursStill.setEnabled(enabled);
         mQuietHoursDim.setEnabled(enabled);
         mQuietHoursHaptic.setEnabled(enabled);
+        mQuietHoursSystem.setEnabled(enabled);
         mRingtoneLoop.setEnabled(enabled);
         mAutoSms.setEnabled(enabled);
         mAutoSmsCall.setEnabled(enabled);
