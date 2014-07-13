@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.ServiceManager;
+import android.provider.Settings;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -54,12 +55,15 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
     public static Intent INTENT_WEATHER = new Intent(Intent.ACTION_MAIN)
             .setClassName(WEATHER_PACKAGE_NAME, WEATHER_PACKAGE_NAME + ".WeatherActivity");
 
+    private static final String PREF_SYSTEMUI_WEATHER_ICON = "cfx_weather_icon";
+
     SwitchPreference mEnableWeather;
     CheckBoxPreference mUseCustomLoc;
     CheckBoxPreference mUseCelcius;
     ListPreference mStatusBarLocation;
     ListPreference mWeatherSyncInterval;
     EditTextPreference mCustomWeatherLoc;
+    CheckBoxPreference mWeatherIcon;
 
     private ShortcutPickerHelper mPicker;
     private Preference mPreference;
@@ -108,6 +112,12 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
 
         mUseCelcius = (CheckBoxPreference) findPreference(WeatherPrefs.KEY_USE_CELCIUS);
         mUseCelcius.setChecked(WeatherPrefs.getUseCelcius(mContext));
+
+        boolean enableWeatherIcon = Settings.System.getBoolean(getContentResolver(),
+                Settings.System.SYSTEMUI_WEATHER_ICON, false);
+        mWeatherIcon = (CheckBoxPreference) findPreference(PREF_SYSTEMUI_WEATHER_ICON);
+        mWeatherIcon.setChecked(enableWeatherIcon);
+        mWeatherIcon.setOnPreferenceChangeListener(this);
 
         setHasOptionsMenu(true);
         update();
@@ -260,7 +270,13 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
 
             update();
             Helpers.restartSystemUI();
-
+            return true;
+        } else if (preference == mWeatherIcon) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.SYSTEMUI_WEATHER_ICON,
+                value ? 1 : 0);
+            Helpers.restartSystemUI();
             return true;
          }
          return false;

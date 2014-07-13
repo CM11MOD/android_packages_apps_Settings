@@ -659,6 +659,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="weather_header_title">AICP Weather header</string>
     <string name="weather_notification_title">Weather notification Panel</string>
     <string name="weather_both_aicp_view">Both header and notificatiion panel</string>
+    <string name="weather_icon_title">Weather statusbar icon</string>
+    <string name="weather_icon_summary">Hide weather icon in statusbar.</string>
 
     <!-- Gesture swipe navigation -->
     <string name="edge_swipe_title">Gesture navigation</string>
