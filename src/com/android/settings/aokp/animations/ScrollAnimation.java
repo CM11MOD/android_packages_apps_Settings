@@ -54,6 +54,7 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
     private static final String OVERSCROLL_GLOW_COLOR = "overscroll_glow_color";
     private static final String OVERSCROLL_PREF = "overscroll_effect";
     private static final String OVERSCROLL_WEIGHT_PREF = "overscroll_weight";
+    private static final String TOUCH_SLOP = "touch_slop";
 
     private static final int MENU_RESET = Menu.FIRST;
 
@@ -61,6 +62,7 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
     private SeekBarPreference2 mAnimationScroll;
     private SeekBarPreference2 mAnimationOverScroll;
     private SeekBarPreference2 mAnimationOverFling;
+    private SeekBarPreference2 mTouchSlop;
     private SwitchPreference mAnimNoScroll;
     private ListPreference mOverscrollPref;
     private ListPreference mOverscrollWeightPref;
@@ -91,6 +93,12 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
         mAnimationFling = (SeekBarPreference2) findPreference(ANIMATION_FLING_VELOCITY);
         mAnimationFling.setValue(defaultFling);
         mAnimationFling.setOnPreferenceChangeListener(this);
+
+        int defaultSlop = Settings.System.getInt(resolver,
+                Settings.System.CUSTOM_TOUCH_SLOP, ViewConfiguration.DEFAULT_TOUCH_SLOP);
+        mTouchSlop = (SeekBarPreference2) findPreference(TOUCH_SLOP);
+        mTouchSlop.setValue(defaultSlop);
+        mTouchSlop.setOnPreferenceChangeListener(this);
 
         int defaultOverScroll = Settings.System.getInt(resolver,
                 Settings.System.CUSTOM_OVERSCROLL_DISTANCE, ViewConfiguration.DEFAULT_OVERSCROLL_DISTANCE);
@@ -161,6 +169,7 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
 
     private void resetAllValues() {
         mAnimationFling.setValue(ViewConfiguration.DEFAULT_MAXIMUM_FLING_VELOCITY);
+        mTouchSlop.setValue(ViewConfiguration.DEFAULT_TOUCH_SLOP);
         mAnimationScroll.setValue((int) (ViewConfiguration.DEFAULT_SCROLL_FRICTION * MULTIPLIER_SCROLL_FRICTION));
         mAnimationOverScroll.setValue(ViewConfiguration.DEFAULT_OVERSCROLL_DISTANCE);
         mAnimationOverFling.setValue(ViewConfiguration.DEFAULT_OVERFLING_DISTANCE);
@@ -169,6 +178,7 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
 
     private void resetAllSettings() {
         setProperVal(mAnimationFling, ViewConfiguration.DEFAULT_MAXIMUM_FLING_VELOCITY);
+        setProperVal(mTouchSlop, ViewConfiguration.DEFAULT_TOUCH_SLOP);
         Settings.System.putFloat(getActivity().getContentResolver(),
                    Settings.System.CUSTOM_SCROLL_FRICTION, ViewConfiguration.DEFAULT_SCROLL_FRICTION);
         setProperVal(mAnimationOverScroll, ViewConfiguration.DEFAULT_OVERSCROLL_DISTANCE);
@@ -193,6 +203,11 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
                    Settings.System.CUSTOM_SCROLL_FRICTION,
                    ((float) (val / MULTIPLIER_SCROLL_FRICTION)));
         } else if (preference == mAnimationFling) {
+            int val = ((Integer)objValue).intValue();
+            Settings.System.putInt(resolver,
+                    Settings.System.CUSTOM_TOUCH_SLOP,
+                    val);
+        } else if (preference == mTouchSlop) {
             int val = ((Integer)objValue).intValue();
             Settings.System.putInt(resolver,
                     Settings.System.CUSTOM_FLING_VELOCITY,
@@ -249,6 +264,8 @@ public class ScrollAnimation extends SettingsPreferenceFragment implements
             mString = Settings.System.ANIMATION_CONTROLS_NO_SCROLL;
         } else if (preference == mAnimationFling) {
             mString = Settings.System.CUSTOM_FLING_VELOCITY;
+        } else if (preference == mTouchSlop) {
+			mString = Settings.System.CUSTOM_TOUCH_SLOP;
         } else if (preference == mAnimationOverScroll) {
             mString = Settings.System.CUSTOM_OVERSCROLL_DISTANCE;
         } else if (preference == mAnimationOverFling) {

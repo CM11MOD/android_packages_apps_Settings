@@ -1204,6 +1204,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="animation_scroll_friction_title">Scroll Friction</string>
     <string name="animation_overscroll_distance_title">Overscroll Distance</string>
     <string name="animation_overfling_distance_title">Overfling Distance</string>
+    <string name="animation_touchslop_title">Scrolling start threshold</string>
+    <string name="animation_touchslop_summary">Set scroll response</string>
     <string name="animation_duration_summary">Set duration</string>
     <string name="animation_no_scroll_title">Customizing scroll</string>
     <string name="animation_no_scroll_summary_on">Enabled</string>
