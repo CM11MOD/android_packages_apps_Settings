@@ -17,6 +17,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/lab_settings_title">
 
+    <PreferenceCategory
+        android:title="@string/navigation_settings_title"
+        android:key="navigation"/>
+
      <PreferenceScreen
         android:key="pie_settings"
         android:icon="@drawable/ic_settings_pie"
@@ -28,6 +32,10 @@
         android:fragment="com.android.settings.chameleonos.labs.gestureanywhere.GestureAnywhereSettings"
         android:icon="@drawable/ic_settings_gesture_anywhere"
         android:title="@string/gesture_anywhere_title" />
+
+    <PreferenceCategory
+        android:title="@string/notifications_category_title"
+        android:key="notifications"/>
 
     <!-- HALO -->
     <PreferenceScreen
@@ -41,6 +49,17 @@
         android:fragment="com.android.settings.pa.Hover"
         android:icon="@drawable/ic_settings_hover"
         android:title="@string/hover_enabled_title" />
+
+    <!-- HEADSUP -->
+    <Preference
+        android:key="heads_up_enabled"
+        android:icon="@drawable/ic_settings_headsup"
+        android:fragment="com.android.settings.headsup.HeadsUpSettings"
+        android:title="@string/category_heads_up"/>
+
+    <PreferenceCategory
+        android:title="@string/shortcut_settings_title"
+        android:key="shortcut"/>
 
     <PreferenceScreen
         android:key="app_sidebar"
@@ -65,10 +84,5 @@
         android:fragment="com.android.settings.slim.ShakeEvents"
         android:icon="@drawable/ic_settings_sync"
         android:title="@string/shake_events_title" />
-
-    <Preference
-        android:key="heads_up_enabled"
-        android:fragment="com.android.settings.headsup.HeadsUpSettings"
-        android:title="@string/category_heads_up"/>
 
 </PreferenceScreen>

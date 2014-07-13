@@ -24,6 +24,7 @@
     <string name="chronus_title">LockClock</string>
     <string name="device_settings_title">Device options</string>
     <string name="lockscreen_settings_title">Lockscreen</string>
+    <string name="shortcut_settings_title">Shortcuts</string>
 
     <!-- Active Display
     <string name="ad_settings_title">Active display</string>
