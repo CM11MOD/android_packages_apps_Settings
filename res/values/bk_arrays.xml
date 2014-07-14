@@ -21,6 +21,20 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <string-array name="active_notification_mode_entries" translatable="false">
+        <item>@string/pocket_mode_off</item>
+        <item>@string/ad_settings_title</item>
+        <item>@string/lockscreen_notifications_title</item>
+        <item>@string/notification_peek_title</item>
+    </string-array>
+
+    <string-array name="active_notification_mode_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <!-- Active Display -->
     <string-array name="ad_redisplay_entries" translatable="false">
         <item>@string/ad_redisplay_never</item>

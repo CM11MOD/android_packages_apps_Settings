@@ -770,6 +770,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="Lockscreen_notifications_header">Active notifications</string>
     <string name="lockscreen_notifications">Active notifications</string>
     <string name="excluded_apps_category">Excluded applications</string>
+    <string name="active_notification_mode_title">Notification Style</string>
+    <string name="active_notification_mode_summary">Choose lockscreen notification style to use</string>
 
     <!-- Lockscreen Notifications -->
     <string name="lockscreen_notifications_title">Lockscreen notifications</string>

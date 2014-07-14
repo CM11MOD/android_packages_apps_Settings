@@ -108,7 +108,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
         PreferenceScreen prefSet = getPreferenceScreen();
 
         boolean AmonAmarth = Settings.System.getInt(mResolver,
-                Settings.System.ENABLE_ACTIVE_DISPLAY, 0) == 1;
+                Settings.System.ACTIVE_NOTIFICATIONS_MODE, 0) == 1;
 
         mBypassPref = (CheckBoxPreference) prefSet.findPreference(KEY_BYPASS_CONTENT);
         mProximityThreshold = (ListPreference) prefSet.findPreference(KEY_THRESHOLD);
