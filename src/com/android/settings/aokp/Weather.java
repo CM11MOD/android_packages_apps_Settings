@@ -269,7 +269,7 @@ public class Weather extends AOKPPreferenceFragment implements OnPreferenceChang
                      Integer.parseInt(newVal));
 
             update();
-            Helpers.restartSystemUI();
+            //Helpers.restartSystemUI();
             return true;
         } else if (preference == mWeatherIcon) {
             boolean value = (Boolean) newValue;
