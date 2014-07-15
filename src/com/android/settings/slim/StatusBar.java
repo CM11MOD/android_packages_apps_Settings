@@ -130,7 +130,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mStatusbarSliderPreference = (CheckBoxPreference) findPreference(STATUS_BAR_BRIGHTNESS);
         mStatusbarSliderPreference.setChecked((Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, 0) == 1));
+                Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1));
 
         mStatusBarCarrier = (CheckBoxPreference) findPreference(STATUS_BAR_CARRIER);
         mStatusBarCarrier.setChecked((Settings.System.getInt(resolver,
@@ -262,7 +262,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         final ContentResolver resolver = getActivity().getContentResolver();
         if (preference == mStatusbarSliderPreference) {
             Settings.System.putInt(resolver,
-                    Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, mStatusbarSliderPreference.isChecked() ? 1 : 0);
+                    Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, mStatusbarSliderPreference.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mStatusBarCarrier) {
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_CARRIER, mStatusBarCarrier.isChecked() ? 1 : 0);
