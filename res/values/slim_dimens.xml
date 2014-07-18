@@ -28,4 +28,9 @@
     <dimen name="normal_height">64dip</dimen>
     <!-- height of an expanded list item in edit playlist mode -->
     <dimen name="expanded_height">128dip</dimen>
+
+    <!-- Width of the sliding KeyguardSecurityContainer (includes 2x keyguard_security_view_margin) -->
+    <dimen name="pa_security_width">320dp</dimen>
+    <!-- Height of the sliding KeyguardSecurityContainer (includes 2x keyguard_security_view_margin) -->
+    <dimen name="pa_security_height">400dp</dimen>
 </resources>
