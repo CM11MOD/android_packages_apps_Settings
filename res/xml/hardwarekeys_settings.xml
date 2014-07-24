@@ -88,6 +88,12 @@
                 android:key="keys_home_double_tap"
                 android:title="@string/keys_action_double"
                 android:dependency="enable_hardware_rebind" />
+
+            <CheckBoxPreference
+                android:key="home_wake_screen"
+                android:title="@string/home_wake_title"
+                android:summary="@string/home_wake_summary"
+                android:defaultValue="true" />
         </PreferenceCategory>
 
         <PreferenceCategory

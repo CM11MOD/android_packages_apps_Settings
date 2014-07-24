@@ -90,6 +90,7 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private static final String KEYS_APP_SWITCH_DOUBLE_TAP = "keys_app_switch_double_tap";
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String FAST_TORCH = "enable_fast_torch";
+    private static final String KEYS_HOME_WAKE = "home_wake_screen";
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
     private static final String KEY_BUTTON_BACKLIGHT_MODE = "button_backlight_mode";
@@ -135,6 +136,7 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
     private Preference mAppSwitchDoubleTapAction;
     private CheckBoxPreference mPowerEndCall;
     private CheckBoxPreference mFastTorch;
+    private CheckBoxPreference mHomeWake;
 
     private CheckBoxPreference mSwapVolumeButtons;
     private ListPreference mButtonBacklightPref;
@@ -248,6 +250,9 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
         mFastTorch = (CheckBoxPreference) prefs.findPreference(
                 FAST_TORCH);
 
+        mHomeWake = (CheckBoxPreference) prefs.findPreference(
+                KEYS_HOME_WAKE);
+
         if (hasPowerKey) {
             if (!Utils.isVoiceCapable(getActivity())) {
                 powerCategory.removePreference(mPowerEndCall);
@@ -294,6 +299,12 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
             setupOrUpdatePreference(mHomeDoubleTapAction,
                     HwKeyHelper.getDoubleTapOnHomeBehavior(getActivity(), false),
                     Settings.System.KEY_HOME_DOUBLE_TAP_ACTION);
+
+            boolean enabled = Settings.System.getInt(getContentResolver(),
+                    Settings.System.HOME_WAKE_SCREEN, 0) == 1;
+            mHomeWake = (CheckBoxPreference) findPreference(KEYS_HOME_WAKE);
+            mHomeWake.setChecked(enabled);
+            mHomeWake.setOnPreferenceChangeListener(this);
         } else {
             prefs.removePreference(keysHomeCategory);
         }
@@ -511,6 +522,11 @@ public class HardwareKeysSettings extends SettingsPreferenceFragment implements
         } else if (preference == mButtonBacklightPref) {
             int value = Integer.parseInt((String) newValue);
             updateButtonBacklight(value);
+            return true;
+        } else if (preference == mHomeWake) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getContentResolver(), Settings.System.HOME_WAKE_SCREEN,
+                    value ? 1 : 0);
             return true;
         }
         return false;
