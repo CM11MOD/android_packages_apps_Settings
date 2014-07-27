@@ -79,6 +79,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_COLOR_ENHANCEMENT = "color_enhancement";
     private static final String KEY_ADVANCED_DISPLAY_SETTINGS = "advanced_display_settings";
     private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
+    private static final String KEY_SCREEN_OFF_GESTURE_SETTINGS = "screen_off_gesture_settings";
 
     private static final String KEY_ANIMATION_OPTIONS = "category_animation_options";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
@@ -291,6 +292,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (!isPostProcessingSupported()) {
             getPreferenceScreen().removePreference(mScreenColorSettings);
         }
+
+        Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
+            getPreferenceScreen(), KEY_SCREEN_OFF_GESTURE_SETTINGS);
     }
 
     private void updateTimeoutPreferenceDescription(long currentTimeout) {
