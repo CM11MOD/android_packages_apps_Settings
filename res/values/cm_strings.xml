@@ -826,6 +826,10 @@
     <string name="wifi_ap_client_reachable"><xliff:g id="addr">%1$s</xliff:g> - reachable</string>
     <string name="wifi_ap_client_unreachable"><xliff:g id="addr">%1$s</xliff:g> - unreachable</string>
 
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Prevent accidental wake-up</string>
+    <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
+
     <string name="spam_added_title">Added %1$s</string>
     <string name="spam_last_blocked_title">Last blocked %1$s</string>
     <string name="block_notifications_title">Filter notifications</string>

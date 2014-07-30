@@ -1454,10 +1454,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="ime_navigation_up_down">up / down</string>
     <string name="ime_navigation_home_end">home / end</string>
 
-    <!-- Proximity wake -->
-    <string name="proximity_wake_title">Proximity wake-up</string>
-    <string name="proximity_wake_summary">Use proximity sensor to help decide whether to wake device up</string>
-
     <!-- Text for disabling immersive mode messages -->
     <string name="disable_immersive_message_title">Diable Immersive Mode Messages</string>
     <string name="disable_immersive_message_summary">This will hide all Immersive Mode Messages</string>
