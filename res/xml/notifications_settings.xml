@@ -46,5 +46,6 @@
         android:id="@+id/spamlist"
         android:icon="@drawable/ic_settings_spamlist"
         android:title="@string/block_notifications_title"
+        android:summary="@string/block_notifications_summary"
         android:fragment="com.android.settings.cyanogenmod.SpamList" />
 </PreferenceScreen>
