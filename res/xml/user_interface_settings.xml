@@ -86,7 +86,7 @@
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="recent_panel_bg_color"
             android:title="@string/recent_panel_bg_color_title"
-            android:defaultValue="@android:color/trds_background"
+            android:defaultValue="0x80f5f5f5"
             alphaSlider="true" />
 
     <PreferenceCategory

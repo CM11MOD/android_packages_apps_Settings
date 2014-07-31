@@ -159,10 +159,13 @@ public class UserInterface extends SettingsPreferenceFragment implements
         mRecentPanelExpandedMode.setValue(recentExpandedMode + "");
 
         // Recent panel background color
-        int intColor;
-        String hexColor;
         mRecentPanelBgColor = (ColorPickerPreference) findPreference(RECENT_PANEL_BG_COLOR);
         mRecentPanelBgColor.setOnPreferenceChangeListener(this);
+        int intColor = Settings.System.getInt(getContentResolver(),
+                Settings.System.RECENT_PANEL_BG_COLOR, 0x80f5f5f5);
+        String hexColor = String.format("#%08x", (0x80f5f5f5 & intColor));
+        mRecentPanelBgColor.setSummary(hexColor);
+        mRecentPanelBgColor.setNewPreviewColor(intColor);
 
         mBubbleMode = (ListPreference) prefSet.findPreference(BUBBLE_MODE);
         int bubble_mode = Settings.System.getInt(getContentResolver(),
@@ -315,35 +318,43 @@ public class UserInterface extends SettingsPreferenceFragment implements
         } else if (preference == mRecentClearAll) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.SHOW_CLEAR_RECENTS_BUTTON, value ? 1 : 0);
+            return true;
         } else if (preference == mRecentClearAllPosition) {
             String value = (String) newValue;
             Settings.System.putString(resolver, Settings.System.CLEAR_RECENTS_BUTTON_LOCATION, value);
+            return true;
         } else if (preference == mRecentsSwipe) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver,
                     Settings.System.RECENTS_SWIPE_FLOATING, value ? 1 : 0);
+            return true;
         } else if (preference == mUseAltResolver) {
             boolean value = (Boolean) newValue;
 			Settings.System.putInt(resolver, Settings.System.ACTIVITY_RESOLVER_USE_ALT, value ? 1 : 0);
             updatePreference();
+            return true;
         } else if (preference == mReverseDefaultAppPicker) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.REVERSE_DEFAULT_APP_PICKER, value ? 1 : 0);
+            return true;
         } else if (preference == mRecentPanelScale) {
             int value = Integer.parseInt((String) newValue);
             Settings.System.putInt(getContentResolver(),
                     Settings.System.RECENT_PANEL_SCALE_FACTOR, value);
+            return true;
         } else if (preference == mRecentPanelLeftyMode) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.RECENT_PANEL_GRAVITY,
                     ((Boolean) newValue) ? Gravity.LEFT : Gravity.RIGHT);
+            return true;
         } else if (preference == mRecentPanelExpandedMode) {
             int value = Integer.parseInt((String) newValue);
             Settings.System.putInt(getContentResolver(),
             Settings.System.RECENT_PANEL_EXPANDED_MODE, value);
+            return true;
         } else if (preference == mRecentPanelBgColor) {
             String hex = ColorPickerPreference.convertToARGB(
-            Integer.valueOf(String.valueOf(newValue)));
+                    Integer.valueOf(String.valueOf(newValue)));
             preference.setSummary(hex);
             int intHex = ColorPickerPreference.convertToColorInt(hex);
             Settings.System.putInt(getContentResolver(),
@@ -353,11 +364,13 @@ public class UserInterface extends SettingsPreferenceFragment implements
         } else if (preference == mRecentsShowTopmost) {
             boolean value = (Boolean) newValue;
 			Settings.System.putInt(resolver, Settings.System.RECENT_PANEL_SHOW_TOPMOST, value ? 1 : 0);
+            return true;
         } else if (preference == mMultiPane) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.FORCE_MULTI_PANE, value ? 1 : 0);
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void openOmniSwitchNotInstalledWarning() {
