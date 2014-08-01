@@ -112,7 +112,7 @@
         android:id="@+id/interface_animation"
         android:icon="@drawable/ic_rom_control_animations"
         android:title="@string/interface_animation_title"
-        android:fragment="com.android.settings.aokp.animations.AnimationInterfaceSettings">
+        android:fragment="com.android.settings.aokp.AnimationInterfaceSettings">
     </header>
 
     <!-- Xposed Frameworks -->

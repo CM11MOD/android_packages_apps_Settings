@@ -110,6 +110,7 @@ import com.android.settings.search.SettingsAutoCompleteTextView;
 import com.android.settings.search.SearchPopulator;
 import com.android.settings.search.SettingsSearchFilterAdapter;
 import com.android.settings.search.SettingsSearchFilterAdapter.SearchInfo;
+import com.android.settings.aokp.AnimationInterfaceSettings;
 import com.android.settings.slim.BatteryIconStyle;
 import com.android.settings.slim.DisplayRotation;
 import com.android.settings.slim.quicksettings.QuickSettingsTiles;
@@ -520,7 +521,7 @@ public class Settings extends PreferenceActivity
         com.android.settings.slim.LockscreenWidgets.class.getName(),
         com.android.settings.slim.notificationlight.BatteryLightSettings.class.getName(),
         com.android.settings.slim.notificationlight.NotificationLightSettings.class.getName(),
-        com.android.settings.aokp.animations.AnimationInterfaceSettings.class.getName(),
+        AnimationInterfaceSettings.class.getName(),
         com.android.settings.aokp.Installer.class.getName(),
         com.android.settings.applications.AppOpsSummary.class.getName(),
         com.android.settings.chameleonos.labs.LabSettings.class.getName(),

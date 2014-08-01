@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package com.android.settings.aokp.animations;
+package com.android.settings.aokp;
 
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.R;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.ListPreference;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
+import android.widget.Toast;
 
 public class AnimationInterfaceSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "AnimationInterfaceSettings";
+
+    private static final String KEY_TOAST_ANIMATION = "toast_animation";
+
+    private ListPreference mToastAnimation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,14 @@ public class AnimationInterfaceSettings extends SettingsPreferenceFragment imple
         addPreferencesFromResource(R.xml.animation_settings_interface);
 
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        mToastAnimation = (ListPreference) findPreference(KEY_TOAST_ANIMATION);
+    	mToastAnimation.setSummary(mToastAnimation.getEntry());
+    	int CurrentToastAnimation = Settings.System.getInt(getContentResolver(),
+                                        Settings.System.ACTIVITY_ANIMATION_CONTROLS[10], 1);
+    	mToastAnimation.setValueIndex(CurrentToastAnimation); //set to index of default value
+    	mToastAnimation.setSummary(mToastAnimation.getEntries()[CurrentToastAnimation]);
+    	mToastAnimation.setOnPreferenceChangeListener(this);
 
     }
 
@@ -46,6 +62,14 @@ public class AnimationInterfaceSettings extends SettingsPreferenceFragment imple
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
+        if (preference == mToastAnimation) {
+            int index = mToastAnimation.findIndexOfValue((String) objValue);
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.ACTIVITY_ANIMATION_CONTROLS[10], (String) objValue);
+            mToastAnimation.setSummary(mToastAnimation.getEntries()[index]);
+            Toast.makeText(mContext, "Toast Test", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         return false;
     }
 }
