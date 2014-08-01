@@ -98,6 +98,9 @@ public class UserInterface extends SettingsPreferenceFragment implements
 
     private Preference mRamBar;
 
+    private static final int MENU_RESET = Menu.FIRST;
+    private static final int DEFAULT_BACKGROUND_COLOR = 0x80f5f5f5;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +164,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
         // Recent panel background color
         mRecentPanelBgColor = (ColorPickerPreference) findPreference(RECENT_PANEL_BG_COLOR);
         mRecentPanelBgColor.setOnPreferenceChangeListener(this);
-        int intColor = Settings.System.getInt(getContentResolver(),
+        final int intColor = Settings.System.getInt(getContentResolver(),
                 Settings.System.RECENT_PANEL_BG_COLOR, 0x80f5f5f5);
         String hexColor = String.format("#%08x", (0x80f5f5f5 & intColor));
         mRecentPanelBgColor.setSummary(hexColor);
@@ -191,6 +194,46 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 Settings.System.REVERSE_DEFAULT_APP_PICKER, 0) == 1);
 
         updatePreference();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, R.string.reset_default_message)
+                .setIcon(R.drawable.ic_settings_backup)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                resetToDefault();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void resetToDefault() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle(R.string.shortcut_action_reset);
+        alertDialog.setMessage(R.string.qs_style_reset_message);
+        alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                resetValues();
+            }
+        });
+        alertDialog.setNegativeButton(R.string.cancel, null);
+        alertDialog.create().show();
+    }
+
+    private void resetValues() {
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.RECENT_PANEL_BG_COLOR, DEFAULT_BACKGROUND_COLOR);
+        String hexColor = String.format("#%08x", (0x80f5f5f5 & DEFAULT_BACKGROUND_COLOR));
+        mRecentPanelBgColor.setSummary(hexColor);
+        mRecentPanelBgColor.setNewPreviewColor(DEFAULT_BACKGROUND_COLOR);
     }
 
     private void updateRamBar() {
