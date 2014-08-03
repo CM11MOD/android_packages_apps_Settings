@@ -1446,4 +1446,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Text for disabling immersive mode messages -->
     <string name="disable_immersive_message_title">Diable Immersive Mode Messages</string>
     <string name="disable_immersive_message_summary">This will hide all Immersive Mode Messages</string>
+
+    <!-- Show 4G/LTE on LTE-->
+    <string name="show_4g_for_lte_title">Use 4G icon on LTE</string>
+    <string name="show_4g_for_lte_summary">Show 4G network indicator icon instead of LTE icon</string>
 </resources>
