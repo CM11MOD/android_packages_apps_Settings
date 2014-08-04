@@ -47,8 +47,10 @@ public class Hover extends SettingsPreferenceFragment implements
 
     private static final String TAG = "HoverSettings";
     private static final String PREF_HOVER_LONG_FADE_OUT_DELAY = "hover_long_fade_out_delay";
+    private static final String PREF_HOVER_MICRO_FADE_OUT_DELAY = "hover_micro_fade_out_delay";
 
     ListPreference mHoverLongFadeOutDelay;
+    ListPreference mHoverMicroFadeOutDelay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,10 +62,17 @@ public class Hover extends SettingsPreferenceFragment implements
 
         mHoverLongFadeOutDelay = (ListPreference) prefSet.findPreference(PREF_HOVER_LONG_FADE_OUT_DELAY);
         int hoverLongFadeOutDelay = Settings.System.getIntForUser(getContentResolver(),
-                Settings.System.SHOW_HOVER_TIME, 5000, UserHandle.USER_CURRENT);
+                Settings.System.HOVER_LONG_FADE_OUT_DELAY, 5000, UserHandle.USER_CURRENT);
         mHoverLongFadeOutDelay.setValue(String.valueOf(hoverLongFadeOutDelay));
         mHoverLongFadeOutDelay.setSummary(mHoverLongFadeOutDelay.getEntry());
         mHoverLongFadeOutDelay.setOnPreferenceChangeListener(this);
+
+        mHoverMicroFadeOutDelay = (ListPreference) prefSet.findPreference(PREF_HOVER_MICRO_FADE_OUT_DELAY);
+        int hoverMicroFadeOutDelay = Settings.System.getIntForUser(getContentResolver(),
+        Settings.System.HOVER_MICRO_FADE_OUT_DELAY, 1250, UserHandle.USER_CURRENT);
+        mHoverMicroFadeOutDelay.setValue(String.valueOf(hoverMicroFadeOutDelay));
+        mHoverMicroFadeOutDelay.setSummary(mHoverMicroFadeOutDelay.getEntry());
+        mHoverMicroFadeOutDelay.setOnPreferenceChangeListener(this);
 
         //
 
@@ -91,9 +100,17 @@ public class Hover extends SettingsPreferenceFragment implements
             int index = mHoverLongFadeOutDelay.findIndexOfValue((String) newValue);
             int hoverLongFadeOutDelay = Integer.valueOf((String) newValue);
             Settings.System.putIntForUser(getContentResolver(),
-                Settings.System.SHOW_HOVER_TIME,
+                Settings.System.HOVER_LONG_FADE_OUT_DELAY,
                     hoverLongFadeOutDelay, UserHandle.USER_CURRENT);
             mHoverLongFadeOutDelay.setSummary(mHoverLongFadeOutDelay.getEntries()[index]);
+            return true;
+        } else if (preference == mHoverMicroFadeOutDelay) {
+            int index = mHoverMicroFadeOutDelay.findIndexOfValue((String) newValue);
+            int hoverMicroFadeOutDelay = Integer.valueOf((String) newValue);
+            Settings.System.putIntForUser(getContentResolver(),
+            Settings.System.HOVER_MICRO_FADE_OUT_DELAY,
+            hoverMicroFadeOutDelay, UserHandle.USER_CURRENT);
+            mHoverMicroFadeOutDelay.setSummary(mHoverMicroFadeOutDelay.getEntries()[index]);
             return true;
         }
         return false;

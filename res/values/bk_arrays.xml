@@ -963,6 +963,17 @@
         <item>15000</item>
     </string-array>
 
+    <!-- Hover micro fade out delay -->
+    <string-array name="hover_micro_fadeout_entries" translatable="false">
+        <item>@string/hover_micro_fadeout_stock</item>
+        <item>@string/hover_micro_fadeout_instant</item>
+    </string-array>
+
+    <string-array name="hover_micro_fadeout_values" translatable="false">
+        <item>1250</item>
+        <item>200</item>
+    </string-array>
+
     <!-- NavBar IME Cursor Longpress -->
     <string-array name="ime_cursor_longpress_action_entries">
         <item>@string/ime_navigation_up_down</item>
