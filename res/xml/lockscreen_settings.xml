@@ -18,17 +18,6 @@
     android:title="@string/lock_screen_title" >
 
     <PreferenceCategory
-        android:key="lockscreen_notifications"
-        android:title="@string/lockscreen_notifications">
-
-        <PreferenceScreen
-            android:id="@+id/active_notifications"
-            android:title="@string/Lockscreen_notifications_header"
-            android:fragment="com.android.settings.ActiveNotifications" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="lockscreen_style"
         android:title="@string/lockscreen_target_title">
 

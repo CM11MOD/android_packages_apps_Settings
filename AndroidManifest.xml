@@ -1860,6 +1860,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".slim.NotificationService" />
+
         <activity android:name=".slim.notificationlight.NotificationLightSettings" />
 
         <activity android:name=".slim.notificationlight.BatteryLightSettings" />

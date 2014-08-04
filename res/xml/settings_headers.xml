@@ -142,13 +142,21 @@
         android:fragment="com.android.settings.slim.InterfaceSettings"
         android:title="@string/interface_settings_title" />
 
-    <!-- Interface -->
+    <!-- LockScreen -->
     <header
         settings:includeXmlForSearch="@xml/lockscreen_settings"
         android:id="@+id/lockscreen_settings"
         android:icon="@drawable/ic_settings_lockscreen"
         android:fragment="com.android.settings.slim.LockscreenUI"
         android:title="@string/lockscreen_settings_title" />
+
+    <!-- Notifications -->
+    <header
+        settings:includeXmlForSearch="@xml/notifications_settings"
+        android:id="@+id/notification_settings"
+        android:icon="@drawable/ic_settings_notifications"
+        android:fragment="com.android.settings.slim.NotificationService"
+        android:title="@string/notifications_settings_title" />
 
     <!-- Navigation -->
     <header

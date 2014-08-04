@@ -113,6 +113,7 @@ import com.android.settings.search.SettingsSearchFilterAdapter.SearchInfo;
 import com.android.settings.aokp.AnimationInterfaceSettings;
 import com.android.settings.slim.BatteryIconStyle;
 import com.android.settings.slim.DisplayRotation;
+import com.android.settings.slim.NotificationService;
 import com.android.settings.slim.quicksettings.QuickSettingsTiles;
 import com.android.settings.slim.QuietHours;
 import com.android.settings.slim.ShakeEvents;
@@ -505,6 +506,7 @@ public class Settings extends PreferenceActivity
         QuickSettingsTiles.class.getName(),
         ApnSettings.class.getName(),
         ShakeEvents.class.getName(),
+        NotificationService.class.getName(),
         BatteryIconStyle.class.getName(),
         DisplayRotation.class.getName(),
         DisplayRotation.class.getName(),

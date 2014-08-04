@@ -34,30 +34,6 @@
         android:title="@string/gesture_anywhere_title" />
 
     <PreferenceCategory
-        android:title="@string/notifications_category_title"
-        android:key="notifications"/>
-
-    <!-- HALO -->
-    <PreferenceScreen
-        android:id="@+id/halo_settings"
-        android:fragment="com.android.settings.pa.Halo"
-        android:icon="@drawable/ic_settings_halo" 
-        android:title="@string/halo_settings_title" />
-
-    <!-- HOVER -->
-    <PreferenceScreen
-        android:fragment="com.android.settings.pa.Hover"
-        android:icon="@drawable/ic_settings_hover"
-        android:title="@string/hover_enabled_title" />
-
-    <!-- HEADSUP -->
-    <Preference
-        android:key="heads_up_enabled"
-        android:icon="@drawable/ic_settings_headsup"
-        android:fragment="com.android.settings.headsup.HeadsUpSettings"
-        android:title="@string/category_heads_up"/>
-
-    <PreferenceCategory
         android:title="@string/shortcut_settings_title"
         android:key="shortcut"/>
 
