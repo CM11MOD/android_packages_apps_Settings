@@ -73,6 +73,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String RECENT_PANEL_SCALE = "recent_panel_scale";
     private static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
     private static final String RECENT_PANEL_BG_COLOR =	"recent_panel_bg_color";
+    private static final String RECENT_PANEL_COLOR = "recents_stock_bg_color";
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
     private static final String BUBBLE_MODE = "bubble_mode";
     private static final String PREF_RECENTS_SWIPE_FLOATING = "recents_swipe";
@@ -91,6 +92,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mRecentsShowTopmost;
     private ListPreference mRecentPanelScale;
     private ListPreference mRecentPanelExpandedMode;
+    private ColorPickerPreference mRecentsStockBgColor;
     private ColorPickerPreference mRecentPanelBgColor;
     private ListPreference mBubbleMode;
     private CheckBoxPreference mMultiPane;
@@ -100,6 +102,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
 
     private static final int MENU_RESET = Menu.FIRST;
     private static final int DEFAULT_BACKGROUND_COLOR = 0x80f5f5f5;
+    private static final int RECENTS_BACKGROUND_COLOR = 0xe0000000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -193,6 +196,9 @@ public class UserInterface extends SettingsPreferenceFragment implements
         mReverseDefaultAppPicker.setChecked(Settings.System.getInt(resolver,
                 Settings.System.REVERSE_DEFAULT_APP_PICKER, 0) == 1);
 
+        mRecentsStockBgColor = (ColorPickerPreference) findPreference(RECENT_PANEL_COLOR);
+        mRecentsStockBgColor.setOnPreferenceChangeListener(this);
+
         updatePreference();
         setHasOptionsMenu(true);
     }
@@ -234,6 +240,12 @@ public class UserInterface extends SettingsPreferenceFragment implements
         String hexColor = String.format("#%08x", (0x80f5f5f5 & DEFAULT_BACKGROUND_COLOR));
         mRecentPanelBgColor.setSummary(hexColor);
         mRecentPanelBgColor.setNewPreviewColor(DEFAULT_BACKGROUND_COLOR);
+
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.RECENTS_PANEL_STOCK_COLOR, RECENTS_BACKGROUND_COLOR);
+        String hex1Color = String.format("#%08x", (0xe0000000 & RECENTS_BACKGROUND_COLOR));
+        mRecentsStockBgColor.setSummary(hex1Color);
+        mRecentsStockBgColor.setNewPreviewColor(RECENTS_BACKGROUND_COLOR);
     }
 
     private void updateRamBar() {
@@ -285,6 +297,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelBgColor.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(true);
+                mRecentsStockBgColor.setEnabled(true);
                 break;
             case 1:
                 mRecentClearAll.setEnabled(false);
@@ -295,6 +308,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelBgColor.setEnabled(true);
                 mRecentsShowTopmost.setEnabled(true);
                 mRecentsSwipe.setEnabled(false);
+                mRecentsStockBgColor.setEnabled(false);
                 break;
             case 2:
                 if (!isOmniSwitchInstalled()) return;
@@ -306,6 +320,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentPanelBgColor.setEnabled(false);
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(false);
+                mRecentsStockBgColor.setEnabled(false);
                 break;
         }
     }
@@ -411,6 +426,15 @@ public class UserInterface extends SettingsPreferenceFragment implements
         } else if (preference == mMultiPane) {
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver, Settings.System.FORCE_MULTI_PANE, value ? 1 : 0);
+            return true;
+        } else if (preference == mRecentsStockBgColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.RECENTS_PANEL_STOCK_COLOR, intHex);
+            //Helpers.restartSystemUI();
             return true;
         }
         return false;

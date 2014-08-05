@@ -18,17 +18,26 @@
         android:key="category_recent_panel"
         android:title="@string/recent_panel_category_title"/>
 
-        <PreferenceScreen
-            android:key="recents_ram_bar"
-            android:fragment="com.android.settings.slim.RamBar"
-            android:title="@string/ram_bar" />
-
         <ListPreference
             android:key="recents_style"
             android:title="@string/recents_style_title"
             android:summary="@string/recents_style_summary"
             android:entries="@array/recent_panel_style_entries"
             android:entryValues="@array/recent_panel_style_values"
+            android:persistent="false" />
+
+        <PreferenceCategory
+            android:title="@string/recents_stock_title"/>
+
+        <PreferenceScreen
+            android:key="recents_ram_bar"
+            android:fragment="com.android.settings.slim.RamBar"
+            android:title="@string/ram_bar" />
+
+        <CheckBoxPreference
+            android:key="recents_swipe"
+            android:title="@string/recents_swipe_title"
+            android:summary="@string/recents_swipe_summary"
             android:persistent="false" />
 
         <CheckBoxPreference
@@ -46,11 +55,11 @@
             android:defaultValue="2"
             android:dependency="recent_menu_clear_all" />
 
-        <CheckBoxPreference
-            android:key="recents_swipe"
-            android:title="@string/recents_swipe_title"
-            android:summary="@string/recents_swipe_summary"
-            android:persistent="false" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="recents_stock_bg_color"
+            android:title="@string/recents_stock_bg_color_title"
+            android:defaultValue="0xE0000000"
+            alphaSlider="true" />
 
     <PreferenceCategory
             android:title="@string/recents_style_slim" />
