@@ -67,6 +67,10 @@ public class HeadsUpEnabler implements CompoundButton.OnCheckedChangeListener {
         boolean enabled = Settings.System.getIntForUser(
                 mContext.getContentResolver(),
                 Settings.System.HEADS_UP_NOTIFICATION, 0, UserHandle.USER_CURRENT) == 1;
+        if (enabled) {
+            Settings.System.putInt(
+                    mContext.getContentResolver(), Settings.System.HOVER_ENABLED, 0);
+        }
         mStateMachineEvent = true;
         mSwitch.setChecked(enabled);
         mStateMachineEvent = false;

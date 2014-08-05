@@ -64,7 +64,7 @@ public class Hover extends SettingsPreferenceFragment
     private ViewGroup mPrefsContainer;
     private View mDisabledText;
 
-    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
+    private ContentObserver mHoverObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             updateEnabledState();
@@ -149,7 +149,7 @@ public class Hover extends SettingsPreferenceFragment
 
         getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HOVER_ENABLED),
-                true, mSettingsObserver);
+                true, mHoverObserver);
         updateEnabledState();
 
         // If running on a phone, remove padding around container
@@ -165,7 +165,7 @@ public class Hover extends SettingsPreferenceFragment
         if (mHoverEnabler != null) {
             mHoverEnabler.pause();
         }
-        getContentResolver().unregisterContentObserver(mSettingsObserver);
+        getContentResolver().unregisterContentObserver(mHoverObserver);
     }
 
     @Override

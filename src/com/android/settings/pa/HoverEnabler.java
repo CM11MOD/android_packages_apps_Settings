@@ -64,9 +64,13 @@ public class HoverEnabler implements CompoundButton.OnCheckedChangeListener {
     }
 
     private void setSwitchState() {
-        boolean enabled = Settings.System.getIntForUser(
+        boolean enabled = Settings.System.getInt(
                 mContext.getContentResolver(),
-                Settings.System.HOVER_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+                Settings.System.HOVER_ENABLED, 0) == 1;
+        if (enabled) {
+            Settings.System.putInt(
+                mContext.getContentResolver(), Settings.System.HEADS_UP_NOTIFICATION, 0);
+        }
         mStateMachineEvent = true;
         mSwitch.setChecked(enabled);
         mStateMachineEvent = false;

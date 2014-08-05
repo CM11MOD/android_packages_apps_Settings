@@ -103,7 +103,7 @@ public class Halo extends SettingsPreferenceFragment
     private ViewGroup mPrefsContainer;
     private View mDisabledText;
 
-    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
+    private ContentObserver mHaloObserver = new ContentObserver(new Handler()) {
     @Override
         public void onChange(boolean selfChange, Uri uri) {
             updateEnabledState();
@@ -291,7 +291,7 @@ public class Halo extends SettingsPreferenceFragment
 
         getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HALO_ENABLED),
-                true, mSettingsObserver);
+                true, mHaloObserver);
         updateEnabledState();
 
         // If running on a phone, remove padding around container
@@ -307,7 +307,7 @@ public class Halo extends SettingsPreferenceFragment
         if (mHaloEnabler != null) {
             mHaloEnabler.pause();
         }
-        getContentResolver().unregisterContentObserver(mSettingsObserver);
+        getContentResolver().unregisterContentObserver(mHaloObserver);
     }
 
     private boolean isHaloPolicyBlack() {
