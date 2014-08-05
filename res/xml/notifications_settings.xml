@@ -8,7 +8,7 @@
         android:title="@string/lockscreen_notifications_settings" />
 
         <PreferenceScreen
-            android:id="@+id/active_notifications"
+            android:key="active_notifications"
             android:icon="@drawable/ic_settings_lockscreen"
             android:title="@string/lockscreen_notifications_settings"
             android:fragment="com.android.settings.ActiveNotifications" />
@@ -19,19 +19,20 @@
 
     <!-- HALO -->
     <PreferenceScreen
-        android:id="@+id/halo_settings"
-        android:fragment="com.android.settings.pa.Halo"
+        android:key="halo_settings"
         android:icon="@drawable/ic_settings_halo" 
+        android:fragment="com.android.settings.pa.Halo"
         android:title="@string/halo_settings_title" />
 
     <!-- HOVER -->
     <PreferenceScreen
-        android:fragment="com.android.settings.pa.Hover"
+        android:key="hover_settings"
         android:icon="@drawable/ic_settings_hover"
+        android:fragment="com.android.settings.pa.Hover"
         android:title="@string/hover_enabled_title" />
 
     <!-- HEADSUP -->
-    <Preference
+    <PreferenceScreen
         android:key="heads_up_enabled"
         android:icon="@drawable/ic_settings_headsup"
         android:fragment="com.android.settings.headsup.HeadsUpSettings"
