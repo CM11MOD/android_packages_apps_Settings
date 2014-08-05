@@ -80,6 +80,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ADVANCED_DISPLAY_SETTINGS = "advanced_display_settings";
     private static final String KEY_TAP_TO_WAKE = "double_tap_wake_gesture";
     private static final String KEY_SCREEN_OFF_GESTURE_SETTINGS = "screen_off_gesture_settings";
+    private static final String KEY_PROXIMITY_WAKE = "proximity_on_wake";
 
     private static final String KEY_ANIMATION_OPTIONS = "category_animation_options";
     private static final String KEY_POWER_CRT_MODE = "system_power_crt_mode";
@@ -243,6 +244,13 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         //if (!isTapToWakeSupported()) {
             mWakeUpOptions.removePreference(mTapToWake);
             mTapToWake = null;
+        }
+
+        boolean proximityCheckOnWait = res.getBoolean(
+                com.android.internal.R.bool.config_proximityCheckOnWake);
+        if (!proximityCheckOnWait) {
+            mWakeUpOptions.removePreference(findPreference(KEY_PROXIMITY_WAKE));
+            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_ON_WAKE, 1);
         }
 
         /* Touchwake */
