@@ -312,6 +312,7 @@
     <string name="halo_behavior_title">Halo Behavior</string>
     <string name="halo_enabled_title">Enable HALO</string>
     <string name="halo_enabled_summary">Completely enable or disable HALO</string>
+    <string name="halo_disabled_notice">Enable to show PA\'s HALO button in Notification Drawer.</string>
     <string name="halo_hide_title">Hide Halo after activity</string>
     <string name="halo_hide_summary">Halo will appear for incoming tasks and scroll out of sight after a while</string>
     <string name="halo_reversed_title">Reverse Halo</string>
