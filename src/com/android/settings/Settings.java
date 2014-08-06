@@ -98,6 +98,7 @@ import com.android.settings.location.LocationSettings;
 import com.android.settings.net.MobileDataEnabler;
 import com.android.settings.nfc.AndroidBeam;
 import com.android.settings.nfc.PaymentSettings;
+import com.android.settings.omni.BatterySaverEnabler;
 import com.android.settings.print.PrintJobSettingsFragment;
 import com.android.settings.print.PrintServiceSettingsFragment;
 import com.android.settings.print.PrintSettingsFragment;
@@ -1045,6 +1046,7 @@ public class Settings extends PreferenceActivity
         private final MobileDataEnabler mMobileDataEnabler;
         private final ProfileEnabler mProfileEnabler;
         private final LocationEnabler mLocationEnabler;
+        private final BatterySaverEnabler mBatterySaverEnabler;
         private final VoiceWakeupEnabler mVoiceWakeupEnabler;
         private AuthenticatorHelper mAuthHelper;
         private DevicePolicyManager mDevicePolicyManager;
@@ -1069,6 +1071,7 @@ public class Settings extends PreferenceActivity
                     || header.id == R.id.theme_settings
                     || header.id == R.id.mobile_network_settings
                     || header.id == R.id.profiles_settings
+                    || header.id == R.id.power_saver_mode
                     || header.id == R.id.voice_wakeup_settings
                     || header.id == R.id.location_settings) {
                 return HEADER_TYPE_SWITCH;
@@ -1120,6 +1123,7 @@ public class Settings extends PreferenceActivity
             mMobileDataEnabler = new MobileDataEnabler(context, new Switch(context));
             mProfileEnabler = new ProfileEnabler(context, new Switch(context));
             mLocationEnabler = new LocationEnabler(context, new Switch(context));
+            mBatterySaverEnabler = new BatterySaverEnabler(context, new Switch(context));
             mVoiceWakeupEnabler = new VoiceWakeupEnabler(context, new Switch(context));
             mDevicePolicyManager = dpm;
         }
@@ -1200,6 +1204,8 @@ public class Settings extends PreferenceActivity
                         mThemeEnabler.setSwitch(holder.switch_);
                     } else if (header.id == R.id.location_settings) {
                         mLocationEnabler.setSwitch(holder.switch_);
+                    } else if (header.id == R.id.power_saver_mode) {
+                        mBatterySaverEnabler.setSwitch(holder.switch_);
                     } else if (header.id == R.id.voice_wakeup_settings) {
                         mVoiceWakeupEnabler.setSwitch(holder.switch_);
                     }
@@ -1279,6 +1285,7 @@ public class Settings extends PreferenceActivity
             mMobileDataEnabler.resume();
             mProfileEnabler.resume();
             mLocationEnabler.resume();
+            mBatterySaverEnabler.resume();
             mVoiceWakeupEnabler.resume();
         }
 
@@ -1289,6 +1296,7 @@ public class Settings extends PreferenceActivity
             mMobileDataEnabler.pause();
             mProfileEnabler.pause();
             mLocationEnabler.pause();
+            mBatterySaverEnabler.pause();
             mVoiceWakeupEnabler.pause();
         }
     }

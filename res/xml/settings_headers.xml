@@ -18,6 +18,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <!-- Battery Saver Mode -->
+    <header
+        settings:includeXmlForSearch="@xml/battery_saver_settings"
+        android:id="@+id/power_saver_mode"
+        android:fragment="com.android.settings.omni.BatterySaverSettings"
+        android:title="@string/battery_saver_title"
+        android:icon="@drawable/ic_settings_powersaver" />
+
     <!-- WIRELESS and NETWORKS -->
     <header android:id="@+id/wireless_section"
         android:title="@string/header_category_wireless_networks" />
@@ -125,14 +133,6 @@
 
     <!-- Additional SlimKat controls -->
     <header android:title="@string/header_category_rom_settings" />
-
-    <!-- Battery Saver Mode -->
-    <header
-        settings:includeXmlForSearch="@xml/battery_saver_settings"
-        android:id="@+id/power_saver_mode"
-        android:fragment="com.android.settings.omni.BatterySaverSettings"
-        android:title="@string/battery_saver_title"
-        android:icon="@drawable/ic_settings_powersaver" />
 
     <!-- Interface -->
     <header

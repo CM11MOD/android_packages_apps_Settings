@@ -23,12 +23,11 @@
     <SwitchPreference
         android:key="pref_battery_saver_enable"
         android:persistent="false"
-        android:title="@string/pref_battery_saver_enable_title"
-        android:summary="@string/pref_battery_saver_enable_summary"  />
+        android:title="@string/battery_saver_title"
+        android:summary="@string/pref_battery_saver_enable_summary" />
 
     <com.android.settings.slim.TimeRangePreference
-        android:key="pref_battery_saver_timerange"
-        android:dependency="pref_battery_saver_enable" />
+        android:key="pref_battery_saver_timerange" />
 
     <com.android.settings.widget.SeekBarPreference2
         android:key="pref_battery_saver_mode_change_delay"
@@ -40,28 +39,24 @@
         settings:interval="1"
         settings:unitsLeft=""
         settings:unitsRight="sec"
-        android:defaultValue="5"
-        android:dependency="pref_battery_saver_enable" />
+        android:defaultValue="5" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_show_toast"
         android:title="@string/pref_battery_saver_toast_title"
-        android:summary="@string/pref_battery_saver_toast_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_toast_summary" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_screen_off"
         android:defaultValue="true"
         android:title="@string/pref_battery_saver_screen_off_title"
-        android:summary="@string/pref_battery_saver_screen_off_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_screen_off_summary" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_ignore_locked"
         android:defaultValue="true"
         android:title="@string/pref_battery_saver_ignore_locked_title"
-        android:summary="@string/pref_battery_saver_ignore_locked_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_ignore_locked_summary" />
 
     <PreferenceCategory
             android:key="category_battery_saver_battery"
@@ -70,8 +65,7 @@
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_battery_mode"
         android:title="@string/pref_battery_saver_battery_title"
-        android:summary="@string/pref_battery_saver_battery_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_battery_summary" />
 
     <com.android.settings.widget.SeekBarPreference2
         android:key="pref_battery_saver_mode_battery_level"
@@ -83,8 +77,7 @@
         settings:interval="5"
         settings:unitsLeft=""
         settings:unitsRight="%"
-        android:defaultValue="20"
-        android:dependency="pref_battery_saver_enable" />
+        android:defaultValue="20" />
 
     <PreferenceCategory
             android:key="category_battery_saver_radio"
@@ -100,15 +93,13 @@
              android:key="pref_battery_saver_mode_data"
              android:persistent="false"
              android:title="@string/pref_battery_saver_data_title"
-             android:summary="@string/pref_battery_saver_data_summary"
-             android:dependency="pref_battery_saver_enable"/>
+             android:summary="@string/pref_battery_saver_data_summary" />
 
         <CheckBoxPreference
              android:key="pref_battery_saver_mode_nosignal"
              android:persistent="false"
              android:title="@string/pref_battery_saver_nosignal_title"
-             android:summary="@string/pref_battery_saver_nosignal_summary"
-             android:dependency="pref_battery_saver_enable"/>
+             android:summary="@string/pref_battery_saver_nosignal_summary" />
 
     </PreferenceCategory>
 
@@ -118,7 +109,6 @@
 
         <ListPreference
              android:key="pref_battery_saver_normal_gsm_mode"
-             android:dependency="pref_battery_saver_enable"
              android:title="@string/pref_battery_saver_normal_mode_title"
              android:entries="@array/enabled_networks_gsm_choices"
              android:entryValues="@array/enabled_networks_gsm_values"
@@ -126,7 +116,6 @@
 
         <ListPreference
              android:key="pref_battery_saver_power_saving_gsm_mode"
-             android:dependency="pref_battery_saver_enable"
              android:title="@string/pref_battery_saver_power_saving_mode_title"
              android:entries="@array/enabled_networks_gsm_choices"
              android:entryValues="@array/enabled_networks_gsm_values"
@@ -140,7 +129,6 @@
 
         <ListPreference
              android:key="pref_battery_saver_normal_cdma_mode"
-             android:dependency="pref_battery_saver_enable"
              android:title="@string/pref_battery_saver_normal_mode_title"
              android:entries="@array/enabled_networks_cdma_choices"
              android:entryValues="@array/enabled_networks_cdma_values"
@@ -148,7 +136,6 @@
 
         <ListPreference
              android:key="pref_battery_saver_power_saving_cdma_mode"
-             android:dependency="pref_battery_saver_enable"
              android:title="@string/pref_battery_saver_power_saving_mode_title"
              android:entries="@array/enabled_networks_cdma_choices"
              android:entryValues="@array/enabled_networks_cdma_values"
@@ -162,7 +149,6 @@
 
         <ListPreference
              android:key="pref_battery_saver_mode_network"
-             android:dependency="pref_battery_saver_enable"
              android:title="@string/pref_battery_saver_network_title"
              android:summary="@string/pref_battery_saver_network_summary"
              android:entries="@array/ad_redisplay_entries"
@@ -177,7 +163,6 @@
 
     <PreferenceScreen
         android:key="pref_battery_saver_mode_cpu"
-        android:dependency="pref_battery_saver_enable"
         android:title="@string/pref_battery_saver_cpu_title"
         android:summary="@string/pref_battery_saver_cpu_summary"
         android:fragment="com.android.settings.omni.BatteryCpuSettings" />
@@ -186,54 +171,47 @@
         android:key="pref_battery_saver_mode_bluetooth"
         android:persistent="false"
         android:title="@string/pref_battery_saver_bluetooth_title"
-        android:summary="@string/pref_battery_saver_bluetooth_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_bluetooth_summary"  />
+
 
     <CheckBoxPreference
         android:key="pref_battery_saver_mode_location"
         android:persistent="false"
         android:title="@string/pref_battery_saver_location_title"
-        android:summary="@string/pref_battery_saver_location_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_location_summary" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_wifi_mode"
         android:title="@string/pref_battery_saver_wifi_title"
-        android:summary="@string/pref_battery_saver_wifi_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_wifi_summary" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_sync_mode"
         android:title="@string/pref_battery_saver_sync_title"
-        android:summary="@string/pref_battery_saver_sync_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_sync_summary" />
 
     <com.android.settings.omnirom.omnigears.preference.GlobalCheckBoxPreference
         android:key="battery_saver_killall_mode"
         android:title="@string/pref_battery_saver_killall_title"
-        android:summary="@string/pref_battery_saver_killall_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_killall_summary" />
 
     <CheckBoxPreference
         android:key="pref_battery_saver_mode_led"
         android:persistent="false"
         android:title="@string/pref_battery_saver_led_title"
-        android:summary="@string/pref_battery_saver_led_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_led_summary" />
 
     <CheckBoxPreference
         android:key="pref_battery_saver_mode_vibrate"
         android:persistent="false"
         android:title="@string/pref_battery_saver_vibrate_title"
-        android:summary="@string/pref_battery_saver_vibrate_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_vibrate_summary" />
 
     <CheckBoxPreference
         android:key="pref_battery_saver_mode_brightness"
         android:persistent="false"
         android:title="@string/pref_battery_saver_brightness_title"
-        android:summary="@string/pref_battery_saver_brightness_summary"
-        android:dependency="pref_battery_saver_enable"/>
+        android:summary="@string/pref_battery_saver_brightness_summary" />
 
     <com.android.settings.widget.SeekBarPreference2
         android:key="pref_battery_saver_mode_brightness_level"

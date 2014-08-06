@@ -1063,7 +1063,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="network_global">Global</string>
     <string name="battery_saver_action_undefined">Undefined</string>
     <string name="battery_saver_title">Battery saver mode</string>
-    <string name="pref_battery_saver_enable_title">Battery saver</string>
+    <string name="battery_saver_disabled_notice">Enable to Launch Battery Saver Mode</string>
+    <string name="pref_battery_saver_enable_title">BatterySaver</string>
     <string name="pref_battery_saver_enable_summary">This will automatically manage your device battery usage and switch your network to user-defined power saving mode or normal mode depending on mobile data and Wi-Fi connection states</string>
     <string name="pref_battery_saver_enable_no_mobiledata_summary">This will automatically manage your device battery usage to user-defined</string>
     <string name="pref_battery_saver_normal_mode_title">Normal network mode</string>
