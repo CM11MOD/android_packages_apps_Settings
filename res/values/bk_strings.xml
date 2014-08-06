@@ -27,6 +27,7 @@
     <string name="notifications_settings_title">Notification services</string>
     <string name="lockscreen_notifications_settings">LockScreen notification settings</string>
     <string name="shortcut_settings_title">Shortcuts</string>
+    <string name="disabled_notice">Switch on to show all setting options.</string>
 
     <!-- Active Display
     <string name="ad_settings_title">Active display</string>

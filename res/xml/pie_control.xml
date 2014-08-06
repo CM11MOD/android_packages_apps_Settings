@@ -17,34 +17,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pie_control_title">
 
-    <CheckBoxPreference
-        android:key="pie_control"
-        android:title="@string/pie_control_title"
-        android:summary="@string/pie_control_summary" />
-
     <PreferenceScreen
             android:key="pie_button"
             android:fragment="com.android.settings.slim.dslv.ButtonsListViewSettings"
-            android:title="@string/pie_button"
-            android:dependency="pie_control">
+            android:title="@string/pie_button">
         <extra android:name="buttonMode" android:value="1" />
         <extra android:name="maxAllowedButtons" android:value="5" />
         <extra android:name="disableDeleteLastEntry" android:value="true" />
         <extra android:name="fragment" android:value="com.android.settings.slim.fragments.PieButtonFragment" />
     </PreferenceScreen>
 
-
     <PreferenceScreen
         android:key="pie_style"
         android:fragment="com.android.settings.slim.PieStyleSettings"
-        android:title="@string/pie_style"
-        android:dependency="pie_control" />
+        android:title="@string/pie_style" />
 
     <PreferenceScreen
         android:key="pie_trigger"
         android:fragment="com.android.settings.slim.PieTriggerSettings"
-        android:title="@string/pie_control_trigger_positions"
-        android:dependency="pie_control" />
+        android:title="@string/pie_control_trigger_positions" />
 
     <PreferenceCategory
         android:title="@string/additional_options_title">
@@ -54,29 +45,25 @@
             android:entries="@array/pref_menu_display_entries"
             android:entryValues="@array/pref_menu_display_values"
             android:title="@string/title_pref_menu_display"
-            android:summary="@string/summary_pref_menu_display"
-            android:dependency="pie_control" />
+            android:summary="@string/summary_pref_menu_display" />
 
         <CheckBoxPreference
             android:key="pie_show_background"
             android:title="@string/pie_show_background_title"
             android:summary="@string/pie_show_background_summary"
-            android:defaultValue="true"
-            android:dependency="pie_control" />
+            android:defaultValue="true" />
 
         <CheckBoxPreference
             android:key="pie_show_snap"
             android:title="@string/pie_show_snap_title"
             android:summary="@string/pie_show_snap_summary"
-            android:defaultValue="true"
-            android:dependency="pie_control" />
+            android:defaultValue="true" />
 
         <CheckBoxPreference
             android:key="pie_show_text"
             android:title="@string/pie_show_text_title"
             android:summary="@string/pie_show_text_summary"
-            android:defaultValue="true"
-            android:dependency="pie_control" />
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 
