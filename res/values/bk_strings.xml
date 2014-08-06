@@ -318,7 +318,6 @@
     <string name="halo_enabled_title">HALO</string>
     <string name="halo_enabled_summary">HALO enabled</string>
     <string name="halo_disabled_summary">HALO disabled</string>
-    <string name="halo_disabled_notice">Enable to show PA\'s HALO button in Notification Drawer.</string>
     <string name="halo_hide_title">Hide Halo after activity</string>
     <string name="halo_hide_summary">Halo will appear for incoming tasks and scroll out of sight after a while</string>
     <string name="halo_reversed_title">Reverse Halo</string>
@@ -1409,7 +1408,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="hover_enabled_title">HOVER</string>
     <string name="hover_enabled_summary">HOVER enabled</string>
     <string name="hover_disabled_summary">HOVER disabled</string>
-    <string name="hover_disabled_notice">Enable to show PA\'s HOVER button in Notification Drawer.</string>
     <string name="hover_hide_button_title">Hide HOVER-Button</string>
     <string name="hover_hide_button_summary">Hide the HOVER-Button in the StatusBar</string>
     <string name="hover_active_title">Activate HOVER</string>

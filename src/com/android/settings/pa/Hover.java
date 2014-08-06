@@ -126,7 +126,7 @@ public class Hover extends SettingsPreferenceFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.hover_fragment, container, false);
+        View v = inflater.inflate(R.layout.disable_fragment, container, false);
         mPrefsContainer = (ViewGroup) v.findViewById(R.id.prefs_container);
         mDisabledText = v.findViewById(R.id.disabled_text);
 
