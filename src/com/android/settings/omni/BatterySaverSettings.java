@@ -46,10 +46,6 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private static final String PREF_KEY_BATTERY_SAVER_ENABLE = "pref_battery_saver_enable";
-    private static final String PREF_KEY_BATTERY_SAVER_NORMAL_GSM_MODE = "pref_battery_saver_normal_gsm_mode";
-    private static final String PREF_KEY_BATTERY_SAVER_POWER_SAVING_GSM_MODE = "pref_battery_saver_power_saving_gsm_mode";
-    private static final String PREF_KEY_BATTERY_SAVER_NORMAL_CDMA_MODE = "pref_battery_saver_normal_cdma_mode";
-    private static final String PREF_KEY_BATTERY_SAVER_POWER_SAVING_CDMA_MODE = "pref_battery_saver_power_saving_cdma_mode";
     private static final String PREF_KEY_BATTERY_SAVER_MODE_CHANGE_DELAY = "pref_battery_saver_mode_change_delay";
     private static final String PREF_KEY_BATTERY_SAVER_MODE_BATTERY_LEVEL = "pref_battery_saver_mode_battery_level";
     private static final String PREF_KEY_BATTERY_SAVER_MODE_BLUETOOTH = "pref_battery_saver_mode_bluetooth";
@@ -65,20 +61,10 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
 
     private static final String CATEGORY_RADIO = "category_battery_saver_radio";
     private static final String CATEGORY_NETWORK = "category_battery_saver_network";
-    private static final String CATEGORY_NETWORK_GSM = "category_battery_saver_network_gsm";
-    private static final String CATEGORY_NETWORK_CDMA = "category_battery_saver_network_cdma";
 
     private ContentResolver mResolver;
     private Context mContext;
-    private boolean mShow4GForLTE;
-    private boolean mIsShowCdma;
-    private boolean mIs2gSupport;
-    private boolean mIsEnabledLte;
 
-    private ListPreference mNormalGsmPreferredNetworkMode;
-    private ListPreference mPowerSavingGsmPreferredNetworkMode;
-    private ListPreference mNormalCdmaPreferredNetworkMode;
-    private ListPreference mPowerSavingCdmaPreferredNetworkMode;
     private SwitchPreference mBatterySaverEnabled;
     private SeekBarPreference2 mBatterySaverDelay;
     private SeekBarPreference2 mLowBatteryLevel;
@@ -102,11 +88,6 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
 
         mContext = getActivity().getApplicationContext();
         mResolver = mContext.getContentResolver();
-
-        mShow4GForLTE = getItemFromApplications("com.android.systemui", "config_show4GForLTE", "bool", false);
-        mIsShowCdma = getItemFromApplications("com.android.phone", "config_show_cdma", "bool", false);
-        mIs2gSupport = getItemFromApplications("com.android.phone", "config_prefer_2g", "bool", true);
-        mIsEnabledLte = getItemFromApplications("com.android.phone", "config_enabled_lte", "bool", true);
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
@@ -134,11 +115,6 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
         mLowBatteryLevel.setOnPreferenceChangeListener(this);
 
         if (BatterySaverHelper.deviceSupportsMobileData(mContext)) {
-            TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-            int phoneType = telephonyManager.getPhoneType();
-            int defaultNetwork = Settings.Global.getInt(mResolver,
-                    Settings.Global.PREFERRED_NETWORK_MODE, Phone.PREFERRED_NT_MODE);
-
             mSmartDataEnabled = (CheckBoxPreference) prefSet.findPreference(PREF_KEY_BATTERY_SAVER_MODE_DATA);
             mSmartDataEnabled.setChecked(Settings.Global.getInt(mResolver,
                      Settings.Global.BATTERY_SAVER_DATA_MODE, 1) == 1);
@@ -155,90 +131,9 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
             mSmartNoSignalEnabled.setChecked(Settings.Global.getInt(mResolver,
                      Settings.Global.BATTERY_SAVER_NOSIGNAL_MODE, 0) == 1);
             mSmartNoSignalEnabled.setOnPreferenceChangeListener(this);
-
-            if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
-                prefSet.removePreference(findPreference(CATEGORY_NETWORK_GSM));
-                mNormalCdmaPreferredNetworkMode = (ListPreference) prefSet.findPreference(PREF_KEY_BATTERY_SAVER_NORMAL_CDMA_MODE);
-                mPowerSavingCdmaPreferredNetworkMode = (ListPreference) prefSet.findPreference(PREF_KEY_BATTERY_SAVER_POWER_SAVING_CDMA_MODE);
-                if (BatterySaverHelper.deviceSupportsLteCdma(mContext)) {
-                    mNormalCdmaPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_cdma_lte_choices);
-                    mNormalCdmaPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_cdma_lte_values);
-                    mPowerSavingCdmaPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_cdma_lte_choices);
-                    mPowerSavingCdmaPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_cdma_lte_values);
-                }
-                int normalNetwork = Settings.Global.getInt(mResolver,
-                         Settings.Global.BATTERY_SAVER_NORMAL_MODE, defaultNetwork);
-                mNormalCdmaPreferredNetworkMode.setValue(String.valueOf(normalNetwork));
-                mNormalCdmaPreferredNetworkMode.setSummary(mNormalCdmaPreferredNetworkMode.getEntry());
-                mNormalCdmaPreferredNetworkMode.setOnPreferenceChangeListener(this);
-                int savingNetwork = Settings.Global.getInt(mResolver,
-                         Settings.Global.BATTERY_SAVER_POWER_SAVING_MODE, defaultNetwork);
-                mPowerSavingCdmaPreferredNetworkMode.setValue(String.valueOf(savingNetwork));
-                mPowerSavingCdmaPreferredNetworkMode.setSummary(mPowerSavingCdmaPreferredNetworkMode.getEntry());
-                mPowerSavingCdmaPreferredNetworkMode.setOnPreferenceChangeListener(this);
-            } else if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
-                mNormalGsmPreferredNetworkMode = (ListPreference) prefSet.findPreference(PREF_KEY_BATTERY_SAVER_NORMAL_GSM_MODE);
-                mPowerSavingGsmPreferredNetworkMode = (ListPreference) prefSet.findPreference(PREF_KEY_BATTERY_SAVER_POWER_SAVING_GSM_MODE);
-                if (!mIs2gSupport && !mIsEnabledLte) {
-                    mNormalGsmPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_except_gsm_lte_choices);
-                    mNormalGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_except_gsm_lte_values);
-                    mPowerSavingGsmPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_except_gsm_lte_choices);
-                    mPowerSavingGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_except_gsm_lte_values);
-                } else if (!mIs2gSupport) {
-                    int select = (mShow4GForLTE == true) ?
-                        R.array.enabled_networks_except_gsm_4g_choices
-                        : R.array.enabled_networks_except_gsm_choices;
-                    mNormalGsmPreferredNetworkMode.setEntries(select);
-                    mNormalGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_except_gsm_values);
-                    mPowerSavingGsmPreferredNetworkMode.setEntries(select);
-                    mPowerSavingGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_except_gsm_values);
-                } else if (mIsShowCdma && BatterySaverHelper.deviceSupportsLteCdma(mContext)) {
-                    mNormalGsmPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_cdma_lte_choices);
-                    mNormalGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_cdma_lte_values);
-                    mPowerSavingGsmPreferredNetworkMode.setEntries(
-                            R.array.enabled_networks_cdma_lte_choices);
-                    mPowerSavingGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_cdma_lte_values);
-                } else if (!mIsShowCdma && BatterySaverHelper.deviceSupportsLteGsm(mContext)) {
-                    int select = (mShow4GForLTE == true) ?
-                        R.array.enabled_networks_4g_choices
-                        : R.array.enabled_networks_lte_choices;
-                    mNormalGsmPreferredNetworkMode.setEntries(select);
-                    mNormalGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_4g_lte_values);
-                    mPowerSavingGsmPreferredNetworkMode.setEntries(select);
-                    mPowerSavingGsmPreferredNetworkMode.setEntryValues(
-                            R.array.enabled_networks_4g_lte_values);
-                }
-                int normalNetwork = Settings.Global.getInt(mResolver,
-                         Settings.Global.BATTERY_SAVER_NORMAL_MODE, defaultNetwork);
-                mNormalGsmPreferredNetworkMode.setValue(String.valueOf(normalNetwork));
-                mNormalGsmPreferredNetworkMode.setSummary(mNormalGsmPreferredNetworkMode.getEntry());
-                mNormalGsmPreferredNetworkMode.setOnPreferenceChangeListener(this);
-                int savingNetwork = Settings.Global.getInt(mResolver,
-                         Settings.Global.BATTERY_SAVER_POWER_SAVING_MODE, defaultNetwork);
-                mPowerSavingGsmPreferredNetworkMode.setValue(String.valueOf(savingNetwork));
-                mPowerSavingGsmPreferredNetworkMode.setSummary(mPowerSavingGsmPreferredNetworkMode.getEntry());
-                mPowerSavingGsmPreferredNetworkMode.setOnPreferenceChangeListener(this);
-                prefSet.removePreference(findPreference(CATEGORY_NETWORK_CDMA));
-            }
         } else {
             mBatterySaverEnabled.setSummary(R.string.pref_battery_saver_enable_no_mobiledata_summary);
             prefSet.removePreference(findPreference(CATEGORY_RADIO));
-            prefSet.removePreference(findPreference(CATEGORY_NETWORK_GSM));
-            prefSet.removePreference(findPreference(CATEGORY_NETWORK_CDMA));
             prefSet.removePreference(findPreference(CATEGORY_NETWORK));
         }
 
@@ -305,28 +200,6 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
         }
     }
 
-    private boolean getItemFromApplications(String packagename, String name, String type, boolean val) {
-        PackageManager pm = mContext.getPackageManager();
-        Resources appResources = null;
-        if (pm != null) {
-            try {
-                appResources = pm.getResourcesForApplication(packagename);
-            } catch (Exception e) {
-                appResources = null;
-            }
-        }
-        if (appResources != null) {
-            int resId = (int) appResources.getIdentifier(name, type, packagename);
-            if (resId > 0) {
-                try {
-                    return appResources.getBoolean(resId);
-                } catch (NotFoundException e) {
-                }
-            }
-        }
-        return val;
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mBatterySaverEnabled) {
@@ -365,30 +238,6 @@ public class BatterySaverSettings extends SettingsPreferenceFragment implements
             Settings.Global.putInt(mResolver,
                 Settings.Global.BATTERY_SAVER_NETWORK_INTERVAL_MODE, val);
             mUserCheckIntervalTime.setSummary(mUserCheckIntervalTime.getEntries()[index]);
-        } else if (preference == mNormalGsmPreferredNetworkMode) {
-            int val = Integer.parseInt((String) newValue);
-            int index = mNormalGsmPreferredNetworkMode.findIndexOfValue((String) newValue);
-            Settings.Global.putInt(mResolver,
-                Settings.Global.BATTERY_SAVER_NORMAL_MODE, val);
-            mNormalGsmPreferredNetworkMode.setSummary(mNormalGsmPreferredNetworkMode.getEntries()[index]);
-        } else if (preference == mPowerSavingGsmPreferredNetworkMode) {
-            int val = Integer.parseInt((String) newValue);
-            int index = mPowerSavingGsmPreferredNetworkMode.findIndexOfValue((String) newValue);
-            Settings.Global.putInt(mResolver,
-                Settings.Global.BATTERY_SAVER_POWER_SAVING_MODE, val);
-            mPowerSavingGsmPreferredNetworkMode.setSummary(mPowerSavingGsmPreferredNetworkMode.getEntries()[index]);
-        } else if (preference == mNormalCdmaPreferredNetworkMode) {
-            int val = Integer.parseInt((String) newValue);
-            int index = mNormalCdmaPreferredNetworkMode.findIndexOfValue((String) newValue);
-            Settings.Global.putInt(mResolver,
-                Settings.Global.BATTERY_SAVER_NORMAL_MODE, val);
-            mNormalCdmaPreferredNetworkMode.setSummary(mNormalCdmaPreferredNetworkMode.getEntries()[index]);
-        } else if (preference == mPowerSavingCdmaPreferredNetworkMode) {
-            int val = Integer.parseInt((String) newValue);
-            int index = mPowerSavingCdmaPreferredNetworkMode.findIndexOfValue((String) newValue);
-            Settings.Global.putInt(mResolver,
-                Settings.Global.BATTERY_SAVER_POWER_SAVING_MODE, val);
-            mPowerSavingCdmaPreferredNetworkMode.setSummary(mPowerSavingCdmaPreferredNetworkMode.getEntries()[index]);
         } else if (preference == mLowBatteryLevel) {
             int val = ((Integer)newValue).intValue();
             Settings.Global.putInt(mResolver,

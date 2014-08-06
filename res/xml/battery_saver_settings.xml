@@ -89,6 +89,12 @@
             android:fragment="com.android.settings.vanir.TeloRadioSettings"
             android:title="@string/telo_radio_settings_title" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="category_battery_saver_network"
+            android:title="@string/battery_saver_network_title" >
+
         <CheckBoxPreference
              android:key="pref_battery_saver_mode_data"
              android:persistent="false"
@@ -100,52 +106,6 @@
              android:persistent="false"
              android:title="@string/pref_battery_saver_nosignal_title"
              android:summary="@string/pref_battery_saver_nosignal_summary" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-            android:key="category_battery_saver_network_gsm"
-            android:title="@string/battery_saver_network_gsm_title" >
-
-        <ListPreference
-             android:key="pref_battery_saver_normal_gsm_mode"
-             android:title="@string/pref_battery_saver_normal_mode_title"
-             android:entries="@array/enabled_networks_gsm_choices"
-             android:entryValues="@array/enabled_networks_gsm_values"
-             android:persistent="false" />
-
-        <ListPreference
-             android:key="pref_battery_saver_power_saving_gsm_mode"
-             android:title="@string/pref_battery_saver_power_saving_mode_title"
-             android:entries="@array/enabled_networks_gsm_choices"
-             android:entryValues="@array/enabled_networks_gsm_values"
-             android:persistent="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-            android:key="category_battery_saver_network_cdma"
-            android:title="@string/battery_saver_network_cdma_title" >
-
-        <ListPreference
-             android:key="pref_battery_saver_normal_cdma_mode"
-             android:title="@string/pref_battery_saver_normal_mode_title"
-             android:entries="@array/enabled_networks_cdma_choices"
-             android:entryValues="@array/enabled_networks_cdma_values"
-             android:persistent="false" />
-
-        <ListPreference
-             android:key="pref_battery_saver_power_saving_cdma_mode"
-             android:title="@string/pref_battery_saver_power_saving_mode_title"
-             android:entries="@array/enabled_networks_cdma_choices"
-             android:entryValues="@array/enabled_networks_cdma_values"
-             android:persistent="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-            android:key="category_battery_saver_network"
-            android:title="@string/battery_saver_network_title" >
 
         <ListPreference
              android:key="pref_battery_saver_mode_network"

@@ -20,6 +20,46 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
+            android:key="category_battery_saver_network_gsm"
+            android:title="@string/battery_saver_network_gsm_title" >
+
+        <ListPreference
+             android:key="pref_battery_saver_normal_gsm_mode"
+             android:title="@string/pref_battery_saver_normal_mode_title"
+             android:entries="@array/enabled_networks_gsm_choices"
+             android:entryValues="@array/enabled_networks_gsm_values"
+             android:persistent="false" />
+
+        <ListPreference
+             android:key="pref_battery_saver_power_saving_gsm_mode"
+             android:title="@string/pref_battery_saver_power_saving_mode_title"
+             android:entries="@array/enabled_networks_gsm_choices"
+             android:entryValues="@array/enabled_networks_gsm_values"
+             android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="category_battery_saver_network_cdma"
+            android:title="@string/battery_saver_network_cdma_title" >
+
+        <ListPreference
+             android:key="pref_battery_saver_normal_cdma_mode"
+             android:title="@string/pref_battery_saver_normal_mode_title"
+             android:entries="@array/enabled_networks_cdma_choices"
+             android:entryValues="@array/enabled_networks_cdma_values"
+             android:persistent="false" />
+
+        <ListPreference
+             android:key="pref_battery_saver_power_saving_cdma_mode"
+             android:title="@string/pref_battery_saver_power_saving_mode_title"
+             android:entries="@array/enabled_networks_cdma_choices"
+             android:entryValues="@array/enabled_networks_cdma_values"
+             android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="telo_radio_options"
         android:title="@string/telo_radio_options_category" >
 
@@ -63,6 +103,6 @@
             android:summary="@string/telo_radio_go_3g_unlock_summary"
             android:defaultValue="true" />
 
-    </PreferenceCategory>   
+    </PreferenceCategory>
 
 </PreferenceScreen>
