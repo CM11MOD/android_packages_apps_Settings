@@ -17,16 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/lab_settings_title">
 
-    <PreferenceCategory
-        android:title="@string/navigation_settings_title"
-        android:key="navigation"/>
-
-     <PreferenceScreen
-        android:key="pie_settings"
-        android:icon="@drawable/ic_settings_pie"
-        android:fragment="com.android.settings.pa.PiePreference"
-        android:title="@string/pa_pie_controls_title" />
-
     <PreferenceScreen
         android:key="gesture_anywhere"
         android:fragment="com.android.settings.chameleonos.labs.gestureanywhere.GestureAnywhereSettings"

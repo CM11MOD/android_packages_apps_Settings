@@ -1,35 +1,49 @@
 package com.android.settings.pa;
 
 import android.app.AlertDialog;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.ContentResolver;
-import android.database.ContentObserver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.text.TextUtils;
+import android.view.IWindowManager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
+import com.android.internal.util.slim.SlimActions;
+import com.vanir.util.Helpers;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-import com.vanir.util.Helpers;
+import com.android.settings.Utils;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-public class PAPieControl extends SettingsPreferenceFragment
-        implements Preference.OnPreferenceChangeListener {
+public class PAPieControl extends SettingsPreferenceFragment implements 
+        CompoundButton.OnCheckedChangeListener, Preference.OnPreferenceChangeListener {
 
-    private static final String PA_PIE_CONTROLS = "pa_pie_controls";
+    private static final String TAG = "PAPieControl";
+
     private static final String PA_PIE_GRAVITY = "pa_pie_gravity";
     private static final String PA_PIE_MODE = "pa_pie_mode";
     private static final String PA_PIE_SIZE = "pa_pie_size";
@@ -41,21 +55,17 @@ public class PAPieControl extends SettingsPreferenceFragment
     private static final String PA_PIE_SEARCH = "pa_pie_search";
     private static final String PA_PIE_LASTAPP = "pa_pie_lastapp";
     private static final String PA_PIE_KILLTASK = "pa_pie_killtask";
-    //private static final String PA_PIE_APPWINDOW = "pa_pie_appwindow";
     private static final String PA_PIE_SCREENSHOT = "pa_pie_screenshot";
     private static final String PA_PIE_ACTNOTIF = "pa_pie_actnotif";
     private static final String PA_PIE_ACTQS = "pa_pie_actqs";
     private static final String PA_PIE_CENTER = "pa_pie_center";
-    //private static final String PA_PIE_STICK = "pa_pie_stick";
     private static final String PA_PIE_NOTIFICATIONS = "pa_pie_notifications";
     private static final String PA_PIE_RESTART = "pa_pie_restart_launcher";
 
     private ListPreference mPieMode;
     private ListPreference mPieSize;
     private ListPreference mPieGravity;
-    private SwitchPreference mPaPieControls;
     private CheckBoxPreference mPieCenter;
-    //private CheckBoxPreference mPieStick;
     private ListPreference mPieTrigger;
     private ListPreference mPieAngle;
     private ListPreference mPieGap;
@@ -66,16 +76,69 @@ public class PAPieControl extends SettingsPreferenceFragment
     private CheckBoxPreference mPieKillTask;
     private CheckBoxPreference mPieActNotif;
     private CheckBoxPreference mPieActQs;
-    //private CheckBoxPreference mPieAppWindow;
     private CheckBoxPreference mPieScreenShot;
     private CheckBoxPreference mPieNotifi;
     private CheckBoxPreference mPieRestart;
+
+    private Switch mEnabledSwitch;
+    private boolean mEnabledPref;
+
+    private ViewGroup mPrefsContainer;
+    private View mDisabledText;
 
     private Context mContext;
     private int mAllowedLocations;
 
     protected Handler mHandler;
     private SettingsObserver mSettingsObserver;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Activity activity = getActivity();
+        mEnabledSwitch = new Switch(activity);
+
+        final int padding = activity.getResources().getDimensionPixelSize(
+                R.dimen.action_bar_switch_padding);
+        mEnabledSwitch.setPaddingRelative(0, 0, padding, 0);
+        mEnabledSwitch.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.disable_fragment, container, false);
+        mPrefsContainer = (ViewGroup) v.findViewById(R.id.prefs_container);
+        mDisabledText = v.findViewById(R.id.disabled_text);
+
+        View prefs = super.onCreateView(inflater, mPrefsContainer, savedInstanceState);
+        mPrefsContainer.addView(prefs);
+
+        return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final Activity activity = getActivity();
+        activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(mEnabledSwitch, new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_VERTICAL | Gravity.END));
+        mEnabledSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 1);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        final Activity activity = getActivity();
+        activity.getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(null);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,18 +151,9 @@ public class PAPieControl extends SettingsPreferenceFragment
 
         mSettingsObserver = new SettingsObserver(new Handler());
 
-        mPaPieControls = (SwitchPreference) findPreference(PA_PIE_CONTROLS);
-        mPaPieControls.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) == 1);
-        mPaPieControls.setOnPreferenceChangeListener(this); 
-
         mPieCenter = (CheckBoxPreference) prefSet.findPreference(PA_PIE_CENTER);
         mPieCenter.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_CENTER, 1) == 1);
-
-        //mPieStick = (CheckBoxPreference) prefSet.findPreference(PA_PIE_STICK);
-        //mPieStick.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-        //        Settings.System.PIE_STICK, 1) == 1);
 
         mPieGravity = (ListPreference) prefSet.findPreference(PA_PIE_GRAVITY);
         int pieGravity = Settings.System.getInt(mContext.getContentResolver(),
@@ -162,10 +216,6 @@ public class PAPieControl extends SettingsPreferenceFragment
         mPieKillTask.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_KILL_TASK, 0) == 1);
 
-        //mPieAppWindow = (CheckBoxPreference) prefSet.findPreference(PA_PIE_APPWINDOW);
-        //mPieAppWindow.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-        //        Settings.System.PIE_APP_WINDOW, 0) == 1);
-
         mPieScreenShot = (CheckBoxPreference) prefSet.findPreference(PA_PIE_SCREENSHOT);
         mPieScreenShot.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_SCREENSHOT, 0) == 1);
@@ -180,7 +230,7 @@ public class PAPieControl extends SettingsPreferenceFragment
 
         mPieNotifi = (CheckBoxPreference) prefSet.findPreference(PA_PIE_NOTIFICATIONS);
         mPieNotifi.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_NOTIFICATIONS, 0) == 1)); 
+                Settings.System.PIE_NOTIFICATIONS, 0) == 1));
 
         mPieRestart = (CheckBoxPreference) prefSet.findPreference(PA_PIE_RESTART);
         mPieRestart.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -190,17 +240,30 @@ public class PAPieControl extends SettingsPreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
+        updateEnabledState();
+
+        // If running on a phone, remove padding around container
+        // and the preference listview
+        if (!Utils.isTablet(getActivity())) {
+            mPrefsContainer.setPadding(0, 0, 0, 0);
+            getListView().setPadding(0, 0, 0, 0);
+        }
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+   @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mPieMenu) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_MENU, 
+                    Settings.System.PIE_MENU,
                     mPieMenu.isChecked() ? 1 : 0);
         } else if (preference == mPieSearch) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_SEARCH, 
+                    Settings.System.PIE_SEARCH,
                     mPieSearch.isChecked() ? 1 : 0);
         } else if (preference == mPiePower) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
@@ -213,9 +276,6 @@ public class PAPieControl extends SettingsPreferenceFragment
         } else if (preference == mPieKillTask) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_KILL_TASK, mPieKillTask.isChecked() ? 1 : 0);
-        //} else if (preference == mPieAppWindow) {
-        //    Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-        //            Settings.System.PIE_APP_WINDOW, mPieAppWindow.isChecked() ? 1 : 0);
         } else if (preference == mPieScreenShot) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_SCREENSHOT, mPieScreenShot.isChecked() ? 1 : 0);
@@ -229,27 +289,22 @@ public class PAPieControl extends SettingsPreferenceFragment
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_CENTER, mPieCenter.isChecked() ? 1 : 0);
         //} else if (preference == mPieStick) {
-        //    Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-        //            Settings.System.PIE_STICK, mPieStick.isChecked() ? 1 : 0);
+        // Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+        // Settings.System.PIE_STICK, mPieStick.isChecked() ? 1 : 0);
         } else if (preference == mPieNotifi) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.PIE_NOTIFICATIONS, mPieNotifi.isChecked() ? 1 : 0);
-            Helpers.restartSystemUI();
+            //Helpers.restartSystemUI();
         } else if (preference == mPieRestart) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_DESKTOP_RESTART_LAUNCHER, mPieRestart.isChecked() ? 1 : 0);
-            Helpers.restartSystemUI();
+            //Helpers.restartSystemUI();
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mPaPieControls) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.PIE_CONTROLS,
-                    (Boolean) newValue ? 1 : 0);
-            return true;
-        } else if (preference == mPieMode) {
+        if (preference == mPieMode) {
             int pieMode = Integer.valueOf((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.PIE_MODE, pieMode);
@@ -268,7 +323,7 @@ public class PAPieControl extends SettingsPreferenceFragment
             int pieAngle = Integer.valueOf((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.PIE_ANGLE, pieAngle);
-            return true; 
+            return true;
         } else if (preference == mPieGap) {
             int pieGap = Integer.valueOf((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
@@ -281,6 +336,17 @@ public class PAPieControl extends SettingsPreferenceFragment
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == mEnabledSwitch) {
+
+            boolean value = ((Boolean)isChecked).booleanValue();
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.PIE_CONTROLS,
+                    value ? 1 : 0);           
+        }
     }
 
     class SettingsObserver extends ContentObserver {
@@ -303,34 +369,41 @@ public class PAPieControl extends SettingsPreferenceFragment
         }
 
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(boolean selfChange, Uri uri) {
             update();
-            Helpers.restartSystemUI();
+            updateEnabledState();
         }
 
         void update() {
             ContentResolver resolver = mContext.getContentResolver();
-            boolean hasNavBarByDefault = getResources().getBoolean(
-                com.android.internal.R.bool.config_showNavigationBar);
 
-            int pieOn = Settings.System.getInt(resolver, 
+            int pieOn = Settings.System.getInt(resolver,
                 Settings.System.PIE_CONTROLS, 0);
             int navbarOn = Settings.System.getInt(resolver,
                 Settings.System.NAVIGATION_BAR_SHOW, 1);
             int pieGravity = Settings.System.getInt(resolver,
                 Settings.System.PIE_GRAVITY, 2);
 
-            if (hasNavBarByDefault && navbarOn == 1) {
-                if (pieOn == 1 && pieGravity == 3) {
-                    Settings.System.putInt(resolver,
-                        Settings.System.NAVIGATION_BAR_SHOW, 0);
+            try {
+                if (SlimActions.isNavBarDefault(getActivity())) {
+                    if (SlimActions.isNavBarEnabled(getActivity()) && (pieOn == 1 && pieGravity == 3)) {
+                            Settings.System.putInt(resolver,
+                                Settings.System.NAVIGATION_BAR_SHOW, 0);
+                    }
+                    if (!SlimActions.isNavBarEnabled(getActivity()) && (pieGravity != 3 || pieOn == 0)) {
+                        Settings.System.putInt(resolver,
+                            Settings.System.NAVIGATION_BAR_SHOW, 1);
+                    }
                 }
-            }
-            
-            if (hasNavBarByDefault && pieOn == 0) {
-                Settings.System.putInt(resolver,
-                    Settings.System.NAVIGATION_BAR_SHOW, 1);
+            } catch (Exception ex) {
             }
         }
+    }
+
+    private void updateEnabledState() {
+        boolean enabled = Settings.System.getInt(getContentResolver(),
+            Settings.System.PIE_CONTROLS, 0) == 1;
+        mPrefsContainer.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        mDisabledText.setVisibility(enabled ? View.GONE : View.VISIBLE);
     }
 }
