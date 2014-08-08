@@ -19,17 +19,11 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/shake_events_title">
 
-    <CheckBoxPreference
-        android:key="enable_shake_events"
-        android:title="@string/shake_events_enabled_title"
-        android:defaultValue="false" />
-
     <PreferenceScreen
         android:key="shake_events_disabled_apps"
         android:fragment="com.android.settings.slim.dslv.ButtonsListViewSettings"
         android:title="@string/shake_events_disabled_title"
-        android:summary="@string/shake_events_disabled_summary"
-        android:dependency="enable_shake_events">
+        android:summary="@string/shake_events_disabled_summary">
         <extra android:name="buttonMode" android:value="7" />
         <extra android:name="maxAllowedButtons" android:value="30" />
         <extra android:name="disableLongpress" android:value="true" />
@@ -42,18 +36,15 @@
 
         <Preference
             android:key="shake_event_x"
-            android:title="@string/shake_event_x_title"
-            android:dependency="enable_shake_events" />
+            android:title="@string/shake_event_x_title" />
 
         <Preference
             android:key="shake_event_y"
-            android:title="@string/shake_event_y_title"
-            android:dependency="enable_shake_events" />
+            android:title="@string/shake_event_y_title" />
 
         <Preference
             android:key="shake_event_z"
-            android:title="@string/shake_event_z_title"
-            android:dependency="enable_shake_events" />
+            android:title="@string/shake_event_z_title" />
 
     </PreferenceCategory>
 

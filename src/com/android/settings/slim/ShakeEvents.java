@@ -17,6 +17,7 @@
 package com.android.settings.slim;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -26,6 +27,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -33,6 +35,15 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.text.TextUtils;
+import android.view.IWindowManager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.android.internal.util.slim.AppHelper;
 import com.android.internal.util.slim.ButtonsConstants;
@@ -42,9 +53,11 @@ import com.android.internal.util.slim.DeviceUtils.FilteredDeviceFeaturesArray;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.slim.util.ShortcutPickerHelper;
+import com.android.settings.Utils;
 
 public class ShakeEvents extends SettingsPreferenceFragment
-        implements Preference.OnPreferenceChangeListener,
+        implements CompoundButton.OnCheckedChangeListener,
+        Preference.OnPreferenceChangeListener,
         ShortcutPickerHelper.OnPickListener {
 
     private static final String KEY_ENABLE_SHAKE_EVENTS = "enable_shake_events";
@@ -65,6 +78,60 @@ public class ShakeEvents extends SettingsPreferenceFragment
 
     private SettingsObserver mSettingsObserver = new SettingsObserver(new Handler());
 
+    private Switch mEnabledSwitch;
+    private boolean mEnabledPref;
+
+    private ViewGroup mPrefsContainer;
+    private View mDisabledText;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Activity activity = getActivity();
+        mEnabledSwitch = new Switch(activity);
+
+        final int padding = activity.getResources().getDimensionPixelSize(
+                R.dimen.action_bar_switch_padding);
+        mEnabledSwitch.setPaddingRelative(0, 0, padding, 0);
+        mEnabledSwitch.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.disable_fragment, container, false);
+        mPrefsContainer = (ViewGroup) v.findViewById(R.id.prefs_container);
+        mDisabledText = v.findViewById(R.id.disabled_text);
+
+        View prefs = super.onCreateView(inflater, mPrefsContainer, savedInstanceState);
+        mPrefsContainer.addView(prefs);
+
+        return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final Activity activity = getActivity();
+        activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(mEnabledSwitch, new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_VERTICAL | Gravity.END));
+        mEnabledSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHAKE_LISTENER_ENABLED, 0) == 1);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        final Activity activity = getActivity();
+        activity.getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(null);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +141,6 @@ public class ShakeEvents extends SettingsPreferenceFragment
         mPicker = new ShortcutPickerHelper(getActivity(), this);
 
         PreferenceScreen prefSet = getPreferenceScreen();
-
-        mShakeEnabled = (CheckBoxPreference) prefSet.findPreference(KEY_ENABLE_SHAKE_EVENTS);
-        mShakeEnabled.setOnPreferenceChangeListener(this);
 
         mShakeX = (Preference) prefSet.findPreference(KEY_SHAKE_EVENT_X);
         mShakeY = (Preference) prefSet.findPreference(KEY_SHAKE_EVENT_Y);
@@ -88,6 +152,7 @@ public class ShakeEvents extends SettingsPreferenceFragment
         super.onResume();
         updateSettings();
         mSettingsObserver.observe();
+        updateEnabledState();
     }
 
     @Override
@@ -97,8 +162,6 @@ public class ShakeEvents extends SettingsPreferenceFragment
     }
 
     private void updateSettings() {
-        mShakeEnabled.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.SHAKE_LISTENER_ENABLED, 0) == 1);
         mShakeX.setSummary(returnFriendlyName(0));
         mShakeY.setSummary(returnFriendlyName(1));
         mShakeZ.setSummary(returnFriendlyName(2));
@@ -138,10 +201,6 @@ public class ShakeEvents extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mShakeEnabled) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.SHAKE_LISTENER_ENABLED, (Boolean) newValue ? 1 : 0);
-        }
         return true;
     }
 
@@ -280,6 +339,25 @@ public class ShakeEvents extends SettingsPreferenceFragment
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
             updateSettings();
+            updateEnabledState();
         }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == mEnabledSwitch) {
+
+            boolean value = ((Boolean)isChecked).booleanValue();
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.SHAKE_LISTENER_ENABLED,
+                    value ? 1 : 0);           
+        }
+    }
+
+    private void updateEnabledState() {
+        boolean enabled = Settings.System.getInt(getContentResolver(),
+                Settings.System.SHAKE_LISTENER_ENABLED, 0) == 1;
+        mPrefsContainer.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        mDisabledText.setVisibility(enabled ? View.GONE : View.VISIBLE);
     }
 }
