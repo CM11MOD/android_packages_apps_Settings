@@ -16,12 +16,16 @@
 
 package com.android.settings.chameleonos.labs;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -35,11 +39,24 @@ import com.android.settings.SettingsPreferenceFragment;
 public class LabSettings extends SettingsPreferenceFragment
         implements OnSharedPreferenceChangeListener {
 
+    private static final String KEY_SHORTCUT = "shortcut";
+    private static final String PREF_APP_SIDEBAR = "app_sidebar";
+
+    private PreferenceGroup mShortcut;
+    private Preference mAppSidebar;
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         addPreferencesFromResource(R.xml.chaos_lab_prefs);
+
+        PreferenceScreen prefSet = getPreferenceScreen();
+        mShortcut = (PreferenceGroup) prefSet.findPreference(KEY_SHORTCUT);
+
+        if (mShortcut != null) {
+            mAppSidebar = prefSet.findPreference(PREF_APP_SIDEBAR);
+        }
 
         initUI();
     }
@@ -50,6 +67,7 @@ public class LabSettings extends SettingsPreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
+        updateAppsidebarState();
     }
 
     @Override
@@ -64,5 +82,12 @@ public class LabSettings extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    private void updateAppsidebarState() {
+        boolean Enabled = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.APP_SIDEBAR_ENABLED, 0, ActivityManager.getCurrentUser()) == 1;
+        mAppSidebar.setSummary(Enabled
+                ? R.string.enabled : R.string.disabled);
     }
 }

@@ -19,18 +19,10 @@ limitations under the License.
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/app_sidebar_title" >
 
-    <SwitchPreference
-        android:key="sidebar_enable"
-        android:title="@string/app_sidebar_enable_title"
-        android:summaryOn="@string/app_sidebar_enable_summaryOn"
-        android:summaryOff="@string/app_sidebar_enable_summaryOff"
-        android:defaultValue="false" />
-
     <Preference
         android:key="sidebar_setup_items"
         android:title="@string/app_sidebar_setup_items_title"
-        android:summary="@string/app_sidebar_setup_items_summary"
-        android:dependency="sidebar_enable" />
+        android:summary="@string/app_sidebar_setup_items_summary" />
 
     <ListPreference
         android:key="sidebar_position"
@@ -38,15 +30,13 @@ limitations under the License.
         android:summary="@string/app_sidebar_position_summary"
         android:entries="@array/app_sidebar_position_entries"
         android:entryValues="@array/app_sidebar_position_values"
-        android:defaultValue="0"
-        android:dependency="sidebar_enable" />
+        android:defaultValue="0" />
 
     <CheckBoxPreference
         android:key="sidebar_hide_labels"
         android:title="@string/app_sidebar_hide_labels_title"
         android:summary="@string/app_sidebar_hide_labels_summary"
-        android:defaultValue="false"
-        android:dependency="sidebar_enable" />
+        android:defaultValue="false" />
 
     <com.android.settings.slim.SeekBarPreference
         android:key="sidebar_transparency"
@@ -56,8 +46,7 @@ limitations under the License.
         settings:min="0"
         settings:unitsLeft=""
         settings:unitsRight="%"
-        android:defaultValue="0"
-        android:dependency="sidebar_enable" />
+        android:defaultValue="0" />
 
     <PreferenceCategory
         android:title="@string/trigger_category" />
@@ -70,8 +59,7 @@ limitations under the License.
         android:max="64"
         settings:min="4"
         settings:unitsLeft=""
-        settings:unitsRight="px"
-        android:dependency="sidebar_enable" />
+        settings:unitsRight="px" />
 
     <com.android.settings.slim.SeekBarPreference
         android:key="trigger_top"
@@ -81,8 +69,7 @@ limitations under the License.
         android:max="99"
         settings:min="0"
         settings:unitsLeft=""
-        settings:unitsRight="%"
-        android:dependency="sidebar_enable" />
+        settings:unitsRight="%" />
 
     <com.android.settings.slim.SeekBarPreference
         android:key="trigger_bottom"
@@ -92,7 +79,6 @@ limitations under the License.
         android:max="100"
         settings:min="1"
         settings:unitsLeft=""
-        settings:unitsRight="%"
-        android:dependency="sidebar_enable" />
+        settings:unitsRight="%" />
 
 </PreferenceScreen>
