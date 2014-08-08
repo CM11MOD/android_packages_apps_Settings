@@ -27,6 +27,12 @@
         android:icon="@drawable/ic_settings_gesture_anywhere"
         android:title="@string/gesture_anywhere_title" />
 
+    <PreferenceScreen
+        android:key="edge_swipe_navigation"
+        android:fragment="com.android.settings.cyanogenmod.EdgeSwipeNavigation"
+        android:icon="@drawable/ic_bars"
+        android:title="@string/edge_swipe_title" />
+
     <PreferenceCategory
         android:title="@string/shortcut_settings_title"
         android:key="shortcut"/>
@@ -36,12 +42,6 @@
         android:fragment="com.android.settings.chameleonos.AppSidebar"
         android:icon="@drawable/ic_interface_app_sidebar" 
         android:title="@string/app_sidebar_title" />
-
-    <PreferenceScreen
-        android:key="edge_swipe_navigation"
-        android:fragment="com.android.settings.cyanogenmod.EdgeSwipeNavigation"
-        android:icon="@drawable/ic_bars"
-        android:title="@string/edge_swipe_title" />
 
     <PreferenceScreen
         android:key="circle_app_sidebar"
