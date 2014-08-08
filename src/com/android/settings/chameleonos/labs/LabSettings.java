@@ -40,14 +40,18 @@ public class LabSettings extends SettingsPreferenceFragment
         implements OnSharedPreferenceChangeListener {
 
     private static final String KEY_SHORTCUT = "shortcut";
+    private static final String CATERGORY_GESTURE = "gesture";
     private static final String PREF_APP_SIDEBAR = "app_sidebar";
     private static final String PREF_CIRCLE_SIDEBAR = "circle_app_sidebar";
     private static final String PREF_SHAKE_EVENT = "shake_events";
+    private static final String PREF_GESTURE_ANYWHERE = "gesture_anywhere";
 
     private PreferenceGroup mShortcut;
+    private PreferenceGroup mGesture;
     private Preference mAppSidebar;
     private Preference mCircleSidebar;
     private Preference mShakeEvent;
+    private Preference mGestureAny;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -57,11 +61,16 @@ public class LabSettings extends SettingsPreferenceFragment
 
         PreferenceScreen prefSet = getPreferenceScreen();
         mShortcut = (PreferenceGroup) prefSet.findPreference(KEY_SHORTCUT);
+        mGesture = (PreferenceGroup) prefSet.findPreference(CATERGORY_GESTURE);
 
         if (mShortcut != null) {
             mAppSidebar = prefSet.findPreference(PREF_APP_SIDEBAR);
             mCircleSidebar = prefSet.findPreference(PREF_CIRCLE_SIDEBAR);
             mShakeEvent = prefSet.findPreference(PREF_SHAKE_EVENT);
+        }
+
+        if (mGesture != null) {
+            mGestureAny = prefSet.findPreference(PREF_GESTURE_ANYWHERE);
         }
 
         initUI();
@@ -76,6 +85,7 @@ public class LabSettings extends SettingsPreferenceFragment
         updateAppsidebarState();
         updateCirclesidebarState();
         updateShakeEventsState();
+        updateGestureAnyState();
     }
 
     @Override
@@ -110,6 +120,13 @@ public class LabSettings extends SettingsPreferenceFragment
         boolean Enabled = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.SHAKE_LISTENER_ENABLED, 0, ActivityManager.getCurrentUser()) == 1;
         mShakeEvent.setSummary(Enabled
+                ? R.string.enabled : R.string.disabled);
+    }
+
+    private void updateGestureAnyState() {
+        boolean Enabled = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.GESTURE_ANYWHERE_ENABLED, 0, ActivityManager.getCurrentUser()) == 1;
+        mGestureAny.setSummary(Enabled
                 ? R.string.enabled : R.string.disabled);
     }
 }
