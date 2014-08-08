@@ -41,9 +41,11 @@ public class LabSettings extends SettingsPreferenceFragment
 
     private static final String KEY_SHORTCUT = "shortcut";
     private static final String PREF_APP_SIDEBAR = "app_sidebar";
+    private static final String PREF_CIRCLE_SIDEBAR = "circle_app_sidebar";
 
     private PreferenceGroup mShortcut;
     private Preference mAppSidebar;
+    private Preference mCircleSidebar;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -56,6 +58,7 @@ public class LabSettings extends SettingsPreferenceFragment
 
         if (mShortcut != null) {
             mAppSidebar = prefSet.findPreference(PREF_APP_SIDEBAR);
+            mCircleSidebar = prefSet.findPreference(PREF_CIRCLE_SIDEBAR);
         }
 
         initUI();
@@ -68,6 +71,7 @@ public class LabSettings extends SettingsPreferenceFragment
     public void onResume() {
         super.onResume();
         updateAppsidebarState();
+        updateCirclesidebarState();
     }
 
     @Override
@@ -88,6 +92,13 @@ public class LabSettings extends SettingsPreferenceFragment
         boolean Enabled = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.APP_SIDEBAR_ENABLED, 0, ActivityManager.getCurrentUser()) == 1;
         mAppSidebar.setSummary(Enabled
+                ? R.string.enabled : R.string.disabled);
+    }
+
+    private void updateCirclesidebarState() {
+        boolean Enabled = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.ENABLE_APP_CIRCLE_BAR, 0, ActivityManager.getCurrentUser()) == 1;
+        mCircleSidebar.setSummary(Enabled
                 ? R.string.enabled : R.string.disabled);
     }
 }
