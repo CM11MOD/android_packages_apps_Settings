@@ -117,6 +117,7 @@ import com.android.settings.slim.DisplayRotation;
 import com.android.settings.slim.NotificationService;
 import com.android.settings.slim.quicksettings.QuickSettingsTiles;
 import com.android.settings.slim.QuietHours;
+import com.android.settings.slim.QuietHoursEnabler;
 import com.android.settings.slim.ShakeEvents;
 import com.android.settings.slim.themes.ThemeEnabler;
 import com.android.settings.tts.TextToSpeechSettings;
@@ -1034,6 +1035,7 @@ public class Settings extends PreferenceActivity
         private final ProfileEnabler mProfileEnabler;
         private final LocationEnabler mLocationEnabler;
         private final BatterySaverEnabler mBatterySaverEnabler;
+        private final QuietHoursEnabler mQuietHoursEnabler;
         private final VoiceWakeupEnabler mVoiceWakeupEnabler;
         private AuthenticatorHelper mAuthHelper;
         private DevicePolicyManager mDevicePolicyManager;
@@ -1059,6 +1061,7 @@ public class Settings extends PreferenceActivity
                     || header.id == R.id.mobile_network_settings
                     || header.id == R.id.profiles_settings
                     || header.id == R.id.power_saver_mode
+                    || header.id == R.id.quiet_hours_settings
                     || header.id == R.id.voice_wakeup_settings
                     || header.id == R.id.location_settings) {
                 return HEADER_TYPE_SWITCH;
@@ -1111,6 +1114,7 @@ public class Settings extends PreferenceActivity
             mProfileEnabler = new ProfileEnabler(context, new Switch(context));
             mLocationEnabler = new LocationEnabler(context, new Switch(context));
             mBatterySaverEnabler = new BatterySaverEnabler(context, new Switch(context));
+            mQuietHoursEnabler = new QuietHoursEnabler(context, new Switch(context));
             mVoiceWakeupEnabler = new VoiceWakeupEnabler(context, new Switch(context));
             mDevicePolicyManager = dpm;
         }
@@ -1193,6 +1197,8 @@ public class Settings extends PreferenceActivity
                         mLocationEnabler.setSwitch(holder.switch_);
                     } else if (header.id == R.id.power_saver_mode) {
                         mBatterySaverEnabler.setSwitch(holder.switch_);
+                    } else if (header.id == R.id.quiet_hours_settings) {
+                        mQuietHoursEnabler.setSwitch(holder.switch_);
                     } else if (header.id == R.id.voice_wakeup_settings) {
                         mVoiceWakeupEnabler.setSwitch(holder.switch_);
                     }
@@ -1273,6 +1279,7 @@ public class Settings extends PreferenceActivity
             mProfileEnabler.resume();
             mLocationEnabler.resume();
             mBatterySaverEnabler.resume();
+            mQuietHoursEnabler.resume();
             mVoiceWakeupEnabler.resume();
         }
 
@@ -1284,6 +1291,7 @@ public class Settings extends PreferenceActivity
             mProfileEnabler.pause();
             mLocationEnabler.pause();
             mBatterySaverEnabler.pause();
+            mQuietHoursEnabler.pause();
             mVoiceWakeupEnabler.pause();
         }
     }

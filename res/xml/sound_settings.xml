@@ -20,15 +20,6 @@
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
-            android:key="category_automation_effects"
-            android:title="@string/automation_effects_title"/>
-
-    <PreferenceScreen
-        android:key="quiet_hours"
-        android:fragment="com.android.settings.slim.QuietHours"
-        android:title="@string/quiet_hours_title" />
-
-    <PreferenceCategory
         android:key="button_headsethook"
         android:title="@string/button_headsethook_title" >
 

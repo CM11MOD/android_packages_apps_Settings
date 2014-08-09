@@ -18,6 +18,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <!-- Optimizations -->
+    <header android:id="@+id/category_presets"
+        android:title="@string/category_presets_title" />
+
     <!-- Battery Saver Mode -->
     <header
         settings:includeXmlForSearch="@xml/battery_saver_settings"
@@ -25,6 +29,21 @@
         android:fragment="com.android.settings.omni.BatterySaverSettings"
         android:title="@string/battery_saver_title"
         android:icon="@drawable/ic_settings_powersaver" />
+
+    <!-- QuietHours -->
+    <header
+        settings:includeXmlForSearch="@xml/quiet_hours_settings"
+        android:id="@+id/quiet_hours_settings"
+        android:icon="@drawable/ic_quiethours"
+        android:fragment="com.android.settings.slim.QuietHours"
+        android:title="@string/quiet_hours_title" />
+
+    <!-- Profiles -->
+    <header
+        android:id="@+id/profiles_settings"
+        android:icon="@drawable/ic_settings_profiles"
+        android:fragment="com.android.settings.profiles.ProfilesSettings"
+        android:title="@string/profiles_settings_title" />
 
     <!-- WIRELESS and NETWORKS -->
     <header android:id="@+id/wireless_section"
@@ -264,14 +283,7 @@
     <header android:id="@+id/personal_section"
         android:title="@string/header_category_personal" />
 
-    <!-- Profiles -->
-    <header
-        android:id="@+id/profiles_settings"
-        android:icon="@drawable/ic_settings_profiles"
-        android:fragment="com.android.settings.profiles.ProfilesSettings"
-        android:title="@string/profiles_settings_title" />
-
-     <!-- Voice Wakeup -->
+    <!-- Voice Wakeup -->
     <header
         settings:excludeFromSearch="true"
         android:fragment="com.android.settings.voicewakeup.VoiceWakeupSettings"

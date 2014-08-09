@@ -159,7 +159,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private Preference mPowerSoundsRingtone;
     private ListPreference mCameraSounds;
     private ListPreference mAnnoyingNotifications;
-    private PreferenceScreen mQuietHours;
     private SeekBarPreference mVibrationDuration;
     private CheckBoxPreference mHeadsetHookLaunchVoice;
     private SliderPreference mVolumePanelTimeout;
@@ -377,16 +376,6 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         mAnnoyingNotifications.setValue(Integer.toString(notificationThreshold));
         mAnnoyingNotifications.setOnPreferenceChangeListener(this);
 
-        mQuietHours = (PreferenceScreen) findPreference(KEY_QUIET_HOURS);
-        if (Settings.System.getInt(resolver, Settings.System.QUIET_HOURS_ENABLED, 0) == 1) {
-            mQuietHours.setSummary(getString(R.string.quiet_hours_active_from) + " " +
-                    returnTime(Settings.System.getString(resolver, Settings.System.QUIET_HOURS_START))
-                    + " " + getString(R.string.quiet_hours_active_to) + " " +
-                    returnTime(Settings.System.getString(resolver, Settings.System.QUIET_HOURS_END)));
-        } else {
-            mQuietHours.setSummary(getString(R.string.quiet_hours_summary));
-        }
-
         initDockSettings();
     }
 
@@ -438,18 +427,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private void updateState(boolean force) {
         if (getActivity() == null) return;
         ContentResolver resolver = getContentResolver();
-
         mRingMode.setValue(getPhoneRingModeSettingValue());
-
-        if (Settings.System.getInt(resolver, Settings.System.QUIET_HOURS_ENABLED, 0) == 1) {
-            mQuietHours.setSummary(getString(R.string.quiet_hours_active_from) + " " +
-                    returnTime(Settings.System.getString(resolver, Settings.System.QUIET_HOURS_START))
-                    + " " + getString(R.string.quiet_hours_active_to) + " " +
-                    returnTime(Settings.System.getString(resolver, Settings.System.QUIET_HOURS_END)));
-        } else {
-            mQuietHours.setSummary(getString(R.string.quiet_hours_summary));
-        }
-
         mRingMode.setSummary(mRingMode.getEntry());
     }
 

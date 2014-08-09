@@ -413,13 +413,22 @@ public class QuietHours extends SettingsPreferenceFragment implements
     private void updateQuietMode() {
         mQuietMode = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QUIET_HOURS_ENABLED, 0);
+        int mQuietState = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QUIET_HOURS_STATE, 1);
         if (mQuietMode == 3 || mQuietMode == 4) {
             mQuietMode = 1;
-        }
+         }
         if (mQuietMode == 2 || mQuietMode == 3) {
             mPrefsMode = 2;
         } else {
             mPrefsMode = 1;
+        }
+        if (mQuietMode == 1 || mQuietMode == 3 || mQuietMode == 4) {
+            Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.QUIET_HOURS_STATE, 1);
+        } else {
+            Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.QUIET_HOURS_STATE, 2);
         }
     }
 
