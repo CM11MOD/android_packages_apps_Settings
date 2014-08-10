@@ -32,19 +32,6 @@
             android:summaryOn="@string/animation_no_scroll_summary_on" />
 
         <com.android.settings.widget.SeekBarPreference2
-            android:key="touch_slop"
-            android:persistent="false"
-            android:title="@string/animation_touchslop_title"
-            android:summary="@string/animation_touchslop_summary"
-            android:max="16"
-            settings:min="4"
-            settings:interval="2"
-            settings:unitsLeft=""
-            settings:unitsRight="px"
-            android:defaultValue="8"
-            android:dependency="animation_no_scroll" />
-
-        <com.android.settings.widget.SeekBarPreference2
             android:key="animation_fling_velocity"
             android:persistent="false"
             android:title="@string/animation_fling_velocity_title"
