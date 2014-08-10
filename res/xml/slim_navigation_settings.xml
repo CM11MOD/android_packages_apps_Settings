@@ -26,11 +26,25 @@
     <PreferenceScreen
         android:key="navbar_settings"
         android:fragment="com.android.settings.slim.NavbarSettings"
+        android:icon="@drawable/ic_dt_navbar_dimen"
         android:title="@string/navigation_bar" />
+
+
+    <PreferenceScreen
+        android:key="navbar_targets_settings"
+        android:fragment="com.android.settings.slim.dslv.ButtonsListViewSettings"
+        android:icon="@drawable/ic_dt_navbar_ring"
+        android:title="@string/navbar_targets_title">
+            <extra android:name="buttonMode" android:value="3" />
+            <extra android:name="maxAllowedButtons" android:value="5" />
+            <extra android:name="actionValues" android:value="shortcut_action_navring_values" />
+            <extra android:name="actionEntries" android:value="shortcut_action_navring_entries" />
+    </PreferenceScreen>
 
     <PreferenceScreen
         android:key="pie_settings"
         android:fragment="com.android.settings.pa.PiePreference"
+        android:icon="@drawable/ic_settings_pie"
         android:title="@string/pa_pie_controls_title" />
 
     <PreferenceCategory
@@ -38,8 +52,10 @@
         android:key="navigation"/>
 
     <PreferenceScreen
+        settings:includeXmlForSearch="@xml/power_menu_fragment"
         android:key="navbar_targets_settings"
         android:fragment="com.android.settings.slim.dslv.ButtonsListViewSettings"
+        android:icon="@drawable/ic_settings_pie"
         android:title="@string/power_menu_title">
             <extra android:name="buttonMode" android:value="6" />
             <extra android:name="maxAllowedButtons" android:value="8" />

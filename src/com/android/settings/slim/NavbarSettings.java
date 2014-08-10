@@ -59,7 +59,6 @@ public class NavbarSettings extends SettingsPreferenceFragment implements
     private static final String PREF_MENU_LOCATION = "pref_navbar_menu_location";
     private static final String PREF_NAVBAR_MENU_DISPLAY = "pref_navbar_menu_display";
     private static final String PREF_BUTTON = "navbar_button_settings";
-    private static final String PREF_RING = "navbar_targets_settings";
     private static final String PREF_STYLE_DIMEN = "navbar_style_dimen_settings";
     private static final String PREF_NAVIGATION_BAR_CAN_MOVE = "navbar_can_move";
 
@@ -69,7 +68,6 @@ public class NavbarSettings extends SettingsPreferenceFragment implements
     ListPreference mNavBarMenuDisplay;
     CheckBoxPreference mNavigationBarCanMove;
     PreferenceScreen mButtonPreference;
-    PreferenceScreen mRingPreference;
     PreferenceScreen mStyleDimenPreference;
 
     private Switch mEnabledSwitch;
@@ -163,7 +161,6 @@ public class NavbarSettings extends SettingsPreferenceFragment implements
         mNavBarMenuDisplay.setOnPreferenceChangeListener(this);
 
         mButtonPreference = (PreferenceScreen) findPreference(PREF_BUTTON);
-        mRingPreference = (PreferenceScreen) findPreference(PREF_RING);
         mStyleDimenPreference = (PreferenceScreen) findPreference(PREF_STYLE_DIMEN);
 
         mNavigationBarCanMove = (CheckBoxPreference) findPreference(PREF_NAVIGATION_BAR_CAN_MOVE);
@@ -199,7 +196,6 @@ public class NavbarSettings extends SettingsPreferenceFragment implements
     private void updateNavbarPreferences(boolean show) {
         mNavBarMenuDisplay.setEnabled(show);
         mButtonPreference.setEnabled(show);
-        mRingPreference.setEnabled(show);
         mStyleDimenPreference.setEnabled(show);
         if (mNavigationBarCanMove != null) {
             mNavigationBarCanMove.setEnabled(show);

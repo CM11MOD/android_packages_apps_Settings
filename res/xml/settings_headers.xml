@@ -173,7 +173,7 @@
     <header
         settings:includeXmlForSearch="@xml/notifications_settings"
         android:id="@+id/notification_settings"
-        android:icon="@drawable/ic_settings_notifications"
+        android:icon="@drawable/ic_dt_notification"
         android:fragment="com.android.settings.slim.NotificationService"
         android:title="@string/notifications_settings_title" />
 
