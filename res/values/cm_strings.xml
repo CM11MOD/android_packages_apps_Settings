@@ -819,13 +819,6 @@
     <string name="storage_format_final_desc">Erase the <xliff:g id="storage" example="SD card">%s</xliff:g>, deleting all files stored there? You can\'t reverse this action!</string>
     <string name="storage_format_gesture_explanation">You need to draw your unlock pattern to confirm that you want to erase the <xliff:g id="storage" example="SD card">%s</xliff:g>.</string>
 
-    <!-- Wifi AP: connected devices -->
-    <string name="wifi_ap_clients_title">Connected devices</string>
-    <string name="wifi_ap_client_ap_disabled">Hotspot is disabled</string>
-    <string name="wifi_ap_client_none_connected">No client is connected</string>
-    <string name="wifi_ap_client_reachable"><xliff:g id="addr">%1$s</xliff:g> - reachable</string>
-    <string name="wifi_ap_client_unreachable"><xliff:g id="addr">%1$s</xliff:g> - unreachable</string>
-
     <!-- Proximity wake -->
     <string name="proximity_wake_title">Prevent accidental wake-up</string>
     <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
