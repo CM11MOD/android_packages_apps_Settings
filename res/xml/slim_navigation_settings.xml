@@ -55,7 +55,7 @@
         settings:includeXmlForSearch="@xml/power_menu_fragment"
         android:key="navbar_targets_settings"
         android:fragment="com.android.settings.slim.dslv.ButtonsListViewSettings"
-        android:icon="@drawable/ic_settings_pie"
+        android:icon="@drawable/ic_dt_powermenu"
         android:title="@string/power_menu_title">
             <extra android:name="buttonMode" android:value="6" />
             <extra android:name="maxAllowedButtons" android:value="8" />
