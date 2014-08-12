@@ -48,7 +48,7 @@ import java.net.URISyntaxException;
 
 import com.android.settings.omnirom.omnigears.preference.AppSelectListPreference;
 
-public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
+public class NotificationDrawerSettings extends SettingsPreferenceFragment
             implements OnPreferenceChangeListener  {
 
     public static final String TAG = "NotificationDrawerSettings";
@@ -65,16 +65,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
             "noti_reminder_interval";
     private static final String PREF_NOTI_REMINDER_RINGTONE =
             "noti_reminder_ringtone";
-    private static final String PRE_QUICK_PULLDOWN =
-            "quick_pulldown";
-    private static final String PRE_SMART_PULLDOWN =
-            "smart_pulldown";
-    private static final String PRE_COLLAPSE_PANEL =
-            "collapse_panel";
-    private static final String PREF_TILES_STYLE =
-            "quicksettings_tiles_style";
-    private static final String PREF_TILE_PICKER =
-            "tile_picker";
 
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
@@ -90,9 +80,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
     ListPreference mReminderInterval;
     ListPreference mReminderMode;
     RingtonePreference mReminderRingtone;
-    ListPreference mQuickPulldown;
-    ListPreference mSmartPulldown;
-    CheckBoxPreference mCollapsePanel;
     private AppSelectListPreference mClockShortcut;
     private AppSelectListPreference mCalendarShortcut;
 
@@ -100,7 +87,7 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.notification_drawer_qs_settings);
+        addPreferencesFromResource(R.xml.notification_drawer_settings);
 
         PreferenceScreen prefs = getPreferenceScreen();
 
@@ -183,32 +170,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
         mReminderRingtone.setOnPreferenceChangeListener(this);
         mReminderRingtone.setEnabled(mode != 0);
 
-        mQuickPulldown = (ListPreference) findPreference(PRE_QUICK_PULLDOWN);
-        mSmartPulldown = (ListPreference) findPreference(PRE_SMART_PULLDOWN);
-        if (!DeviceUtils.isPhone(getActivity())) {
-            prefs.removePreference(mQuickPulldown);
-            prefs.removePreference(mSmartPulldown);
-        } else {
-            // Quick Pulldown
-            mQuickPulldown.setOnPreferenceChangeListener(this);
-            int statusQuickPulldown = Settings.System.getInt(getContentResolver(),
-                    Settings.System.QS_QUICK_PULLDOWN, 0);
-            mQuickPulldown.setValue(String.valueOf(statusQuickPulldown));
-            updateQuickPulldownSummary(statusQuickPulldown);
-
-            // Smart Pulldown
-            mSmartPulldown.setOnPreferenceChangeListener(this);
-            int smartPulldown = Settings.System.getIntForUser(getContentResolver(),
-                    Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
-            mSmartPulldown.setValue(String.valueOf(smartPulldown));
-            updateSmartPulldownSummary(smartPulldown);
-        }
-
-        mCollapsePanel = (CheckBoxPreference) findPreference(PRE_COLLAPSE_PANEL);
-        mCollapsePanel.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.QS_COLLAPSE_PANEL, 0) == 1);
-        mCollapsePanel.setOnPreferenceChangeListener(this);
-
         mClockShortcut = (AppSelectListPreference)prefs.findPreference(CLOCK_SHORTCUT);
         mClockShortcut.setOnPreferenceChangeListener(this);
 
@@ -216,30 +177,11 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
         mCalendarShortcut.setOnPreferenceChangeListener(this);
 
         updateClockCalendarSummary();
-        updateQuickSettingsOptions();
-    }
-
-    private void updateQuickSettingsOptions() {
-        Preference tilesStyle = (Preference) findPreference(PREF_TILES_STYLE);
-        Preference tilesPicker = (Preference) findPreference(PREF_TILE_PICKER);
-        String qsConfig = Settings.System.getStringForUser(getContentResolver(),
-                Settings.System.QUICK_SETTINGS_TILES, UserHandle.USER_CURRENT);
-        boolean hideSettingsPanel = qsConfig != null && qsConfig.isEmpty();
-        mQuickPulldown.setEnabled(!hideSettingsPanel);
-        mSmartPulldown.setEnabled(!hideSettingsPanel);
-        tilesStyle.setEnabled(!hideSettingsPanel);
-        if (hideSettingsPanel) {
-            tilesPicker.setSummary(getResources().getString(R.string.disable_qs));
-        } else {
-            tilesPicker.setSummary(getResources().getString(R.string.tile_picker_summary));
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        QuickSettingsUtil.updateAvailableTiles(getActivity());
-        updateQuickSettingsOptions();
     }
 
     @Override
@@ -254,23 +196,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
             float valNav = Float.parseFloat((String) newValue);
             Settings.System.putFloat(getContentResolver(),
                     Settings.System.NOTIFICATION_ALPHA, valNav / 100);
-            return true;
-        } else if (preference == mQuickPulldown) {
-            int statusQuickPulldown = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.QS_QUICK_PULLDOWN,
-                    statusQuickPulldown);
-            updateQuickPulldownSummary(statusQuickPulldown);
-            return true;
-        } else if (preference == mSmartPulldown) {
-            int smartPulldown = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.QS_SMART_PULLDOWN,
-                    smartPulldown);
-            updateSmartPulldownSummary(smartPulldown);
-            return true;
-        } else if (preference == mCollapsePanel) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.QS_COLLAPSE_PANEL,
-                    (Boolean) newValue ? 1 : 0);
             return true;
         } else if (preference == mReminder) {
             Settings.System.putIntForUser(getContentResolver(),
@@ -313,45 +238,6 @@ public class NotificationDrawerQsSettings extends SettingsPreferenceFragment
             updateClockCalendarSummary();
         }
         return false;
-    }
-
-    private void updateQuickPulldownSummary(int value) {
-        Resources res = getResources();
-
-        if (value == 0) {
-            // quick pulldown deactivated
-            mQuickPulldown.setSummary(res.getString(R.string.quick_pulldown_off));
-        } else {
-            String direction = res.getString(value == 2
-                    ? R.string.quick_pulldown_left
-                    : R.string.quick_pulldown_right);
-            mQuickPulldown.setSummary(res.getString(R.string.summary_quick_pulldown, direction));
-        }
-    }
-
-    private void updateSmartPulldownSummary(int value) {
-        Resources res = getResources();
-
-        if (value == 0) {
-            // Smart pulldown deactivated
-            mSmartPulldown.setSummary(res.getString(R.string.smart_pulldown_off));
-        } else {
-            String type = null;
-            switch (value) {
-                case 1:
-                    type = res.getString(R.string.smart_pulldown_dismissable);
-                    break;
-                case 2:
-                    type = res.getString(R.string.smart_pulldown_persistent);
-                    break;
-                default:
-                    type = res.getString(R.string.smart_pulldown_all);
-                    break;
-            }
-            // Remove title capitalized formatting
-            type = type.toLowerCase();
-            mSmartPulldown.setSummary(res.getString(R.string.smart_pulldown_summary, type));
-        }
     }
 
     private void updateHideNotificationLabelsSummary(int value) {

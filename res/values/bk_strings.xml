@@ -25,6 +25,7 @@
     <string name="device_settings_title">Device options</string>
     <string name="category_presets_title">Presets</string>
     <string name="lockscreen_settings_title">Lockscreen</string>
+    <string name="quick_settings_title">Quicksettings</string>
     <string name="notifications_settings_title">Notification services</string>
     <string name="lockscreen_notifications_settings">LockScreen notification settings</string>
     <string name="shortcut_settings_title">Shortcuts</string>

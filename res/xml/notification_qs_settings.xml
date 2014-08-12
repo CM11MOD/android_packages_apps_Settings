@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Slimroms
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/power_widget_title" />
+
+        <PreferenceScreen
+            android:key="PowerWidget"
+            android:fragment="com.android.settings.cyanogenmod.PowerWidget"
+            android:title="@string/power_widget_title" />
+
+    <PreferenceCategory
+        android:title="@string/quick_settings_title" />
+
+        <PreferenceScreen
+            android:key="tile_picker"
+            android:title="@string/tile_picker_title"
+            android:summary="@string/tile_picker_summary"
+            android:fragment="com.android.settings.slim.quicksettings.QuickSettingsTiles" />
+
+        <PreferenceScreen
+            android:key="quicksettings_tiles_style"
+            android:fragment="com.android.settings.slim.quicksettings.QuickSettingsTilesStyle"
+            android:title="@string/quicksettings_tiles_style"
+            android:summary="@string/summary_quicksettings_tiles_style" />
+
+    <PreferenceCategory
+        android:title="@string/quick_settings_ribbon_title" />
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="qs_quick_access"
+            android:title="@string/quick_settings_ribbon_title"
+            android:summary="@string/quick_settings_ribbon_summary"
+            android:defaultValue="false" />
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="qs_quick_access_label"
+            android:title="@string/quick_settings_label_title"
+            android:summary="@string/quick_settings_label_summary"
+            android:dependency="qs_quick_access"
+            android:defaultValue="false" />
+
+    <PreferenceCategory
+        android:title="@string/general_category_title" />
+
+        <ListPreference
+            android:key="quick_pulldown"
+            android:title="@string/title_quick_pulldown"
+            android:entries="@array/quick_pulldown_entries"
+            android:entryValues="@array/quick_pulldown_values"
+            android:persistent="false" />
+
+        <ListPreference
+            android:key="smart_pulldown"
+            android:title="@string/smart_pulldown_title"
+            android:entries="@array/smart_pulldown_entries"
+            android:entryValues="@array/smart_pulldown_values"
+            android:persistent="false" />
+
+        <CheckBoxPreference
+            android:key="collapse_panel"
+            android:title="@string/title_collapse_panel"
+            android:summary="@string/summary_collapse_panel"
+            android:defaultValue="false" />
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="status_bar_notification_swipe_floating"
+            android:title="@string/notification_swipe_title"
+            android:summary="@string/notification_swipe_summary"
+            android:defaultValue="false" />
+
+</PreferenceScreen>
