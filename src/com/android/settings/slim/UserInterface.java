@@ -224,7 +224,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private void resetToDefault() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle(R.string.shortcut_action_reset);
-        alertDialog.setMessage(R.string.qs_style_reset_message);
+        alertDialog.setMessage(R.string.reset_settings_message);
         alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 resetValues();

@@ -29,6 +29,7 @@
     <string name="lockscreen_notifications_settings">LockScreen notification settings</string>
     <string name="shortcut_settings_title">Shortcuts</string>
     <string name="disabled_notice">Switch on to show all setting options.</string>
+    <string name="reset_settings_message">Reset settings entries to default?</string>
 
     <!-- Active Display
     <string name="ad_settings_title">Active display</string>
