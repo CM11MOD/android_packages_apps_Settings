@@ -40,6 +40,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -74,6 +75,7 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.util.Helpers;
 
+import com.android.internal.util.slim.DeviceUtils;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
@@ -91,6 +93,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_DATA_COLOR = "status_bar_data_color";
     private static final String STATUS_BAR_AIRPLANE_COLOR = "status_bar_airplane_color";
     private static final String STATUS_BAR_VOLUME_COLOR = "status_bar_volume_color";
+    private static final String CATEGORY_SIGNAL = "signal";
+    private static final String KEY_4G_SHOW_LTE = "statusbar_signal_show_4g_for_lte";
 
     static final int DEFAULT_STATUS_ICON_COLOR = 0xffffffff;
 
@@ -108,6 +112,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private ListPreference mDbmStyletyle;
     private CheckBoxPreference mHideSignal;
     private ColorPickerPreference mSignalColor;
+
+    private PreferenceGroup mSignalCategory;
+    private CheckBoxPreference mShowLTE;
 
     private static final int MENU_RESET = Menu.FIRST;
 
@@ -182,6 +189,19 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                          Settings.System.STATUS_BAR_VOLUME_COLOR, -1);
         mStatusBarVolumeColor.setNewPreviewColor(VolColor);
         mStatusBarVolumeColor.setOnPreferenceChangeListener(this);
+
+        mSignalCategory = (PreferenceGroup) findPreference(CATEGORY_SIGNAL);
+
+        mShowLTE = (CheckBoxPreference) findPreference(KEY_4G_SHOW_LTE);
+        if (mShowLTE != null) {
+            mShowLTE.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.STATUSBAR_SIGNAL_SHOW_4G_FOR_LTE,
+                0) == 1);
+                mShowLTE.setOnPreferenceChangeListener(this);
+            if (!DeviceUtils.deviceSupportsLte(getActivity())) {
+                mSignalCategory.removePreference(findPreference(KEY_4G_SHOW_LTE));
+            }
+        }
 
         mCustomStatusBarCarrierLabel = (PreferenceScreen) findPreference(CUSTOM_CARRIER_LABEL);
         updateCustomLabelTextSummary();
@@ -265,7 +285,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, mStatusbarSliderPreference.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mStatusBarCarrier) {
-            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_CARRIER, mStatusBarCarrier.isChecked() ? 1 : 0);
+            Settings.System.putInt(resolver,
+                    Settings.System.STATUS_BAR_CARRIER, mStatusBarCarrier.isChecked() ? 1 : 0);
             return true;
         } else if (preference.getKey().equals(CUSTOM_CARRIER_LABEL)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -305,7 +326,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             return true;
         } else if (preference == mHideSignal) {
             boolean value = (Boolean) newValue;
-            Settings.System.putInt(resolver, Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, value ? 1 : 0);
+            Settings.System.putInt(resolver,
+                    Settings.System.STATUSBAR_HIDE_SIGNAL_BARS, value ? 1 : 0);
+            return true;
+        } else if (preference == mShowLTE) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.STATUSBAR_SIGNAL_SHOW_4G_FOR_LTE, value ? 1 : 0);
             return true;
         } else if (preference == mDbmStyletyle) {
             int val = Integer.parseInt((String) newValue);
