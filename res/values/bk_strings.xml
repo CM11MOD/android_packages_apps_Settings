@@ -281,18 +281,28 @@
     <!-- Network usage stats -->
     <string name="status_bar_network_cat">Network traffic meter</string>
     <string name="status_bar_network_header">Network traffic meter</string>
-    <string name="status_bar_network_title">Network traffic</string>
-    <string name="status_bar_show_network_stats_title">Show network speed</string>
-    <string name="status_bar_traffic_style_hidden">Hide</string>
-    <string name="status_bar_traffic_style_rx">Show download speed only</string>
-    <string name="status_bar_traffic_style_rxtx">Shot both upload and download speed</string>
-
-    <string name="status_bar_network_stats_update_title">Update frequency</string>
-
+    <string name="network_traffic_title">Network traffic</string>
+    <string name="show_network_traffic_state">Traffic monitor</string>
+    <string name="show_network_traffic_unit">Display unit</string>
+    <string name="show_network_traffic_frequency">Update interval</string>
+    <string name="show_network_traffic_disable">Disabled</string>
+    <string name="show_network_traffic_up">Outgoing</string>
+    <string name="show_network_traffic_down">Incoming</string>
+    <string name="show_network_traffic_all">Outgoing and incoming</string>
+    <string name="show_network_traffic_bit">Bits per second</string>
+    <string name="show_network_traffic_byte">Bytes per second</string>
+    <string name="show_network_traffic_500">500 ms</string>
+    <string name="show_network_traffic_1000">1000 ms</string>
+    <string name="show_network_traffic_1500">1500 ms</string>
+    <string name="show_network_traffic_2000">2000 ms</string>
+    <string name="network_traffic_autohide">Auto hide</string>
+    <string name="network_traffic_autohide_summary">Hide monitor when there is no activity</string>
+    <string name="network_traffic_autohide_threshold">Inactivity threshold</string>
     <!-- Network stats custm colors -->
-    <string name="status_bar_network_usage_color_style">Color style</string>
-    <string name="status_bar_network_usage_color_reset">Reset color</string>
-    <string name="status_bar_network_usage_color_reset_message">Reset network stats color to default?</string>
+    <string name="network_traffic_color_style">Color style</string>
+    <string name="network_traffic_icon_color_style">Icon color</string>
+    <string name="network_traffic_color_reset">Reset color</string>
+    <string name="network_traffic_color_reset_message">Reset network stats color to default?</string>
     <string name="reset_default_message">Reset all values to default?</string>
 
     <!-- Network stats hide if there's no traffic -->
