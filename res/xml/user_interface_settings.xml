@@ -98,6 +98,12 @@
             android:defaultValue="0x80f5f5f5"
             alphaSlider="true" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="recents_panel_header_text_color"
+            android:title="@string/recents_panel_header_text_color_title"
+            android:defaultValue="0xffffffff"
+            alphaSlider="true" />
+
     <PreferenceCategory
         android:key="bubble_mode_cat"
         android:title="@string/recents_style_aosb">

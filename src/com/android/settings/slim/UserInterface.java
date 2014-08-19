@@ -77,6 +77,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final String FORCE_MULTI_PANE = "force_multi_pane";
     private static final String BUBBLE_MODE = "bubble_mode";
     private static final String PREF_RECENTS_SWIPE_FLOATING = "recents_swipe";
+    private static final String PREF_RECENTS_PANEL_HEADER_TEXT_COLOR ="recents_panel_header_text_color";
 
     public static final String OMNISWITCH_PACKAGE_NAME = "org.omnirom.omniswitch";
 
@@ -94,6 +95,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private ListPreference mRecentPanelExpandedMode;
     private ColorPickerPreference mRecentsStockBgColor;
     private ColorPickerPreference mRecentPanelBgColor;
+    private ColorPickerPreference mRecentsPanelHeaderTextColor;
     private ListPreference mBubbleMode;
     private CheckBoxPreference mMultiPane;
     private CheckBoxPreference mRecentsSwipe;
@@ -103,6 +105,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private static final int MENU_RESET = Menu.FIRST;
     private static final int DEFAULT_BACKGROUND_COLOR = 0x80f5f5f5;
     private static final int RECENTS_BACKGROUND_COLOR = 0xe0000000;
+    private static final int SLIM_RECENTS_HEADER_TEXT_COLOR =0xffffffff;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,6 +115,9 @@ public class UserInterface extends SettingsPreferenceFragment implements
 
         PreferenceScreen prefSet = getPreferenceScreen();
         ContentResolver resolver = getActivity().getContentResolver();
+
+        int intColor;
+        String hexColor;
 
         mRamBar = findPreference(KEY_RECENTS_RAM_BAR);
         updateRamBar();
@@ -167,11 +173,21 @@ public class UserInterface extends SettingsPreferenceFragment implements
         // Recent panel background color
         mRecentPanelBgColor = (ColorPickerPreference) findPreference(RECENT_PANEL_BG_COLOR);
         mRecentPanelBgColor.setOnPreferenceChangeListener(this);
-        final int intColor = Settings.System.getInt(getContentResolver(),
+        intColor = Settings.System.getInt(getContentResolver(),
                 Settings.System.RECENT_PANEL_BG_COLOR, 0x80f5f5f5);
-        String hexColor = String.format("#%08x", (0x80f5f5f5 & intColor));
+        hexColor = String.format("#%08x", (0x80f5f5f5 & intColor));
         mRecentPanelBgColor.setSummary(hexColor);
         mRecentPanelBgColor.setNewPreviewColor(intColor);
+
+        // Slim Recent Headers Custom Color
+        mRecentsPanelHeaderTextColor =
+                (ColorPickerPreference) findPreference(PREF_RECENTS_PANEL_HEADER_TEXT_COLOR);
+        mRecentsPanelHeaderTextColor.setOnPreferenceChangeListener(this);
+        intColor = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.RECENT_PANEL_HEADER_TEXT_COLOR, SLIM_RECENTS_HEADER_TEXT_COLOR);
+        mRecentsPanelHeaderTextColor.setNewPreviewColor(intColor);
+        hexColor = String.format("#%08x", (0xffffffff & intColor));
+        mRecentsPanelHeaderTextColor.setSummary(hexColor);
 
         mBubbleMode = (ListPreference) prefSet.findPreference(BUBBLE_MODE);
         int bubble_mode = Settings.System.getInt(getContentResolver(),
@@ -237,15 +253,21 @@ public class UserInterface extends SettingsPreferenceFragment implements
     private void resetValues() {
         Settings.System.putInt(getContentResolver(),
                 Settings.System.RECENT_PANEL_BG_COLOR, DEFAULT_BACKGROUND_COLOR);
-        String hexColor = String.format("#%08x", (0x80f5f5f5 & DEFAULT_BACKGROUND_COLOR));
-        mRecentPanelBgColor.setSummary(hexColor);
+        String bgColor = String.format("#%08x", (0x80f5f5f5 & DEFAULT_BACKGROUND_COLOR));
+        mRecentPanelBgColor.setSummary(bgColor);
         mRecentPanelBgColor.setNewPreviewColor(DEFAULT_BACKGROUND_COLOR);
 
         Settings.System.putInt(getContentResolver(),
                 Settings.System.RECENTS_PANEL_STOCK_COLOR, RECENTS_BACKGROUND_COLOR);
-        String hex1Color = String.format("#%08x", (0xe0000000 & RECENTS_BACKGROUND_COLOR));
-        mRecentsStockBgColor.setSummary(hex1Color);
+        String stockbgColor = String.format("#%08x", (0xe0000000 & RECENTS_BACKGROUND_COLOR));
+        mRecentsStockBgColor.setSummary(stockbgColor);
         mRecentsStockBgColor.setNewPreviewColor(RECENTS_BACKGROUND_COLOR);
+
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.RECENT_PANEL_HEADER_TEXT_COLOR, SLIM_RECENTS_HEADER_TEXT_COLOR);
+        String headerColor = String.format("#%08x", (0xe0000000 & SLIM_RECENTS_HEADER_TEXT_COLOR));
+        mRecentsPanelHeaderTextColor.setSummary(headerColor);
+        mRecentsPanelHeaderTextColor.setNewPreviewColor(SLIM_RECENTS_HEADER_TEXT_COLOR);
     }
 
     private void updateRamBar() {
@@ -298,6 +320,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(true);
                 mRecentsStockBgColor.setEnabled(true);
+                mRecentsPanelHeaderTextColor.setEnabled(false);
                 break;
             case 1:
                 mRecentClearAll.setEnabled(false);
@@ -309,6 +332,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentsShowTopmost.setEnabled(true);
                 mRecentsSwipe.setEnabled(false);
                 mRecentsStockBgColor.setEnabled(false);
+                mRecentsPanelHeaderTextColor.setEnabled(true);
                 break;
             case 2:
                 if (!isOmniSwitchInstalled()) return;
@@ -321,6 +345,7 @@ public class UserInterface extends SettingsPreferenceFragment implements
                 mRecentsShowTopmost.setEnabled(false);
                 mRecentsSwipe.setEnabled(false);
                 mRecentsStockBgColor.setEnabled(false);
+                mRecentsPanelHeaderTextColor.setEnabled(false);
                 break;
         }
     }
@@ -430,11 +455,18 @@ public class UserInterface extends SettingsPreferenceFragment implements
         } else if (preference == mRecentsStockBgColor) {
             String hex = ColorPickerPreference.convertToARGB(
                 Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
             int intHex = ColorPickerPreference.convertToColorInt(hex);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.RECENTS_PANEL_STOCK_COLOR, intHex);
-            //Helpers.restartSystemUI();
+            preference.setSummary(hex);
+            return true;
+        } else if (preference == mRecentsPanelHeaderTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                Integer.valueOf(String.valueOf(newValue)));
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.RECENT_PANEL_HEADER_TEXT_COLOR, intHex);
+            preference.setSummary(hex);
             return true;
         }
         return false;

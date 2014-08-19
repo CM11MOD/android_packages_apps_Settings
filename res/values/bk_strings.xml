@@ -1011,6 +1011,7 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="omniswitch_not_installed_summary">OmniSwitch is not installed</string>
     <string name="omniswitch_not_installed_message">OmniSwitch is not installed</string>
     <string name="omniswitch_enabled_message">Please turn OmniSwitch on and configure it to start on boot.</string>
+    <string name="recents_panel_header_text_color_title">Header text color</string>
 
     <!-- Bubble Recents -->
     <string name="bubble_recent_title">AOSB Bubble add on</string>
