@@ -55,6 +55,12 @@
             android:entryValues="@array/notification_hide_labels_values"
             android:persistent="false" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="notification_carrier_wifi_label_color"
+            android:title="@string/wifi_carrier_label_color_title"
+            android:defaultValue="0xff999999"
+            alphaSlider="true" />
+
         <com.android.settings.widget.SeekBarPreference
             android:key="notification_alpha"
             android:title="@string/notif_alpha_title" />

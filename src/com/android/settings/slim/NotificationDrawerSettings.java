@@ -17,7 +17,10 @@
 package com.android.settings.slim;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -35,6 +38,10 @@ import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
 import android.provider.Settings;
 import android.os.UserHandle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.android.internal.util.slim.DeviceUtils;
 
@@ -47,6 +54,8 @@ import com.android.settings.widget.SeekBarPreference;
 import java.net.URISyntaxException;
 
 import com.android.settings.omnirom.omnigears.preference.AppSelectListPreference;
+
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class NotificationDrawerSettings extends SettingsPreferenceFragment
             implements OnPreferenceChangeListener  {
@@ -66,10 +75,16 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
     private static final String PREF_NOTI_REMINDER_RINGTONE =
             "noti_reminder_ringtone";
 
+    private static final String PREF_NOTIFICATION_CW_LABEL_COLOR =
+            "notification_carrier_wifi_label_color";
+
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_NOTIFICATION_DRAWER_TABLET = "notification_drawer_tablet";
     private static final String CLOCK_SHORTCUT = "clock_shortcut";
     private static final String CALENDAR_SHORTCUT = "calendar_shortcut";
+
+    private static final int MENU_RESET = Menu.FIRST;
+    private static final int DEFAULT_LABEL_COLOR = 0xff999999;
 
     private PreferenceScreen mPhoneDrawer;
     private PreferenceScreen mTabletDrawer;
@@ -83,6 +98,8 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
     private AppSelectListPreference mClockShortcut;
     private AppSelectListPreference mCalendarShortcut;
 
+    private ColorPickerPreference mNotificationCwLabelColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +107,9 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.notification_drawer_settings);
 
         PreferenceScreen prefs = getPreferenceScreen();
+
+        int intColor;
+        String hexColor;
 
         mHideLabels = (ListPreference) findPreference(PREF_NOTIFICATION_HIDE_LABELS);
         int hideCarrier = Settings.System.getInt(getContentResolver(),
@@ -176,12 +196,81 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
         mCalendarShortcut = (AppSelectListPreference)prefs.findPreference(CALENDAR_SHORTCUT);
         mCalendarShortcut.setOnPreferenceChangeListener(this);
 
+        mNotificationCwLabelColor = (ColorPickerPreference) findPreference(PREF_NOTIFICATION_CW_LABEL_COLOR);
+        intColor = Settings.System.getInt(getContentResolver(),
+                Settings.System.NOTIFICATION_CARRIER_WIFI_LABEL_COLOR, DEFAULT_LABEL_COLOR);
+        mNotificationCwLabelColor.setNewPreviewColor(intColor);
+        hexColor = String.format("#%08x", (0xff999999 & intColor));
+        mNotificationCwLabelColor.setSummary(hexColor);
+        mNotificationCwLabelColor.setOnPreferenceChangeListener(this);
+
         updateClockCalendarSummary();
+        updatePreference();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, R.string.reset_default_message)
+                .setIcon(R.drawable.ic_settings_backup)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                resetToDefault();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void resetToDefault() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle(R.string.shortcut_action_reset);
+        alertDialog.setMessage(R.string.reset_settings_message);
+        alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                resetValues();
+            }
+        });
+        alertDialog.setNegativeButton(R.string.cancel, null);
+        alertDialog.create().show();
+    }
+
+    private void resetValues() {
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.NOTIFICATION_CARRIER_WIFI_LABEL_COLOR, DEFAULT_LABEL_COLOR);
+        String bgColor = String.format("#%08x", (0xff999999 & DEFAULT_LABEL_COLOR));
+        mNotificationCwLabelColor.setSummary(bgColor);
+        mNotificationCwLabelColor.setNewPreviewColor(DEFAULT_LABEL_COLOR);
+    }
+
+    private void updatePreference() {
+        int hideCarrier = Settings.System.getInt(getContentResolver(),
+                Settings.System.NOTIFICATION_HIDE_LABELS, 0);
+
+        if (hideCarrier == 0)  {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.ACTIVITY_RESOLVER_USE_ALT, 0);
+            mNotificationCwLabelColor.setEnabled(false);
+        } else {
+            mNotificationCwLabelColor.setEnabled(true);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        updatePreference();
+    }
+
+    @Override
+    public void onPause() {
+        super.onResume();
+        updatePreference();
     }
 
     @Override
@@ -191,6 +280,7 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_HIDE_LABELS,
                     hideLabels);
             updateHideNotificationLabelsSummary(hideLabels);
+            updatePreference();
             return true;
         } else if (preference == mNotificationAlpha) {
             float valNav = Float.parseFloat((String) newValue);
@@ -236,6 +326,13 @@ public class NotificationDrawerSettings extends SettingsPreferenceFragment
             Settings.System.putString(getContentResolver(),
                     Settings.System.CALENDAR_SHORTCUT, value);
             updateClockCalendarSummary();
+        } else if (preference == mNotificationCwLabelColor) {
+            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(newValue)));
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NOTIFICATION_CARRIER_WIFI_LABEL_COLOR, intHex);
+            preference.setSummary(hex);
+            return true;
         }
         return false;
     }

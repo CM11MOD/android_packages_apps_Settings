@@ -1483,4 +1483,7 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="tether_user_network_default">Use System Default</string>
     <string name="tether_wifi_network_text">WiFi Tether Network</string>
 
+    <!-- Notification carrier and wifi label color-->
+    <string name="wifi_carrier_label_color_title">Carrier and wifi label</string>
+
 </resources>
