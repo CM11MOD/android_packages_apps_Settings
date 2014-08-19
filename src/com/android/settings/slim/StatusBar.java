@@ -95,6 +95,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_VOLUME_COLOR = "status_bar_volume_color";
     private static final String CATEGORY_SIGNAL = "signal";
     private static final String KEY_4G_SHOW_LTE = "statusbar_signal_show_4g_for_lte";
+    private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
     static final int DEFAULT_STATUS_ICON_COLOR = 0xffffffff;
 
@@ -102,6 +103,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private CheckBoxPreference mStatusBarCarrier;
     private PreferenceScreen mCustomStatusBarCarrierLabel;
     private CheckBoxPreference mStatusbarSliderPreference;
+    private CheckBoxPreference mStatusBarNetworkActivity;
     private ColorPickerPreference mCarrierColorPicker;
     private ColorPickerPreference mStatusBarWifiColor;
     private ColorPickerPreference mStatusBarDataColor;
@@ -189,6 +191,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                          Settings.System.STATUS_BAR_VOLUME_COLOR, -1);
         mStatusBarVolumeColor.setNewPreviewColor(VolColor);
         mStatusBarVolumeColor.setOnPreferenceChangeListener(this);
+
+        mStatusBarNetworkActivity = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_NETWORK_ACTIVITY);
+        mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
+        Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
+        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
 
         mSignalCategory = (PreferenceGroup) findPreference(CATEGORY_SIGNAL);
 
@@ -367,6 +374,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Settings.System.putInt(getContentResolver(),
                 Settings.System.STATUS_BAR_VOLUME_COLOR, volcolor);
     	    return true;
+        } else if (preference == mStatusBarNetworkActivity) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+            return true;
         }
         return false;
     }
