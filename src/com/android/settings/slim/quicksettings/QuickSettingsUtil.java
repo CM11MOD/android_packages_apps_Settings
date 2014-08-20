@@ -38,6 +38,7 @@ import static com.android.internal.util.slim.QSConstants.TILE_LOCKSCREEN;
 import static com.android.internal.util.slim.QSConstants.TILE_LTE;
 import static com.android.internal.util.slim.QSConstants.TILE_MOBILEDATA;
 import static com.android.internal.util.slim.QSConstants.TILE_MUSIC;
+import static com.android.internal.util.slim.QSConstants.TILE_NETWORKADB;
 import static com.android.internal.util.slim.QSConstants.TILE_NETWORKMODE;
 import static com.android.internal.util.slim.QSConstants.TILE_NFC;
 import static com.android.internal.util.slim.QSConstants.TILE_QUICKRECORD;
@@ -220,6 +221,9 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_GESTUREPANEL, R.string.title_tile_gesture,
                 "com.android.systemui:drawable/ic_sysbar_gesture"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_NETWORKADB, R.string.title_tile_network_adb,
+                "com.android.systemui:drawable/ic_qs_network_adb_off"));
     }
 
     private static void registerTile(QuickSettingsUtil.TileInfo info) {
@@ -352,6 +356,14 @@ public class QuickSettingsUtil {
                 disableTile(TILE_NETWORKMODE);
                 break;
         }
+
+        // Don't show the Network ADB tile if adb debugging is disabled
+        if (DeviceUtils.adbEnabled(resolver)) {
+            enableTile(TILE_NETWORKADB);
+        } else {
+            disableTile(TILE_NETWORKADB);
+        }
+
     }
 
     public static synchronized void updateAvailableTiles(Context context) {
