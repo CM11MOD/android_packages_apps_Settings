@@ -251,6 +251,7 @@
     <string name="recent_clear_all_button_location_top_right">Top right</string>
     <string name="recent_clear_all_button_location_bottom_left">Bottom left</string>
     <string name="recent_clear_all_button_location_bottom_right">Bottom right</string>
+    <string name="recents_clear_all_button_color_title">Clear all button color</string>
 
     <!-- Recents background custom color - stock view -->
     <string name="recents_stock_bg_color_title">Recents panel color</string>

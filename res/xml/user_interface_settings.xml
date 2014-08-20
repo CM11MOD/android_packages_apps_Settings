@@ -56,6 +56,12 @@
             android:dependency="recent_menu_clear_all" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="recent_clear_all_button_color"
+            android:title="@string/recents_clear_all_button_color_title"
+            android:defaultValue="0xffffffff"
+            alphaSlider="true" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="recents_stock_bg_color"
             android:title="@string/recents_stock_bg_color_title"
             android:defaultValue="0xE0000000"
