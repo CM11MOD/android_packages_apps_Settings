@@ -46,6 +46,35 @@
         android:title="@string/battery_text_charging_color"
         android:defaultValue="0xffffffff" />
 
+    <CheckBoxPreference
+        android:key="battery_circle_dotted"
+        android:title="@string/battery_status_circle_dotted_title"
+        android:summary="@string/battery_status_circle_dotted_summary" />
+
+    <ListPreference
+        android:key="battery_circle_dot_length"
+        android:title="@string/dot_length_title"
+        android:entries="@array/battery_circle_dot_entries"
+        android:entryValues="@array/battery_circle_dot_values"
+        android:persistent="false"
+        android:defaultValue="3" />
+
+    <ListPreference
+        android:key="battery_circle_dot_interval"
+        android:title="@string/dot_interval_title"
+        android:entries="@array/battery_circle_dot_entries"
+        android:entryValues="@array/battery_circle_dot_values"
+        android:persistent="false"
+        android:defaultValue="2" />
+
+    <ListPreference
+        android:key="battery_circle_dot_offset"
+        android:title="@string/dot_offset_title"
+        android:entries="@array/battery_circle_dot_entries"
+        android:entryValues="@array/battery_circle_dot_values"
+        android:persistent="false"
+        android:defaultValue="0" />
+
     <PreferenceCategory
         android:key="category_status_bar_battery_bar"
         android:title="@string/battery_bar_title">

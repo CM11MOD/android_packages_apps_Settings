@@ -1487,4 +1487,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Notification carrier and wifi label color-->
     <string name="wifi_carrier_label_color_title">Carrier and wifi label</string>
 
+    <!-- Circle Battery : Dot length, Dot offset, Dot interval -->
+    <string name="dot_length_title">Ring&#47;Circle Dot length</string>
+    <string name="dot_interval_title">Ring&#47;Circle Dot interval</string>
+    <string name="dot_offset_title">Ring&#47;Circle Dot offset</string>
+    <string name="battery_status_circle_dotted_title">Circle dotted</string>
+    <string name="battery_status_circle_dotted_summary">Activate, to show the battery circle dotted</string>
 </resources>

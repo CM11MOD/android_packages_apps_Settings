@@ -59,6 +59,10 @@ public class BatteryIconStyle extends SettingsPreferenceFragment
     private static final String PREF_BATT_BAR_COLOR = "battery_bar_color";
     private static final String PREF_BATT_BAR_WIDTH = "battery_bar_thickness";
     private static final String PREF_BATT_ANIMATE = "battery_bar_animate";
+    private static final String PREF_BATT_STAT_CIRCLE_DOTTED = "battery_circle_dotted";
+    private static final String PREF_BATT_STAT_CIRCLE_DOT_LENGTH = "battery_circle_dot_length";
+    private static final String PREF_BATT_STAT_CIRCLE_DOT_INTERVAL = "battery_circle_dot_interval";
+    private static final String PREF_BATT_STAT_CIRCLE_DOT_OFFSET = "battery_circle_dot_offset";
 
     private static final int MENU_RESET = Menu.FIRST;
 
@@ -74,6 +78,10 @@ public class BatteryIconStyle extends SettingsPreferenceFragment
     private ColorPickerPreference mBatteryTextColor;
     private ColorPickerPreference mBatteryTextChargingColor;
     private ListPreference mCircleAnimSpeed;
+    private CheckBoxPreference mCircleDotted;
+    private ListPreference mCircleDotLength;
+    private ListPreference mCircleDotInterval;
+    private ListPreference mCircleDotOffset;
 
     private boolean mCheckPreferences;
 
@@ -111,6 +119,45 @@ public class BatteryIconStyle extends SettingsPreferenceFragment
                 Settings.System.STATUS_BAR_BATTERY, 0);
         mStatusBarBattery.setValue(String.valueOf(statusBarBattery));
         mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
+
+        boolean isCircleDottedEnabled = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.STATUS_BAR_CIRCLE_DOTTED, 0) == 1;
+
+        mCircleDotted = (CheckBoxPreference) findPreference(PREF_BATT_STAT_CIRCLE_DOTTED);
+        if (statusBarBattery == 3 || statusBarBattery == 4) {
+            mCircleDotted.setChecked(isCircleDottedEnabled);
+            mCircleDotted.setOnPreferenceChangeListener(this);
+        } else {
+            removePreference(PREF_BATT_STAT_CIRCLE_DOTTED);
+        }
+
+        mCircleDotLength = (ListPreference) findPreference(PREF_BATT_STAT_CIRCLE_DOT_LENGTH);
+        mCircleDotInterval = (ListPreference) findPreference(PREF_BATT_STAT_CIRCLE_DOT_INTERVAL);
+        mCircleDotOffset = (ListPreference) findPreference(PREF_BATT_STAT_CIRCLE_DOT_OFFSET);
+
+        if ((statusBarBattery == 3 || statusBarBattery == 4) && isCircleDottedEnabled) {
+            int circleDotLength = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_LENGTH, 3);
+            mCircleDotLength.setValue(String.valueOf(circleDotLength));
+            mCircleDotLength.setSummary(mCircleDotLength.getEntry());
+            mCircleDotLength.setOnPreferenceChangeListener(this);
+
+            int circleDotInterval = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_INTERVAL, 2);
+            mCircleDotInterval.setValue(String.valueOf(circleDotInterval));
+            mCircleDotInterval.setSummary(mCircleDotInterval.getEntry());
+            mCircleDotInterval.setOnPreferenceChangeListener(this);
+
+            int circleDotOffset = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_OFFSET, 0);
+            mCircleDotOffset.setValue(String.valueOf(circleDotOffset));
+            mCircleDotOffset.setSummary(mCircleDotOffset.getEntry());
+            mCircleDotOffset.setOnPreferenceChangeListener(this);
+        } else {
+            removePreference(PREF_BATT_STAT_CIRCLE_DOT_LENGTH);
+            removePreference(PREF_BATT_STAT_CIRCLE_DOT_INTERVAL);
+            removePreference(PREF_BATT_STAT_CIRCLE_DOT_OFFSET);
+        }
 
         mBatteryColor = (ColorPickerPreference) findPreference(PREF_STATUS_BAR_BATTERY_COLOR);
         mBatteryColor.setOnPreferenceChangeListener(this);
@@ -304,6 +351,33 @@ public class BatteryIconStyle extends SettingsPreferenceFragment
                     Settings.System.STATUSBAR_BATTERY_BAR_THICKNESS, val);
             mBatteryBarThickness.setSummary(mBatteryBarThickness.getEntries()[index]);
             return true;
+        } else if (preference == mCircleDotted) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOTTED, value ? 1 : 0);
+            createCustomView();
+            return true;
+        } else if (preference == mCircleDotLength) {
+            int circleDotLength = Integer.valueOf((String) newValue);
+            int index = mCircleDotLength.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_LENGTH, circleDotLength);
+            mCircleDotLength.setSummary(mCircleDotLength.getEntries()[index]);
+            return true;
+        } else if (preference == mCircleDotInterval) {
+            int circleDotInterval = Integer.valueOf((String) newValue);
+            int index = mCircleDotInterval.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_INTERVAL, circleDotInterval);
+            mCircleDotInterval.setSummary(mCircleDotInterval.getEntries()[index]);
+            return true;
+        } else if (preference == mCircleDotOffset) {
+            int circleDotOffset = Integer.valueOf((String) newValue);
+            int index = mCircleDotOffset.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_CIRCLE_DOT_OFFSET, circleDotOffset);
+            mCircleDotOffset.setSummary(mCircleDotOffset.getEntries()[index]);
+            return true;
         }
         return false;
     }
@@ -326,30 +400,36 @@ public class BatteryIconStyle extends SettingsPreferenceFragment
             mBatteryTextColor.setEnabled(false);
             mBatteryTextChargingColor.setEnabled(true);
             mCircleAnimSpeed.setEnabled(false);
-        } else if (batteryIconStat == 2 || batteryIconStat == 3) {
+            mCircleDotted.setEnabled(false);
+        } else if (batteryIconStat == 2 || batteryIconStat == 7) {
             mBatteryColor.setEnabled(true);
             mBatteryTextColor.setEnabled(true);
             mBatteryTextChargingColor.setEnabled(true);
             mCircleAnimSpeed.setEnabled(false);
-        } else if (batteryIconStat == 4 || batteryIconStat == 6) {
-            mBatteryColor.setEnabled(true);
+            mCircleDotted.setEnabled(false);
+        } else if (batteryIconStat == 3) {
+			mBatteryColor.setEnabled(true);
+			mCircleDotted.setEnabled(true);
             mBatteryTextColor.setEnabled(false);
             mBatteryTextChargingColor.setEnabled(true);
             mCircleAnimSpeed.setEnabled(true);
             mBatteryTextChargingColor.setTitle(R.string.battery_circle_charging_color);
-        } else if (batteryIconStat == 5 || batteryIconStat == 7) {
-            mBatteryColor.setEnabled(true);
+		} else if (batteryIconStat == 4) {
+			mCircleDotted.setEnabled(true);
+			mBatteryColor.setEnabled(true);
             mBatteryTextColor.setEnabled(true);
             mBatteryTextChargingColor.setEnabled(true);
             mCircleAnimSpeed.setEnabled(true);
-            mBatteryTextChargingColor.setTitle(R.string.battery_circle_charging_color);
-        } else if (batteryIconStat == 8) {
+            mBatteryTextChargingColor.setTitle(R.string.battery_circle_charging_color);			
+		} else if (batteryIconStat == 8) {
+			mCircleDotted.setEnabled(false);
             mBatteryColor.setEnabled(false);
             mBatteryTextColor.setEnabled(false);
             mBatteryTextChargingColor.setEnabled(false);
             mCircleAnimSpeed.setEnabled(false);
         } else {
             mBatteryColor.setEnabled(false);
+            mCircleDotted.setEnabled(false);
             mBatteryTextColor.setEnabled(true);
             mBatteryTextChargingColor.setEnabled(true);
             mBatteryTextChargingColor.setTitle(R.string.battery_text_charging_color);
