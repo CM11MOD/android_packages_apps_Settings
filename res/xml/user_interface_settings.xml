@@ -7,6 +7,12 @@
 		android:key="category_system"
 		android:title="@string/interface_settings_animation_title">
 
+        <PreferenceScreen
+            android:key="settings_root_list"
+            android:title="@string/settings_root_list_title"
+            android:summary="@string/settings_root_list_summary"
+            android:fragment="com.android.settings.slim.SettingsRootListSettings" />
+
         <CheckBoxPreference
             android:key="force_multi_pane"
             android:title="@string/force_multi_pane"

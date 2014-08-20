@@ -37,6 +37,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff.Mode;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.INetworkManagementService;
@@ -47,6 +48,7 @@ import android.os.UserManager;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.provider.Settings.System;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,6 +71,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.slim.ImageHelper;
 import com.android.settings.accessibility.AccessibilitySettings;
 import com.android.settings.accessibility.CaptionPropertiesFragment;
 import com.android.settings.accessibility.ToggleAccessibilityServicePreferenceFragment;
@@ -1039,6 +1042,9 @@ public class Settings extends PreferenceActivity
         private final VoiceWakeupEnabler mVoiceWakeupEnabler;
         private AuthenticatorHelper mAuthHelper;
         private DevicePolicyManager mDevicePolicyManager;
+        private boolean mColorizeAccountIcons;
+        private int mIconColor;
+        Context mContext;
 
         private static class HeaderViewHolder {
             ImageView icon;
@@ -1117,6 +1123,7 @@ public class Settings extends PreferenceActivity
             mQuietHoursEnabler = new QuietHoursEnabler(context, new Switch(context));
             mVoiceWakeupEnabler = new VoiceWakeupEnabler(context, new Switch(context));
             mDevicePolicyManager = dpm;
+            mContext = context;
         }
 
         @Override
@@ -1243,32 +1250,42 @@ public class Settings extends PreferenceActivity
         }
 
         private void updateCommonHeaderView(Header header, HeaderViewHolder holder) {
-                if (header.extras != null
-                        && header.extras.containsKey(ManageAccountsSettings.KEY_ACCOUNT_TYPE)) {
-                    String accType = header.extras.getString(
-                            ManageAccountsSettings.KEY_ACCOUNT_TYPE);
-                    Drawable icon = mAuthHelper.getDrawableForType(getContext(), accType);
-                    setHeaderIcon(holder, icon);
-                } else {
-                    holder.icon.setImageResource(header.iconRes);
-                }
-                holder.title.setText(header.getTitle(getContext().getResources()));
-                CharSequence summary = header.getSummary(getContext().getResources());
-                if (!TextUtils.isEmpty(summary)) {
-                    holder.summary.setVisibility(View.VISIBLE);
-                    holder.summary.setText(summary);
-                } else {
-                    holder.summary.setVisibility(View.GONE);
-                }
+            mIconColor = System.getInt(mContext.getContentResolver(),
+                    System.SETTINGS_ROOT_LIST_ICON_COLOR, 0xffffffff);
+            if (header.extras != null
+                    && header.extras.containsKey(ManageAccountsSettings.KEY_ACCOUNT_TYPE)) {
+                String accType = header.extras.getString(
+                        ManageAccountsSettings.KEY_ACCOUNT_TYPE);
+                Drawable icon = mAuthHelper.getDrawableForType(getContext(), accType);
+                setHeaderIcon(holder, icon);
+            } else {
+                holder.icon.setImageResource(header.iconRes);
+                holder.icon.setColorFilter(mIconColor, Mode.MULTIPLY);
             }
+            holder.title.setText(header.getTitle(getContext().getResources()));
+            CharSequence summary = header.getSummary(getContext().getResources());
+            if (!TextUtils.isEmpty(summary)) {
+                holder.summary.setVisibility(View.VISIBLE);
+                holder.summary.setText(summary);
+            } else {
+                holder.summary.setVisibility(View.GONE);
+            }
+        }
 
         private void setHeaderIcon(HeaderViewHolder holder, Drawable icon) {
             ViewGroup.LayoutParams lp = holder.icon.getLayoutParams();
             lp.width = getContext().getResources().getDimensionPixelSize(
                     R.dimen.header_icon_width);
             lp.height = lp.width;
+            mColorizeAccountIcons = System.getInt(mContext.getContentResolver(),
+                    System.SETTINGS_ROOT_LIST_COLORIZE_ACCOUNT_ICONS, 0) == 1;
             holder.icon.setLayoutParams(lp);
-            holder.icon.setImageDrawable(icon);
+            holder.icon.setColorFilter(null);
+            if (mColorizeAccountIcons) {
+                holder.icon.setImageBitmap(ImageHelper.getColoredBitmap(icon, mIconColor));
+            } else {
+                holder.icon.setImageDrawable(icon);
+            }
         }
 
         public void resume() {

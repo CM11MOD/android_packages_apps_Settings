@@ -31,6 +31,9 @@
     <string name="shortcut_settings_title">Shortcuts</string>
     <string name="disabled_notice">Switch on to show all setting options.</string>
     <string name="reset_settings_message">Reset settings entries to default?</string>
+    <string name="options_title">Options</string>
+    <string name="color_title">Custom color</string>
+    <string name="icon_title">Icon</string>
 
     <!-- Active Display
     <string name="ad_settings_title">Active display</string>
@@ -1493,4 +1496,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="dot_offset_title">Ring&#47;Circle Dot offset</string>
     <string name="battery_status_circle_dotted_title">Circle dotted</string>
     <string name="battery_status_circle_dotted_summary">Activate, to show the battery circle dotted</string>
+
+    <!-- Settings root list settings -->
+    <string name="settings_root_list_title">Root list</string>
+    <string name="settings_root_list_summary">Customize the root list of the settings</string>
+    <string name="settings_root_list_colorize_account_icons_title">Account icons</string>
+    <string name="settings_root_list_colorize_account_icons_summary">Enable to colorize the account icons, too.</string>
 </resources>
