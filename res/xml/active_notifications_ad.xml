@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="@string/ad_customizations_title"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+
+    <PreferenceCategory
+        android:key="wake_options"
+        android:title="@string/category_wake_options" >
+
+        <ListPreference
+            android:key="pocket_mode"
+            android:persistent="false"
+            android:title="@string/pocket_mode_title"
+            android:summary="@string/pocket_mode_summary"
+            android:entries="@array/pocket_mode_entries"
+            android:entryValues="@array/pocket_mode_values" />
+
+        <ListPreference
+            android:key="ad_threshold"
+            android:persistent="false"
+            android:dialogTitle="@string/ad_threshold_title"
+            android:title="@string/ad_threshold_title"
+            android:summary="@string/ad_threshold_summary"
+            android:entries="@array/ad_threshold_entries"
+            android:entryValues="@array/ad_threshold_values" />
+
+        <CheckBoxPreference
+            android:key="ad_turnoff_mode"
+            android:persistent="true"
+            android:title="@string/ad_turnoff_mode_title"
+            android:summary="@string/ad_turnoff_mode_summary" />
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_double_tap"
+            android:title="@string/ad_double_tap_title"
+            android:summary="@string/ad_double_tap_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="notifications"
+        android:title="@string/notifications_settings_title" >
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_all_notifications"
+            android:title="@string/ad_all_notifications_title"
+            android:summary="@string/ad_all_notifications_summary"/>
+
+        <CheckBoxPreference
+            android:key="hide_low_priority"
+            android:title="@string/hide_low_priority"
+            android:summary="@string/hide_low_priority_summary" />
+
+        <CheckBoxPreference
+            android:key="hide_non_clearable"
+            android:title="@string/hide_non_clearable"
+            android:summary="@string/hide_non_clearable_summary" />
+
+        <CheckBoxPreference
+            android:key="dismiss_all"
+            android:title="@string/dismiss_all"
+            android:summary="@string/dismiss_all_summary" />
+
+        <ListPreference
+            android:key="ad_timeout"
+            android:persistent="false"
+            android:dialogTitle="@string/ad_timeout_title"
+            android:title="@string/ad_timeout_title"
+            android:entries="@array/ad_timeout_entries"
+            android:entryValues="@array/ad_timeout_values" />
+
+        <com.android.settings.widget.SeekBarPreference2
+            android:key="ad_annoying"
+            android:persistent="false"
+            android:title="@string/ad_annoying_title"
+            android:summary="@string/ad_annoying_summary"
+            android:max="60"
+            settings:min="0"
+            settings:interval="1"
+            settings:unitsLeft=""
+            settings:unitsRight="s" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="display_options"
+        android:title="@string/category_display_title" >
+
+        <ListPreference
+            android:key="ad_redisplay"
+            android:persistent="false"
+            android:dialogTitle="@string/ad_redisplay_title"
+            android:title="@string/ad_redisplay_title"
+            android:entries="@array/ad_redisplay_entries"
+            android:entryValues="@array/ad_redisplay_values" />
+
+        <CheckBoxPreference
+            android:key="ad_bypass"
+            android:persistent="false"
+            android:title="@string/ad_bypass_title"
+            android:summary="@string/ad_bypass_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="ad_shake_event"
+        android:title="@string/ad_shake_event_settings_title" >
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_shake_event"
+            android:title="@string/ad_shake_event_title"
+            android:summary="@string/ad_shake_event_summary"/>
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_shake_force"
+            android:title="@string/ad_shake_force_title"
+            android:summary="@string/ad_shake_force_summary" />
+
+        <com.android.settings.widget.SeekBarPreference2
+            android:key="ad_shake_threshold"
+            android:persistent="false"
+            android:title="@string/ad_shake_threshold_title"
+            android:summary="@string/ad_shake_threshold_summary"
+            android:max="20"
+            settings:min="5"
+            settings:interval="1"
+            settings:unitsLeft=""
+            settings:unitsRight="" />
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_shake_quiet_hours"
+			android:title="@string/ad_shake_quiet_hours_title"
+			android:summary="@string/ad_shake_quiet_hours_summary" />
+
+        <com.android.settings.widget.SeekBarPreference2
+            android:key="ad_shake_long_threshold"
+			android:persistent="false"
+			android:title="@string/ad_shake_long_threshold_title"
+			android:summary="@string/ad_shake_long_threshold_summary"
+			android:max="5"
+			settings:min="1"
+			settings:interval="1"
+			settings:unitsLeft=""
+			settings:unitsRight="" />
+
+        <com.android.settings.widget.SeekBarPreference2
+            android:key="ad_shake_timeout"
+            android:persistent="false"
+            android:title="@string/ad_shake_timeout_title"
+            android:summary="@string/ad_shake_timeout_summary"
+			android:max="10"
+			settings:min="0"
+			settings:interval="1"
+			settings:unitsLeft=""
+			settings:unitsRight="m" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="style"
+        android:title="@string/category_style_title" >
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_content"
+            android:defaultValue="true"
+            android:title="@string/ad_content_title"
+            android:summary="@string/ad_content_summary" />
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_text"
+            android:title="@string/ad_text_title"
+            android:summary="@string/ad_text_summary"/>
+
+        <com.android.settings.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="active_display_show_date"
+            android:defaultValue="true"
+            android:title="@string/ad_show_date_title"
+            android:summary="@string/ad_show_date_summary"/>
+
+        <CheckBoxPreference
+            android:key="ad_show_ampm"
+            android:persistent="false"
+            android:title="@string/ad_show_ampm_title"
+            android:summary="@string/ad_show_ampm_summary"/>
+
+        <CheckBoxPreference
+            android:key="ad_sunlight_mode"
+            android:persistent="false"
+            android:title="@string/ad_sunlight_mode_title"
+            android:summary="@string/ad_sunlight_mode_summary" />
+
+        <com.android.settings.widget.SeekBarPreference2
+            android:key="ad_brightness"
+            android:persistent="false"
+            android:title="@string/ad_brightness_title"
+            android:summary="@string/ad_brightness_summary"
+            settings:unitsLeft=""
+            settings:unitsRight="%" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

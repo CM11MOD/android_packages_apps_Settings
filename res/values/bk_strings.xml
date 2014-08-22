@@ -24,6 +24,11 @@
     <string name="chronus_title">LockClock</string>
     <string name="device_settings_title">Device options</string>
     <string name="category_presets_title">Presets</string>
+    <string name="category_general_title">General settings</string>
+    <string name="category_display_title">Display options</string>
+    <string name="category_style_title">Style settings</string>
+    <string name="category_ui_title">User interface</string>
+    <string name="category_wake_options">Wake options</string>
     <string name="lockscreen_settings_title">Lockscreen</string>
     <string name="quick_settings_title">Quicksettings</string>
     <string name="notifications_settings_title">Notification services</string>
@@ -836,7 +841,9 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="privacy_mode_summary">Disables notifications from beeing shown and dismissed. This way, you just see the icons of your notifications.</string>
     <string name="excluded_apps_title">Lockscreen notifications blacklist</string>
     <string name="excluded_apps_summary">Excluded applications will not show up as lockscreen notifications</string>
+
     <!-- Active Display -->
+    <string name="ad_customizations_title">Customizations</string>
     <string name="ad_settings_title">Active display</string>
     <string name="ad_enable_summary">Active display style notifications</string>
     <string name="ad_text_title">Notification text</string>

@@ -37,35 +37,22 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
         DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
 
     private static final String KEY_NOTIFICATION_MODE = "active_notification_mode";
-    private static final String KEY_POCKET_MODE = "pocket_mode";
-    private static final String KEY_HIDE_LOW_PRIORITY = "hide_low_priority";
-    private static final String KEY_HIDE_NON_CLEARABLE = "hide_non_clearable";
-    private static final String KEY_DISMISS_ALL = "dismiss_all";
-    private static final String KEY_PRIVACY_MODE = "privacy_mode";
-    private static final String KEY_QUIET_HOURS = "quiet_hours";
     private static final String KEY_ADDITIONAL = "additional_options";
+    private static final String KEY_QUIET_HOURS = "quiet_hours";
     private static final String KEY_EXCLUDED_APPS = "ad_excluded_apps";
     private static final String KEY_EXCLUDED_NOTIF_APPS = "excluded_apps";
-    private static final String KEY_PRIVACY_APPS = "ad_privacy_apps";
 
     private Switch mEnabledSwitch;
-    private Preference mAdditional;
-    private boolean mActiveNotifications;
-
     private boolean mDialogClicked;
     private Dialog mEnableDialog;
 
+    private CheckBoxPreference mQuietHours;
     private ListPreference mNotiModePref;
-    private ListPreference mPocketModePref;
-    private CheckBoxPreference mHideLowPriority;
-    private CheckBoxPreference mHideNonClearable;
-    private CheckBoxPreference mDismissAll;
     private AppMultiSelectListPreference mExcludedAppsPref;
     private AppMultiSelectListPreference mNotifAppsPref;
-    private AppMultiSelectListPreference mPrivacyAppsPref;
-    private CheckBoxPreference mPrivacyMode;
 
-    private CheckBoxPreference mQuietHours;
+    private Preference mAdditional;
+    private boolean mActiveNotifications;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -117,36 +104,10 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
         mNotiModePref.setSummary(mNotiModePref.getEntry());
         mNotiModePref.setOnPreferenceChangeListener(this);
 
-        mPocketModePref = (ListPreference) prefs.findPreference(KEY_POCKET_MODE);
-        if (!DeviceUtils.deviceSupportsProximitySensor(mContext)) {
-            prefs.removePreference(mPocketModePref);
-        } else {
-            int mode = Settings.System.getInt(cr,
-                    Settings.System.ACTIVE_NOTIFICATIONS_POCKET_MODE, 0);
-            mPocketModePref.setValue(String.valueOf(mode));
-            updatePocketModeSummary(mode);
-            mPocketModePref.setOnPreferenceChangeListener(this);
-        }
-
-        mHideLowPriority = (CheckBoxPreference) prefs.findPreference(KEY_HIDE_LOW_PRIORITY);
-        mHideLowPriority.setChecked(Settings.System.getInt(cr,
-                    Settings.System.ACTIVE_NOTIFICATIONS_HIDE_LOW_PRIORITY, 0) == 1);
-
-        mHideNonClearable = (CheckBoxPreference) prefs.findPreference(KEY_HIDE_NON_CLEARABLE);
-        mHideNonClearable.setChecked(Settings.System.getInt(cr,
-                    Settings.System.LOCKSCREEN_NOTIFICATIONS_HIDE_NON_CLEARABLE, 0) == 1);
-
-        mDismissAll = (CheckBoxPreference) prefs.findPreference(KEY_DISMISS_ALL);
-        mDismissAll.setChecked(Settings.System.getInt(cr,
-                    Settings.System.LOCKSCREEN_NOTIFICATIONS_DISMISS_ALL, 1) == 1);
-
-        mPrivacyMode = (CheckBoxPreference) prefs.findPreference(KEY_PRIVACY_MODE);
-        mPrivacyMode.setChecked(Settings.System.getInt(cr,
-                    Settings.System.ACTIVE_NOTIFICATIONS_PRIVACY_MODE, 0) == 1);
-
         mQuietHours = (CheckBoxPreference) prefs.findPreference(KEY_QUIET_HOURS);
         mQuietHours.setChecked(Settings.System.getInt(cr,
-                    Settings.System.ACTIVE_NOTIFICATIONS_QUIET_HOURS, 0) == 1);
+                Settings.System.ACTIVE_NOTIFICATIONS_QUIET_HOURS, 0) == 1);
+        mQuietHours.setOnPreferenceChangeListener(this);
 
         mExcludedAppsPref = (AppMultiSelectListPreference) findPreference(KEY_EXCLUDED_APPS);
         Set<String> excludedApps = getExcludedApps();
@@ -162,13 +123,6 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
         }
         mNotifAppsPref.setOnPreferenceChangeListener(this);
 
-        mPrivacyAppsPref = (AppMultiSelectListPreference) findPreference(KEY_PRIVACY_APPS);
-        Set<String> privacyApps = getPrivacyApps();
-        if (privacyApps != null) {
-            mPrivacyAppsPref.setValues(privacyApps);
-        }
-        mPrivacyAppsPref.setOnPreferenceChangeListener(this);
-
         mAdditional = (PreferenceScreen) prefs.findPreference(KEY_ADDITIONAL);
 
         updateDependency();
@@ -183,60 +137,53 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
     private void updateDependency() {
         mActiveNotifications = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.ACTIVE_NOTIFICATIONS, 0) == 1;
-        mPocketModePref.setEnabled(mActiveNotifications);
-        mHideLowPriority.setEnabled(mActiveNotifications);
-        mHideNonClearable.setEnabled(mActiveNotifications);
-        mDismissAll.setEnabled(!mHideNonClearable.isChecked() && mActiveNotifications);
-        mQuietHours.setEnabled(mActiveNotifications);
-        mPrivacyMode.setEnabled(mActiveNotifications);
+        int view = Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.ACTIVE_NOTIFICATIONS_MODE, 0);
+
         mAdditional.setEnabled(mActiveNotifications);
-        mNotifAppsPref.setEnabled(mActiveNotifications);
-        mExcludedAppsPref.setEnabled(mActiveNotifications);
+
+        if (mActiveNotifications && (view == 1)) {
+            mExcludedAppsPref.setEnabled(true);
+            mNotifAppsPref.setEnabled(false);
+            mQuietHours.setEnabled(true);
+        } else if (mActiveNotifications && (view == 2)) {
+            mNotifAppsPref.setEnabled(true);
+            mExcludedAppsPref.setEnabled(false);
+            mQuietHours.setEnabled(true);
+        } else {
+            mNotifAppsPref.setEnabled(false);
+            mExcludedAppsPref.setEnabled(false);
+            mQuietHours.setEnabled(false);
+        }
     }
        
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        ContentResolver cr = getActivity().getContentResolver();
-        if (preference == mHideLowPriority) {
-            Settings.System.putInt(cr, Settings.System.ACTIVE_NOTIFICATIONS_HIDE_LOW_PRIORITY,
-                    mHideLowPriority.isChecked() ? 1 : 0);
-        } else if (preference == mHideNonClearable) {
-            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_NOTIFICATIONS_HIDE_NON_CLEARABLE,
-                    mHideNonClearable.isChecked() ? 1 : 0);
-            mDismissAll.setEnabled(!mHideNonClearable.isChecked());
-        } else if (preference == mDismissAll) {
-            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_NOTIFICATIONS_DISMISS_ALL,
-                    mDismissAll.isChecked() ? 1 : 0);
-        } else if (preference == mPrivacyMode) {
-            Settings.System.putInt(cr, Settings.System.ACTIVE_NOTIFICATIONS_PRIVACY_MODE,
-                    mPrivacyMode.isChecked() ? 1 : 0);
-        } else if (preference == mQuietHours) {
-            Settings.System.putInt(cr, Settings.System.ACTIVE_NOTIFICATIONS_QUIET_HOURS,
-                    mQuietHours.isChecked() ? 1 : 0);
-        } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
-        }
-        return true;
     }
 
     @Override
-    public boolean onPreferenceChange(Preference pref, Object value) {
-        if (pref == mNotiModePref) {
-            int mode = Integer.valueOf((String) value);
-            int index = mNotiModePref.findIndexOfValue((String) value);
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        boolean value;
+        if (preference == mNotiModePref) {
+            int mode = Integer.valueOf((String) newValue);
+            int index = mNotiModePref.findIndexOfValue((String) newValue);
             Settings.System.putInt(getContentResolver(),
                     Settings.System.ACTIVE_NOTIFICATIONS_MODE, mode);
             mNotiModePref.setSummary(mNotiModePref.getEntries()[index]);
+            updateDependency();
             return true;
-        } else if (pref == mPocketModePref) {
-            int mode = Integer.valueOf((String) value);
-            updatePocketModeSummary(mode);
+        } else if (preference == mQuietHours) {
+            value = (Boolean) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.ACTIVE_NOTIFICATIONS_QUIET_HOURS,
+            value ? 1 : 0);
             return true;
-        } else if (pref == mExcludedAppsPref) {
-            storeExcludedApps((Set<String>) value);
+        } else if (preference == mExcludedAppsPref) {
+            storeExcludedApps((Set<String>) newValue);
             return true;
-        } else if (pref == mNotifAppsPref) {
-			storeExcludedNotifApps((Set<String>) value);
+        } else if (preference == mNotifAppsPref) {
+			storeExcludedNotifApps((Set<String>) newValue);
 			return true;
         } else {
             return false;
@@ -287,13 +234,6 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
         }
     }
 
-    private void updatePocketModeSummary(int value) {
-        mPocketModePref.setSummary(
-                mPocketModePref.getEntries()[mPocketModePref.findIndexOfValue("" + value)]);
-        Settings.System.putInt(getContentResolver(),
-                Settings.System.ACTIVE_NOTIFICATIONS_POCKET_MODE, value);
-    }
-
     private Set<String> getExcludedApps() {
         String excluded = Settings.System.getString(getContentResolver(),
                 Settings.System.ACTIVE_DISPLAY_EXCLUDED_APPS);
@@ -337,26 +277,5 @@ public class ActiveNotifications extends SettingsPreferenceFragment implements
 
     public void onDismiss(DialogInterface dialog) {
         // ahh!
-    }
-
-    private Set<String> getPrivacyApps() {
-        String privacies = Settings.System.getString(getContentResolver(),
-                Settings.System.ACTIVE_DISPLAY_PRIVACY_APPS);
-        if (TextUtils.isEmpty(privacies)) {
-            return null;
-        }
-        return new HashSet<String>(Arrays.asList(privacies.split("\\|")));
-    }
-
-    private void storePrivacyApps(Set<String> values) {
-        StringBuilder builder = new StringBuilder();
-        String delimiter = "";
-        for (String value : values) {
-            builder.append(delimiter);
-            builder.append(value);
-            delimiter = "|";
-        }
-        Settings.System.putString(getContentResolver(),
-                Settings.System.ACTIVE_DISPLAY_PRIVACY_APPS, builder.toString());
     }
 }

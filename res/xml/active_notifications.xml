@@ -19,41 +19,13 @@
     android:title="@string/lockscreen_notifications"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <PreferenceCategory
-        android:title="@string/general" >
-
-        <ListPreference
-            android:key="active_notification_mode"
-            android:persistent="true"
-            android:title="@string/active_notification_mode_title"
-            android:summary="@string/active_notification_mode_summary"
-            android:entries="@array/active_notification_mode_entries"
-            android:entryValues="@array/active_notification_mode_values" />
-
-        <ListPreference
-            android:key="pocket_mode"
-            android:persistent="false"
-            android:title="@string/pocket_mode_title"
-            android:summary="@string/pocket_mode_summary"
-            android:entries="@array/pocket_mode_entries"
-            android:entryValues="@array/pocket_mode_values" />
-
-        <CheckBoxPreference
-            android:key="hide_low_priority"
-            android:title="@string/hide_low_priority"
-            android:summary="@string/hide_low_priority_summary" />
-
-        <CheckBoxPreference
-            android:key="hide_non_clearable"
-            android:title="@string/hide_non_clearable"
-            android:summary="@string/hide_non_clearable_summary" />
-
-        <CheckBoxPreference
-            android:key="dismiss_all"
-            android:title="@string/dismiss_all"
-            android:summary="@string/dismiss_all_summary" />
-
-    </PreferenceCategory>
+    <ListPreference
+        android:key="active_notification_mode"
+        android:persistent="true"
+        android:title="@string/active_notification_mode_title"
+        android:summary="@string/active_notification_mode_summary"
+        android:entries="@array/active_notification_mode_entries"
+        android:entryValues="@array/active_notification_mode_values" />
 
     <PreferenceScreen
         android:key="additional_options"
@@ -61,28 +33,12 @@
         android:title="@string/additional_settings_title" />
     
     <PreferenceCategory
-        android:title="@string/privacy" >
+        android:title="@string/excluded_apps_category" />
 
-        <CheckBoxPreference
-            android:key="privacy_mode"
-            android:title="@string/privacy_mode"
-            android:summary="@string/privacy_mode_summary" />
-
-        <com.android.settings.vanir.AppMultiSelectListPreference
-            android:key="ad_privacy_apps"
-            android:persistent="false"
-            android:title="@string/ad_privacy_apps_title"
-            android:summary="@string/ad_privacy_apps_summary" />
-
-        <CheckBoxPreference
+         <CheckBoxPreference
             android:key="quiet_hours"
             android:title="@string/active_quiet_hours_title"
             android:summary="@string/active_quiet_hours_summary" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/excluded_apps_category" />
 
         <com.android.settings.vanir.AppMultiSelectListPreference
             android:key="ad_excluded_apps"
