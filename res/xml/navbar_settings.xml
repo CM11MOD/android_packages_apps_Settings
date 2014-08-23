@@ -36,6 +36,12 @@
                 android:fragment="com.android.settings.slim.NavbarStyleDimenSettings"
                 android:title="@string/navbar_style_dimen_title" />
 
+            <PreferenceScreen
+                android:key="navbar_bg"
+                android:title="@string/bg_title"
+                android:summary="@string/bg_colors_summary"
+                android:fragment="com.android.settings.slim.NavbarBg" />
+
         </PreferenceCategory>
 
         <PreferenceCategory

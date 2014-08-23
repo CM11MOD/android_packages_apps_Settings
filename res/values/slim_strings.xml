@@ -113,7 +113,17 @@
 
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
+    <string name="status_bar_summary">Customize status bar</string>
     <string name="status_bar_style_title">Style</string>
+    <string name="status_bar_expanded_title">Status bar expanded</string>
+    <string name="status_bar_expanded_summary">Customize status bar expanded</string>
+    <string name="navigation_bar_title">Navigation bar</string>
+    <string name="navigation_bar_summary">Customize navigation bar</string>
+    <string name="bg_title">Background</string>
+    <string name="bg_colors_summary">Customize the background colors</string>
+    <string name="opaque_color_title">Opaque</string>
+    <string name="semi_trans_color_title">Semi transparent</string>
+    <string name="gradient_color_title">Shadow</string>
 
     <!-- Status bar | Clock -->
     <string name="status_bar_clock">Clock and date</string>
