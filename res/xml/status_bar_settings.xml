@@ -19,12 +19,6 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/status_bar_title">
 
-    <PreferenceScreen
-        android:key="status_bar_bg"
-        android:title="@string/bg_title"
-        android:summary="@string/bg_colors_summary"
-        android:fragment="com.android.settings.slim.StatusBarBg" />
-
     <!-- Status bar tweaks -->
     <PreferenceCategory
         android:title="@string/status_bar_clock">
@@ -103,6 +97,23 @@
             android:key="signal_color"
             android:title="@string/signal_color_title"
             android:defaultValue="0xffffffff" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/category_style_title">
+
+        <PreferenceScreen
+            android:key="status_bar_bg"
+            android:title="@string/bg_title"
+            android:summary="@string/bg_colors_summary"
+            android:fragment="com.android.settings.slim.StatusBarBg" />
+
+        <PreferenceScreen
+            android:key="status_bar_notif_system_icons"
+            android:title="@string/status_bar_notif_system_icons_title"
+            android:summary="@string/status_bar_notif_system_icons_summary"
+            android:fragment="com.android.settings.slim.StatusBarNotifSystemIcons" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="status_bar_wifi_color"

@@ -210,6 +210,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             }
         }
 
+        if (DeviceUtils.isPhone(getActivity())) {
+            PreferenceScreen notifSystemIcons =
+                (PreferenceScreen) findPreference("status_bar_notif_system_icons");
+            notifSystemIcons.setTitle(R.string.status_bar_notif_system_icons_title_phone);
+        }
+
         mCustomStatusBarCarrierLabel = (PreferenceScreen) findPreference(CUSTOM_CARRIER_LABEL);
         updateCustomLabelTextSummary();
         setHasOptionsMenu(true);
