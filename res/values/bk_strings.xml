@@ -1509,6 +1509,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="settings_root_list_summary">Customize the root list of the settings</string>
     <string name="settings_root_list_colorize_account_icons_title">Account icons</string>
     <string name="settings_root_list_colorize_account_icons_summary">Enable to colorize the account icons, too.</string>
+    <string name="settings_root_list_category_text_color_title">Categorie text</string>
+    <string name="settings_root_list_title_text_color_title">Title text</string>
 
     <string name="show_noti_settings_button_title">Add Settings button</string>
     <string name="show_noti_settings_button_summary">Always settings button in notification panel</string>

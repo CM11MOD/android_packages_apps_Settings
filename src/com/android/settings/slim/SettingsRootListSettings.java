@@ -41,15 +41,23 @@ public class SettingsRootListSettings extends SettingsPreferenceFragment impleme
 
     private static final String PREF_COLORIZE_ACCOUNT_ICONS =
             "settings_root_list_colorize_account_icons";
+    private static final String PREF_CATEGORY_TEXT_COLOR =
+            "settings_root_list_category_text_color";
+    private static final String PREF_TITLE_TEXT_COLOR =
+            "settings_root_list_title_text_color";
     private static final String PREF_ICON_COLOR =
             "settings_root_list_icon_color";
 
-    private static final int DEFAULT_ICON_COLOR = 0xffffffff;
+    private static final int DEFAULT_CATEGORY_TEXT_COLOR = 0xffffffff;
+    private static final int DEFAULT_TITLE_TEXT_COLOR    = 0xffffffff;
+    private static final int DEFAULT_ICON_COLOR          = 0xffffffff;
 
     private static final int MENU_RESET = Menu.FIRST;
-    private static final int DLG_RESET = 0;
+    private static final int DLG_RESET  = 0;
 
     private CheckBoxPreference mColorizeAccountIcons;
+    private ColorPickerPreference mCategoryTextColor;
+    private ColorPickerPreference mTitleTextColor;
     private ColorPickerPreference mIconColor;
 
     private ContentResolver mResolver;
@@ -76,6 +84,26 @@ public class SettingsRootListSettings extends SettingsPreferenceFragment impleme
         mColorizeAccountIcons.setChecked(Settings.System.getInt(mResolver,
                 Settings.System.SETTINGS_ROOT_LIST_COLORIZE_ACCOUNT_ICONS, 0) == 1);
         mColorizeAccountIcons.setOnPreferenceChangeListener(this);
+
+        mCategoryTextColor =
+                (ColorPickerPreference) findPreference(PREF_CATEGORY_TEXT_COLOR);
+        color = Settings.System.getInt(mResolver,
+                Settings.System.SETTINGS_ROOT_LIST_CATEGORY_TEXT_COLOR,
+                DEFAULT_CATEGORY_TEXT_COLOR);
+        mCategoryTextColor.setNewPreviewColor(color);
+        hexColor = String.format("#%08x", (0xffffffff & color));
+        mCategoryTextColor.setSummary(hexColor);
+        mCategoryTextColor.setOnPreferenceChangeListener(this);
+
+        mTitleTextColor =
+                (ColorPickerPreference) findPreference(PREF_TITLE_TEXT_COLOR);
+        color = Settings.System.getInt(mResolver,
+                Settings.System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR,
+                DEFAULT_TITLE_TEXT_COLOR);
+        mTitleTextColor.setNewPreviewColor(color);
+        hexColor = String.format("#%08x", (0xffffffff & color));
+        mTitleTextColor.setSummary(hexColor);
+        mTitleTextColor.setOnPreferenceChangeListener(this);
 
         mIconColor =
                 (ColorPickerPreference) findPreference(PREF_ICON_COLOR);
@@ -114,6 +142,24 @@ public class SettingsRootListSettings extends SettingsPreferenceFragment impleme
             Settings.System.putInt(mResolver,
                     Settings.System.SETTINGS_ROOT_LIST_COLORIZE_ACCOUNT_ICONS,
                             value ? 1 : 0);
+            return true;
+        } else if (preference == mCategoryTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(mResolver,
+                    Settings.System.SETTINGS_ROOT_LIST_CATEGORY_TEXT_COLOR,
+                    intHex);
+            preference.setSummary(hex);
+            return true;
+        } else if (preference == mTitleTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(mResolver,
+                    Settings.System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR,
+                    intHex);
+            preference.setSummary(hex);
             return true;
         } else if (preference == mIconColor) {
             String hex = ColorPickerPreference.convertToARGB(
@@ -162,6 +208,12 @@ public class SettingsRootListSettings extends SettingsPreferenceFragment impleme
                         public void onClick(DialogInterface dialog, int which) {
                             Settings.System.putInt(getOwner().mResolver,
                                     Settings.System.SETTINGS_ROOT_LIST_COLORIZE_ACCOUNT_ICONS, 0);
+                            Settings.System.putInt(getOwner().mResolver,
+                                    Settings.System.SETTINGS_ROOT_LIST_CATEGORY_TEXT_COLOR,
+                                    DEFAULT_CATEGORY_TEXT_COLOR);
+                            Settings.System.putInt(getOwner().mResolver,
+                                    Settings.System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR,
+                                    DEFAULT_TITLE_TEXT_COLOR);
                             Settings.System.putInt(getOwner().mResolver,
                                     Settings.System.SETTINGS_ROOT_LIST_ICON_COLOR,
                                     DEFAULT_ICON_COLOR);

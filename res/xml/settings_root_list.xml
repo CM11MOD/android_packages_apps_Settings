@@ -39,5 +39,17 @@
             android:defaultValue="0xffffffff"
             alphaSlider="true" />
 
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="settings_root_list_category_text_color"
+            android:title="@string/settings_root_list_category_text_color_title"
+            android:defaultValue="0xffffffff"
+            alphaSlider="true" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="settings_root_list_title_text_color"
+            android:title="@string/settings_root_list_title_text_color_title"
+            android:defaultValue="0xffffffff"
+            alphaSlider="true" />
+
     </PreferenceCategory>
 </PreferenceScreen>

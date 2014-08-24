@@ -36,10 +36,12 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -59,6 +61,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
@@ -72,6 +75,8 @@ import android.widget.TextView;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.slim.ImageHelper;
+import com.android.internal.widget.ActionBarView;
+import com.android.internal.widget.ActionBarContainer;
 import com.android.settings.accessibility.AccessibilitySettings;
 import com.android.settings.accessibility.CaptionPropertiesFragment;
 import com.android.settings.accessibility.ToggleAccessibilityServicePreferenceFragment;
@@ -234,6 +239,11 @@ public class Settings extends PreferenceActivity
     private ActionBar mActionBar;
     private MenuItem mSearchItem;
     private SettingsAutoCompleteTextView mSearchBar;
+    private ActionBarContainer mActionBarContainer;
+    private ActionBarView mActionBarView;
+    private ImageView mHomeView;
+    private int mAbTitleTextColor;
+    private int mAbHomeIconColor;
 
     private boolean mBatteryPresent = true;
     private BroadcastReceiver mBatteryInfoReceiver = new BroadcastReceiver() {
@@ -296,6 +306,13 @@ public class Settings extends PreferenceActivity
         return true;
     }
 
+    private ContentObserver mActionBarColorObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            setActionbarColors();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().hasExtra(EXTRA_UI_OPTIONS)) {
@@ -353,6 +370,11 @@ public class Settings extends PreferenceActivity
 
         mActionBar = getActionBar();
         mActionBar.setDisplayShowCustomEnabled(true);
+
+        mActionBarView = (ActionBarView) getActionBarView();
+        mHomeView =
+                (ImageView) mActionBarView.findViewById(com.android.internal.R.id.home);
+        setActionbarColors();
     }
 
     @Override
@@ -377,6 +399,27 @@ public class Settings extends PreferenceActivity
         }
     }
 
+    private View getActionBarView() {
+        Window window = getWindow();
+        View v = window.getDecorView();
+        int resId =
+                getResources().getIdentifier("action_bar_container", "id", "android");
+        mActionBarContainer = (ActionBarContainer) v.findViewById(resId);
+        return mActionBarContainer.findViewById(com.android.internal.R.id.action_bar);
+    }
+
+    private void setActionbarColors() {
+        if (getClass() != Settings.class) {
+            return;
+        }
+        mAbTitleTextColor = System.getInt(getContentResolver(),
+                System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR, 0xffffffff);
+        mAbHomeIconColor = System.getInt(getContentResolver(),
+                System.SETTINGS_ROOT_LIST_ICON_COLOR, 0xffffffff);
+        mActionBarView.setTitleColor(mAbTitleTextColor);
+        mHomeView.setColorFilter(mAbHomeIconColor, Mode.MULTIPLY);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -393,6 +436,8 @@ public class Settings extends PreferenceActivity
             };
             mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(
                     mDevelopmentPreferencesListener);
+
+            getContentResolver().unregisterContentObserver(mActionBarColorObserver);
 
             ListAdapter listAdapter = getListAdapter();
             if (listAdapter instanceof HeaderAdapter) {
@@ -437,6 +482,13 @@ public class Settings extends PreferenceActivity
             mDevelopmentPreferences.unregisterOnSharedPreferenceChangeListener(
                     mDevelopmentPreferencesListener);
             mDevelopmentPreferencesListener = null;
+
+            getContentResolver().registerContentObserver(
+                    System.getUriFor(System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR), true,
+                    mActionBarColorObserver);
+            getContentResolver().registerContentObserver(
+                    System.getUriFor(System.SETTINGS_ROOT_LIST_ICON_COLOR), true,
+                    mActionBarColorObserver);
         }
     }
 
@@ -1043,6 +1095,8 @@ public class Settings extends PreferenceActivity
         private AuthenticatorHelper mAuthHelper;
         private DevicePolicyManager mDevicePolicyManager;
         private boolean mColorizeAccountIcons;
+        private int mCategoryTextColor;
+        private int mTitleTextColor;
         private int mIconColor;
         Context mContext;
 
@@ -1133,6 +1187,9 @@ public class Settings extends PreferenceActivity
             int headerType = getHeaderType(header);
             View view = null;
 
+            mCategoryTextColor = System.getInt(mContext.getContentResolver(),
+                    System.SETTINGS_ROOT_LIST_CATEGORY_TEXT_COLOR, 0xffffffff);
+
             if (convertView == null || headerType == HEADER_TYPE_SWITCH) {
                 holder = new HeaderViewHolder();
                 switch (headerType) {
@@ -1186,6 +1243,7 @@ public class Settings extends PreferenceActivity
             switch (headerType) {
                 case HEADER_TYPE_CATEGORY:
                     holder.title.setText(header.getTitle(getContext().getResources()));
+                    holder.title.setTextColor(mCategoryTextColor);
                     break;
 
                 case HEADER_TYPE_SWITCH:
@@ -1250,6 +1308,8 @@ public class Settings extends PreferenceActivity
         }
 
         private void updateCommonHeaderView(Header header, HeaderViewHolder holder) {
+            mTitleTextColor = System.getInt(mContext.getContentResolver(),
+                    System.SETTINGS_ROOT_LIST_TITLE_TEXT_COLOR, 0xffffffff);
             mIconColor = System.getInt(mContext.getContentResolver(),
                     System.SETTINGS_ROOT_LIST_ICON_COLOR, 0xffffffff);
             if (header.extras != null
@@ -1263,6 +1323,7 @@ public class Settings extends PreferenceActivity
                 holder.icon.setColorFilter(mIconColor, Mode.MULTIPLY);
             }
             holder.title.setText(header.getTitle(getContext().getResources()));
+            holder.title.setTextColor(mTitleTextColor);
             CharSequence summary = header.getSummary(getContext().getResources());
             if (!TextUtils.isEmpty(summary)) {
                 holder.summary.setVisibility(View.VISIBLE);
