@@ -1512,4 +1512,23 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
 
     <string name="show_noti_settings_button_title">Add Settings button</string>
     <string name="show_noti_settings_button_summary">Always settings button in notification panel</string>
+
+    <!-- Custom Bootanimation -->
+    <string name="bootanimation_settings_title">Bootanimation</string>
+
+    <string name="custom_bootanimation_title">Custom boot animation</string>
+    <string name="custom_bootanimation_summary">Select a bootanimation zip from sdcard.</string>
+    <string name="install_file_manager_error">No application found to pick the zip file. Please install a file manager.</string>
+    <string name="bootanimation_preview">Bootanimation preview</string>
+    <string name="apply">Apply</string>
+    <string name="creating_preview">Creating preview...</string>
+    <string name="error_reading_zip_file">Error reading zip file</string>
+    <string name="error_creating_preview">Error creating preview</string>
+    <string name="bootanimation_preview_loop_title">Loop preview</string>
+    <string name="bootanimation_preview_loop_summary">Enable to play the bootanimation preview looped</string>
+    <string name="dlg_bootanimation_help_message">The rom doesn`t contains additional bootanimations, the bootanimation has to be stored on the sd-card\n\nThe bootaniamtion has to be in bootanimation zip format, (NOT a flashable zip!)\n\nThe current bootanimation will be backed up on every bootanimation installation, this last bootanimation can be restored at any time.\nThis backup will be overwritten on every new bootanimation installation.\n\nOn the first bootanimation installation, there will be a seperate backup of this original bootanimation, this original bootanimation can be restored at any time.\n\nThe backups won`t get lost on a rom update, as long as you DON`T use a full-wipe.\n\nThe rom contains a backup script which will restore the current bootanimation on a rom update.</string>
+    <string name="dlg_bootanimation_restore_title">Restore</string>
+    <string name="dlg_bootanimation_restore_message">Click cancel to dismiss.\nClick Original to restore the original boot animation.\nClick last to restore the last boot animation.</string>
+    <string name="dlg_bootanimation_restore_original">Original</string>
+    <string name="dlg_bootanimation_restore_last">Last</string>
 </resources>

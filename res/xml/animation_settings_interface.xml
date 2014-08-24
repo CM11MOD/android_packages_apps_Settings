@@ -26,6 +26,11 @@
         android:title="@string/system_animation_title" />
 
     <PreferenceScreen
+        android:key="bootanimation_settings"
+        android:title="@string/bootanimation_settings_title"
+        android:fragment="com.android.settings.aokp.animations.BootanimationSettings" />
+
+    <PreferenceScreen
         android:key="interface_animation_listview"
         android:fragment="com.android.settings.aokp.animations.ListViewAnimation"
         android:title="@string/listview_title" />
