@@ -5,7 +5,7 @@
     <!-- System -->
 	<PreferenceCategory
 		android:key="category_system"
-		android:title="@string/interface_settings_animation_title">
+		android:title="@string/category_ui_title">
 
         <PreferenceScreen
             android:key="settings_root_list"
