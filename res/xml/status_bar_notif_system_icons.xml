@@ -51,6 +51,27 @@
             android:defaultValue="0xffffffff" />
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="status_bar_wifi_color"
+            android:title="@string/status_bar_wifi_color"
+            android:defaultValue="#ffffff" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="status_bar_data_color"
+            android:title="@string/status_bar_data_color"
+            android:defaultValue="#ffffff" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="status_bar_airplane_color"
+            android:title="@string/status_bar_airplain_color"
+            android:defaultValue="#ffffff" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="status_bar_volume_color"
+            android:title="@string/status_bar_volume_color"
+            android:defaultValue="#ffffff" />
+
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="status_bar_notif_count_icon_color"
             android:title="@string/status_bar_notif_count_title"
             android:defaultValue="0xffE5350D" />
