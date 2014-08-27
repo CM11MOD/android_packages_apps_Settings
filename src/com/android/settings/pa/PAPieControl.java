@@ -49,36 +49,20 @@ public class PAPieControl extends SettingsPreferenceFragment implements
     private static final String PA_PIE_SIZE = "pa_pie_size";
     private static final String PA_PIE_TRIGGER = "pa_pie_trigger";
     private static final String PA_PIE_ANGLE = "pa_pie_angle";
+    private static final String PA_PIE_STICK = "pa_pie_stick";
     private static final String PA_PIE_GAP = "pa_pie_gap";
-    private static final String PA_PIE_POWER = "pa_pie_power";
-    private static final String PA_PIE_MENU = "pa_pie_menu";
-    private static final String PA_PIE_SEARCH = "pa_pie_search";
-    private static final String PA_PIE_LASTAPP = "pa_pie_lastapp";
-    private static final String PA_PIE_KILLTASK = "pa_pie_killtask";
-    private static final String PA_PIE_SCREENSHOT = "pa_pie_screenshot";
-    private static final String PA_PIE_ACTNOTIF = "pa_pie_actnotif";
-    private static final String PA_PIE_ACTQS = "pa_pie_actqs";
     private static final String PA_PIE_CENTER = "pa_pie_center";
     private static final String PA_PIE_NOTIFICATIONS = "pa_pie_notifications";
-    private static final String PA_PIE_RESTART = "pa_pie_restart_launcher";
 
     private ListPreference mPieMode;
     private ListPreference mPieSize;
     private ListPreference mPieGravity;
-    private CheckBoxPreference mPieCenter;
     private ListPreference mPieTrigger;
     private ListPreference mPieAngle;
     private ListPreference mPieGap;
-    private CheckBoxPreference mPieMenu;
-    private CheckBoxPreference mPiePower;
-    private CheckBoxPreference mPieSearch;
-    private CheckBoxPreference mPieLastApp;
-    private CheckBoxPreference mPieKillTask;
-    private CheckBoxPreference mPieActNotif;
-    private CheckBoxPreference mPieActQs;
-    private CheckBoxPreference mPieScreenShot;
+    private CheckBoxPreference mPieCenter;
     private CheckBoxPreference mPieNotifi;
-    private CheckBoxPreference mPieRestart;
+    private CheckBoxPreference mPieStick;
 
     private Switch mEnabledSwitch;
     private boolean mEnabledPref;
@@ -155,6 +139,10 @@ public class PAPieControl extends SettingsPreferenceFragment implements
         mPieCenter.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_CENTER, 1) == 1);
 
+        mPieStick = (CheckBoxPreference) prefSet.findPreference(PA_PIE_STICK);
+        mPieStick.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_STICK, 1) == 1);
+
         mPieGravity = (ListPreference) prefSet.findPreference(PA_PIE_GRAVITY);
         int pieGravity = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_GRAVITY, 2);
@@ -196,45 +184,9 @@ public class PAPieControl extends SettingsPreferenceFragment implements
         mPieAngle.setValue(String.valueOf(pieAngle));
         mPieAngle.setOnPreferenceChangeListener(this);
 
-        mPieMenu = (CheckBoxPreference) prefSet.findPreference(PA_PIE_MENU);
-        mPieMenu.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_MENU, 1) == 1);
-
-        mPieSearch = (CheckBoxPreference) prefSet.findPreference(PA_PIE_SEARCH);
-        mPieSearch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_SEARCH, 1) == 1);
-
-        mPiePower = (CheckBoxPreference) prefSet.findPreference(PA_PIE_POWER);
-        mPiePower.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.PIE_POWER, 0) == 1);
-
-        mPieLastApp = (CheckBoxPreference) prefSet.findPreference(PA_PIE_LASTAPP);
-        mPieLastApp.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_LAST_APP, 0) == 1);
-
-        mPieKillTask = (CheckBoxPreference) prefSet.findPreference(PA_PIE_KILLTASK);
-        mPieKillTask.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_KILL_TASK, 0) == 1);
-
-        mPieScreenShot = (CheckBoxPreference) prefSet.findPreference(PA_PIE_SCREENSHOT);
-        mPieScreenShot.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_SCREENSHOT, 0) == 1);
-
-        mPieActNotif = (CheckBoxPreference) prefSet.findPreference(PA_PIE_ACTNOTIF);
-        mPieActNotif.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_ACT_NOTIF, 0) == 1);
-
-        mPieActQs = (CheckBoxPreference) prefSet.findPreference(PA_PIE_ACTQS);
-        mPieActQs.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_ACT_QS, 0) == 1);
-
         mPieNotifi = (CheckBoxPreference) prefSet.findPreference(PA_PIE_NOTIFICATIONS);
-        mPieNotifi.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_NOTIFICATIONS, 0) == 1));
-
-        mPieRestart = (CheckBoxPreference) prefSet.findPreference(PA_PIE_RESTART);
-        mPieRestart.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.EXPANDED_DESKTOP_RESTART_LAUNCHER, 1) == 1);
+        mPieNotifi.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_NOTIFICATIONS, 0) == 1);
     }
 
     @Override
@@ -257,48 +209,16 @@ public class PAPieControl extends SettingsPreferenceFragment implements
 
    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mPieMenu) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_MENU,
-                    mPieMenu.isChecked() ? 1 : 0);
-        } else if (preference == mPieSearch) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_SEARCH,
-                    mPieSearch.isChecked() ? 1 : 0);
-        } else if (preference == mPiePower) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_POWER,
-                    mPiePower.isChecked() ? 1 : 0);
-        } else if (preference == mPieLastApp) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_LAST_APP,
-                    mPieLastApp.isChecked() ? 1 : 0);
-        } else if (preference == mPieKillTask) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_KILL_TASK, mPieKillTask.isChecked() ? 1 : 0);
-        } else if (preference == mPieScreenShot) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_SCREENSHOT, mPieScreenShot.isChecked() ? 1 : 0);
-        } else if (preference == mPieActNotif) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_ACT_NOTIF, mPieActNotif.isChecked() ? 1 : 0);
-        } else if (preference == mPieActQs) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PIE_ACT_QS, mPieActQs.isChecked() ? 1 : 0);
-        } else if (preference == mPieCenter) {
+
+        if (preference == mPieCenter) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_CENTER, mPieCenter.isChecked() ? 1 : 0);
-        //} else if (preference == mPieStick) {
-        // Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-        // Settings.System.PIE_STICK, mPieStick.isChecked() ? 1 : 0);
+        } else if (preference == mPieStick) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PIE_STICK, mPieStick.isChecked() ? 1 : 0);
         } else if (preference == mPieNotifi) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.PIE_NOTIFICATIONS, mPieNotifi.isChecked() ? 1 : 0);
-            //Helpers.restartSystemUI();
-        } else if (preference == mPieRestart) {
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.EXPANDED_DESKTOP_RESTART_LAUNCHER, mPieRestart.isChecked() ? 1 : 0);
-            //Helpers.restartSystemUI();
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

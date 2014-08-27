@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 ParanoidAndroid Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/buttons_layout_title">
+
+    <PreferenceCategory
+        android:key="pa_pie_layout_title"
+        android:title="@string/buttons_layout_title" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_menu"
+            android:title="@string/pie_menu_title"
+            android:summary="@string/pie_menu_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_search"
+            android:title="@string/pie_search_title"
+            android:summary="@string/pie_search_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_power"
+            android:title="@string/pie_power_title"
+            android:summary="@string/pie_power_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_lastapp"
+            android:title="@string/pie_lastapp_title"
+            android:summary="@string/pie_lastapp_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_killtask"
+            android:title="@string/pie_killtask_title"
+            android:summary="@string/pie_killtask_summary" />
+
+        <!--<CheckBoxPreference
+            android:key="pa_pie_appwindow"
+            android:title="@string/pie_appwindow_title"
+            android:summary="@string/pie_appwindow_summary"
+            android:dependency="pa_pie_controls" />-->
+
+        <CheckBoxPreference
+            android:key="pa_pie_screenshot"
+            android:title="@string/pie_screenshot_title"
+            android:summary="@string/pie_screenshot_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_torch"
+            android:title="@string/pie_torch_title"
+            android:summary="@string/pie_torch_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_actnotif"
+            android:title="@string/pie_actnotif_title"
+            android:summary="@string/pie_actnotif_summary" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_actqs"
+            android:title="@string/pie_actqs_title"
+            android:summary="@string/pie_actqs_summary" />
+
+</PreferenceScreen>

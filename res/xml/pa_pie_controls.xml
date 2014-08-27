@@ -17,6 +17,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/pa_pie_controls_title">
 
+    <PreferenceScreen
+        android:key="pie_targets"
+        android:title="@string/buttons_layout_title"
+        android:fragment="com.android.settings.pa.PieTargets" />
+
     <PreferenceCategory
         android:key="pa_pie_color"
         android:title="@string/pie_color_title" />
@@ -53,6 +58,11 @@
             android:summary="@string/pie_trigger_summary"
             android:entries="@array/entries_pie_trigger"
             android:entryValues="@array/values_pie_trigger" />
+
+        <CheckBoxPreference
+            android:key="pa_pie_stick"
+            android:title="@string/pie_stick_title"
+            android:summary="@string/pie_stick_summary" />
 
         <CheckBoxPreference
             android:key="pa_pie_center"
@@ -94,59 +104,9 @@
             android:summary="@string/pie_notifications_summary"
             android:defaultValue="false" />
 
-        <CheckBoxPreference
+        <!--<CheckBoxPreference
             android:key="pa_pie_restart_launcher"
             android:title="@string/pie_restart_launcher_title"
-            android:summary="@string/pie_restart_launcher_summary" />
-
-    <PreferenceCategory
-        android:key="pa_pie_layout_title"
-        android:title="@string/buttons_layout_title" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_menu"
-            android:title="@string/pie_menu_title"
-            android:summary="@string/pie_menu_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_search"
-            android:title="@string/pie_search_title"
-            android:summary="@string/pie_search_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_power"
-            android:title="@string/pie_power_title"
-            android:summary="@string/pie_power_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_lastapp"
-            android:title="@string/pie_lastapp_title"
-            android:summary="@string/pie_lastapp_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_killtask"
-            android:title="@string/pie_killtask_title"
-            android:summary="@string/pie_killtask_summary" />
-
-        <!--<CheckBoxPreference
-            android:key="pa_pie_appwindow"
-            android:title="@string/pie_appwindow_title"
-            android:summary="@string/pie_appwindow_summary"
-            android:dependency="pa_pie_controls" />-->
-
-        <CheckBoxPreference
-            android:key="pa_pie_screenshot"
-            android:title="@string/pie_screenshot_title"
-            android:summary="@string/pie_screenshot_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_actnotif"
-            android:title="@string/pie_actnotif_title"
-            android:summary="@string/pie_actnotif_summary" />
-
-        <CheckBoxPreference
-            android:key="pa_pie_actqs"
-            android:title="@string/pie_actqs_title"
-            android:summary="@string/pie_actqs_summary" />
+            android:summary="@string/pie_restart_launcher_summary" />-->
 
 </PreferenceScreen>
