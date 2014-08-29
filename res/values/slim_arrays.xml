@@ -779,6 +779,7 @@
         <item>@string/shortcut_action_screenrecord</item>
         <item>@string/shortcut_action_onthego</item>
         <item>@string/shortcut_action_mobiledata</item>
+        <item>@string/shortcut_action_wifi</item>
     </string-array>
 
     <string-array name="shortcut_action_power_menu_values" translatable="false">
@@ -796,6 +797,7 @@
         <item>**screenrecord**</item>
         <item>**onthego**</item>
         <item>**mobiledata**</item>
+        <item>**wifi**</item>
     </string-array>
 
     <string-array name="shortcut_action_screen_off_entries">
