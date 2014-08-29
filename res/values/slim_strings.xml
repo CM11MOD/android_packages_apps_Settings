@@ -304,6 +304,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="shortcut_action_papie">PA Pie controls</string>
     <string name="shortcut_action_airplane">Airplane mode</string>
     <string name="shortcut_action_expanded_desktop">Expanded desktop</string>
+    <string name="shortcut_action_gesture">Gesture Panel</string>
     <string name="shortcut_action_onthego">On the go mode</string>
     <string name="shortcut_action_power_off">Power off</string>
     <string name="shortcut_action_reboot">Reboot</string>
@@ -848,6 +849,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="title_tile_compass">Compass</string>
     <string name="title_tile_hover">HOVER</string>
     <string name="title_tile_halo">Halo</string>
+    <string name="title_tile_gesture">Gesture Panel</string>
     <string name="dynamic_tile_ime_switcher">IME switcher</string>
     <string name="dynamic_tile_usb_tether">USB tether</string>
     <string name="dynamic_tile_alarm">Alarm</string>

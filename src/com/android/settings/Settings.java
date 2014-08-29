@@ -1524,4 +1524,5 @@ public class Settings extends PreferenceActivity
     public static class ShakeEventsSettingsActivity extends Settings { /* empty */ }
     public static class HaloActivity extends Settings { /* empty */ }
     public static class HoverSettingsActivity extends Settings { /* empty */ }
+    public static class GestureSettingsActivity extends Settings { /* empty */ }
 }

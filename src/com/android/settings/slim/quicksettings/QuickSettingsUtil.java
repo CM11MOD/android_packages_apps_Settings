@@ -68,6 +68,7 @@ import static com.android.internal.util.slim.QSConstants.TILE_SCREENCAST;
 import static com.android.internal.util.slim.QSConstants.TILE_COMPASS;
 import static com.android.internal.util.slim.QSConstants.TILE_HALO;
 import static com.android.internal.util.slim.QSConstants.TILE_HOVER;
+import static com.android.internal.util.slim.QSConstants.TILE_GESTUREPANEL;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -216,6 +217,9 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_HALO, R.string.title_tile_halo,
                 "com.android.systemui:drawable/ic_qs_halo_on"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_GESTUREPANEL, R.string.title_tile_gesture,
+                "com.android.systemui:drawable/ic_sysbar_gesture"));
     }
 
     private static void registerTile(QuickSettingsUtil.TileInfo info) {

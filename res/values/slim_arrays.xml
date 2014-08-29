@@ -575,6 +575,7 @@
         <item>@string/shortcut_action_back</item>
         <item>@string/shortcut_action_app</item>
         <item>@string/shortcut_action_expanded_desktop</item>
+        <item>@string/shortcut_action_gesture</item>
         <item>@string/shortcut_action_home</item>
         <item>@string/shortcut_action_kill</item>
         <item>@string/shortcut_action_lastapp</item>
@@ -602,6 +603,7 @@
         <item>**back**</item>
         <item>**app**</item>
         <item>**expanded_desktop**</item>
+        <item>**gesture**</item>
         <item>**home**</item>
         <item>**kill**</item>
         <item>**lastapp**</item>
@@ -643,6 +645,7 @@
         <item>**app**</item>
         <item>**keyguard_camera**</item>
         <item>**expanded_desktop**</item>
+        <item>**gesture**</item>
         <item>**nav_bar**</item>
         <item>**pie**</item>
         <item>**power_menu**</item>
@@ -656,6 +659,7 @@
     <string-array name="shortcut_action_navring_entries">
         <item>@string/shortcut_action_app</item>
         <item>@string/shortcut_action_expanded_desktop</item>
+        <item>@string/shortcut_action_gesture</item>
         <item>@string/shortcut_action_kill</item>
         <item>@string/shortcut_action_lastapp</item>
         <item>@string/shortcut_action_notifications</item>
@@ -679,6 +683,7 @@
     <string-array name="shortcut_action_navring_values" translatable="false">
         <item>**app**</item>
         <item>**expanded_desktop**</item>
+        <item>**gesture**</item>
         <item>**kill**</item>
         <item>**lastapp**</item>
         <item>**notifications**</item>
@@ -703,6 +708,7 @@
         <item>@string/shortcut_action_back</item>
         <item>@string/shortcut_action_app</item>
         <item>@string/shortcut_action_expanded_desktop</item>
+        <item>@string/shortcut_action_gesture</item>
         <item>@string/shortcut_action_home</item>
         <item>@string/shortcut_action_kill</item>
         <item>@string/shortcut_action_lastapp</item>
@@ -735,6 +741,7 @@
         <item>**back**</item>
         <item>**app**</item>
         <item>**expanded_desktop**</item>
+        <item>**gesture**</item>
         <item>**home**</item>
         <item>**kill**</item>
         <item>**lastapp**</item>
