@@ -16,6 +16,8 @@ import android.util.Log;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
+import com.android.internal.util.slim.DeviceUtils;
+
 public class PieTargets extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String PA_PIE_POWER = "pa_pie_power";
@@ -57,7 +59,11 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
 
         mPieSearch = (CheckBoxPreference) prefSet.findPreference(PA_PIE_SEARCH);
         mPieSearch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_SEARCH, 1) == 1);
+                Settings.System.PIE_SEARCH, 0) == 1);
+
+        if (!DeviceUtils.deviceSupportsSearch(getActivity().getApplicationContext())) {
+            prefSet.removePreference(mPieSearch);
+        }
 
         mPiePower = (CheckBoxPreference) prefSet.findPreference(PA_PIE_POWER);
         mPiePower.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
