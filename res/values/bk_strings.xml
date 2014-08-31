@@ -1416,10 +1416,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="clock_use_second">Use second clock</string>
     <string name="clock_use_second_summary">Show second in clock</string>
 
-    <!-- Contextual header -->
-    <string name="custom_statusbar_header_title">Contextual header</string>
-    <string name="custom_statusbar_header_summary">Sets header based on date and time</string>
-
     <!-- Quick ribbon -->
     <string name="quick_settings_ribbon_title">Quick ribbon</string>
     <string name="quick_settings_ribbon_summary">Enable ribbon widget below status bar</string>

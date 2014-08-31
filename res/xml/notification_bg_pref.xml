@@ -36,10 +36,4 @@
              android:key="notification_wallpaper_alpha"
              android:title="@string/notif_wallpaper_alpha_title" />
 
-        <CheckBoxPreference
-            android:key="custom_status_bar_header"
-            android:title="@string/custom_statusbar_header_title"
-            android:summary="@string/custom_statusbar_header_summary"
-            android:defaultValue="false" />
-
 </PreferenceScreen>
