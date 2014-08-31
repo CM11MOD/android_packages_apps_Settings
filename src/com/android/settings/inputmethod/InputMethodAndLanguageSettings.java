@@ -182,17 +182,27 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
         mIm = (InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
         updateInputDevices();
 
-        if (!mIsOnlyImeSettings) {
-            mStylusGestures = (PreferenceScreen) findPreference(KEY_STYLUS_GESTURES);
-            mStylusIconEnabled = (CheckBoxPreference) findPreference(KEY_STYLUS_ICON_ENABLED);
+        PreferenceCategory pointerSettingsCategory = (PreferenceCategory)
+                        findPreference(KEY_POINTER_SETTINGS_CATEGORY);
+        mStylusGestures = (PreferenceScreen) findPreference(KEY_STYLUS_GESTURES);
+        mStylusIconEnabled = (CheckBoxPreference) findPreference(KEY_STYLUS_ICON_ENABLED);
+        mHighTouchSensitivity = (CheckBoxPreference) findPreference(KEY_HIGH_TOUCH_SENSITIVITY);
+
+        if (pointerSettingsCategory != null) {
             // remove stylus preference for non stylus devices
             if (!getResources().getBoolean(com.android.internal.R.bool.config_stylusGestures)) {
-                PreferenceGroup pointerSettingsCategory = (PreferenceGroup)
-                        findPreference(KEY_POINTER_SETTINGS_CATEGORY);
                 pointerSettingsCategory.removePreference(mStylusGestures);
                 pointerSettingsCategory.removePreference(mStylusIconEnabled);
-            } else {
-                mStylusIconEnabled.setOnPreferenceChangeListener(this);
+            }
+            if (!isHighTouchSensitivitySupported()) {
+                pointerSettingsCategory.removePreference(mHighTouchSensitivity);
+                mHighTouchSensitivity = null;
+            }
+
+            Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
+                            pointerSettingsCategory, KEY_TRACKPAD_SETTINGS);
+            if (pointerSettingsCategory.getPreferenceCount() == 0) {
+                getPreferenceScreen().removePreference(pointerSettingsCategory);
             }
         }
 
