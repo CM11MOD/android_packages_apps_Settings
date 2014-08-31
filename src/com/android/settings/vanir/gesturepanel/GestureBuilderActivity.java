@@ -71,7 +71,7 @@ public class GestureBuilderActivity extends ListActivity
     // Type: long (id)
     private static final String GESTURES_INFO_ID = "gestures.info_id";
 
-    private final File mStoreFile = new File("/sdcard", "gpv_gestures");
+    private final File mStoreFile = new File("/sdcard", "ga_gestures");
 
     private final Comparator<NamedGesture> mSorter = new Comparator<NamedGesture>() {
         public int compare(NamedGesture object1, NamedGesture object2) {

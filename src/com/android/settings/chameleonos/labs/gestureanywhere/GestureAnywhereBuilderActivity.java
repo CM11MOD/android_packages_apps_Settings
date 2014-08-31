@@ -73,7 +73,7 @@ public class GestureAnywhereBuilderActivity extends ListActivity
     // Type: long (id)
     private static final String GESTURES_INFO_ID = "gestures.info_id";
 
-    private final File mStoreFile = new File("/data/system", "ga_gestures");
+    private final File mStoreFile = new File("/sdcard", "ga_gestures");
 
     private final Comparator<NamedGesture> mSorter = new Comparator<NamedGesture>() {
         public int compare(NamedGesture object1, NamedGesture object2) {
@@ -104,8 +104,8 @@ public class GestureAnywhereBuilderActivity extends ListActivity
 
         if (sStore == null) {
             if(!mStoreFile.exists()) {
-                CMDProcessor.runSuCommand("touch /data/system/ga_gestures");
-                CMDProcessor.runSuCommand("chmod 777 /data/system/ga_gestures");
+                CMDProcessor.runSuCommand("touch /sdcard/ga_gestures");
+                CMDProcessor.runSuCommand("chmod 777 /sdcard/ga_gestures");
             }
             sStore = GestureLibraries.fromFile(mStoreFile);
         }
