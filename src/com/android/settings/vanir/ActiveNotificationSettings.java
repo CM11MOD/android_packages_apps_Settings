@@ -178,18 +178,21 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
         if (mDismissAll != null) {
             mDismissAll.setChecked(Settings.System.getInt(cr,
                         Settings.System.LOCKSCREEN_NOTIFICATIONS_DISMISS_ALL, 1) == 1);
+            mDismissAll.setOnPreferenceChangeListener(this);
         }
 
         mHideLowPriority = (CheckBoxPreference) root.findPreference(KEY_HIDE_LOW_PRIORITY);
         if (mHideLowPriority != null) {
             mHideLowPriority.setChecked(Settings.System.getInt(cr,
                     Settings.System.ACTIVE_NOTIFICATIONS_HIDE_LOW_PRIORITY, 0) == 1);
+            mHideLowPriority.setOnPreferenceChangeListener(this);
         }
 
         mHideNonClearable = (CheckBoxPreference) root.findPreference(KEY_HIDE_NON_CLEARABLE);
         if (mHideNonClearable != null) {
             mHideNonClearable.setChecked(Settings.System.getInt(cr,
                         Settings.System.LOCKSCREEN_NOTIFICATIONS_HIDE_NON_CLEARABLE, 0) == 1);
+            mHideNonClearable.setOnPreferenceChangeListener(this);
         }
 
         mBypassPref = (CheckBoxPreference) root.findPreference(KEY_BYPASS_CONTENT);
@@ -210,6 +213,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
             if (mBypassPref != null) {
                 mBypassPref.setChecked((Settings.System.getInt(cr,
                     Settings.System.ACTIVE_DISPLAY_BYPASS, 1) != 0));
+                mBypassPref.setOnPreferenceChangeListener(this);
             }
             if (mProximityThreshold != null) {
                 long threshold = Settings.System.getLong(cr,
@@ -221,23 +225,27 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
             if (mTurnOffModePref != null) {
                 mTurnOffModePref.setChecked((Settings.System.getInt(cr,
                         Settings.System.ACTIVE_DISPLAY_TURNOFF_MODE, 0) == 1));
+                mTurnOffModePref.setOnPreferenceChangeListener(this);
             }
         }
 
+        mShowAmPmPref = (CheckBoxPreference) root.findPreference(KEY_SHOW_AMPM);
         if (mShowAmPmPref != null) {
-            mShowAmPmPref = (CheckBoxPreference) root.findPreference(KEY_SHOW_AMPM);
             mShowAmPmPref.setChecked((Settings.System.getInt(cr,
                     Settings.System.ACTIVE_DISPLAY_SHOW_AMPM, 0) == 1));
-            mShowAmPmPref.setEnabled(!is24Hour());
+            mShowAmPmPref.setOnPreferenceChangeListener(this);
+            if (is24Hour()) {
+                mShowAmPmPref.setEnabled(false);
+            }
         }
 
         mSunlightModePref = (CheckBoxPreference) root.findPreference(KEY_SUNLIGHT_MODE);
         if (mSunlightModePref != null) {
-            if (!DeviceUtils.deviceSupportsLightSensor(mContext)) {
-                root.removePreference(mSunlightModePref);
-            } else {
                 mSunlightModePref.setChecked((Settings.System.getInt(cr,
                         Settings.System.ACTIVE_DISPLAY_SUNLIGHT_MODE, 0) == 1));
+                mSunlightModePref.setOnPreferenceChangeListener(this);
+            if (!DeviceUtils.deviceSupportsLightSensor(mContext)) {
+                root.removePreference(mSunlightModePref);
             }
         }
 
@@ -316,6 +324,7 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
         if (mWakeOnNotification != null) {
             mWakeOnNotification.setChecked(Settings.System.getInt(cr,
             Settings.System.LOCKSCREEN_NOTIFICATIONS_WAKE_ON_NOTIFICATION, 0) == 1);
+            mWakeOnNotification.setOnPreferenceChangeListener(this);
 
             if (ad_enabled) {
                 mWakeOnNotification.setEnabled(false);
@@ -435,7 +444,6 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
             Settings.System.putInt(cr,
                     Settings.System.LOCKSCREEN_NOTIFICATIONS_HIDE_NON_CLEARABLE,
                     value ? 1 : 0);
-            mDismissAll.setEnabled(!mHideNonClearable.isChecked());
 			return true;
         } else if (preference == mDismissAll) {
             value = (Boolean) newValue;
@@ -448,7 +456,6 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
             Settings.System.putInt(cr,
                 Settings.System.LOCKSCREEN_NOTIFICATIONS_EXPANDED_VIEW,
                 value ? 1 : 0);
-            mForceExpandedView.setEnabled(mExpandedView.isChecked());
 			return true;
         } else if (preference == mForceExpandedView) {
             value = (Boolean) newValue;
@@ -463,25 +470,25 @@ public class ActiveNotificationSettings extends SettingsPreferenceFragment imple
                     value ? 1 : 0);
 			return true;
         } else if (preference == mSunlightModePref) {
-            value = mSunlightModePref.isChecked();
+            value = (Boolean) newValue;
             Settings.System.putInt(cr,
                     Settings.System.ACTIVE_DISPLAY_SUNLIGHT_MODE,
                     value ? 1 : 0);
 			return true;
         } else if (preference == mTurnOffModePref) {
-            value = mTurnOffModePref.isChecked();
+            value = (Boolean) newValue;
             Settings.System.putInt(cr,
                     Settings.System.ACTIVE_DISPLAY_TURNOFF_MODE,
                     value ? 1 : 0);
 			return true;
         } else if (preference == mBypassPref) {
-            value = mBypassPref.isChecked();
+            value = (Boolean) newValue;
             Settings.System.putInt(cr,
                     Settings.System.ACTIVE_DISPLAY_BYPASS,
                     value ? 1 : 0);
 			return true;
         } else if (preference == mShowAmPmPref) {
-            value = mShowAmPmPref.isChecked();
+            value = (Boolean) newValue;
             Settings.System.putInt(cr,
                     Settings.System.ACTIVE_DISPLAY_SHOW_AMPM,
                     value ? 1 : 0);
