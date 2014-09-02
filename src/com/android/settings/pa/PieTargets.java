@@ -59,7 +59,7 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
 
         mPieSearch = (CheckBoxPreference) prefSet.findPreference(PA_PIE_SEARCH);
         mPieSearch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_SEARCH, 0) == 1);
+                Settings.System.PIE_SEARCH, 1) == 1);
 
         if (!DeviceUtils.deviceSupportsSearch(getActivity().getApplicationContext())) {
             prefSet.removePreference(mPieSearch);
