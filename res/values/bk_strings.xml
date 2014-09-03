@@ -484,6 +484,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="pie_screenshot_summary">Enable ScreenShot button on Pie</string>
     <string name="pie_torch_title">Torch</string>
     <string name="pie_torch_summary">Enable torch button</string>
+    <string name="pie_omniswitch_title">OmniSwitch</string>
+    <string name="pie_omniswitch_summary">Use OmniSwitch for recents panel</string>
+    <string name="pie_gesture_title">Gesture Panel</string>
+    <string name="pie_gesture_summary">Enable gesture panel button</string>
     <string name="pie_center_title">Center pie</string>
     <string name="pie_center_summary">Center Pie on the trigger edge</string>
     <string name="pie_stick_title">Prevent rotation</string>

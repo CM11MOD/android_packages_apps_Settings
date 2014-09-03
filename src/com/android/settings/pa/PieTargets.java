@@ -15,7 +15,6 @@ import android.util.Log;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-
 import com.android.internal.util.slim.DeviceUtils;
 
 public class PieTargets extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
@@ -28,6 +27,8 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
     private static final String PA_PIE_SCREENSHOT = "pa_pie_screenshot";
     private static final String PA_PIE_ACTNOTIF = "pa_pie_actnotif";
     private static final String PA_PIE_ACTQS = "pa_pie_actqs";
+    private static final String PA_PIE_GESTURE = "pa_pie_gesture";
+    private static final String PA_PIE_OMNISWITCH = "pa_pie_omniswitch";
     private static final String PA_PIE_TORCH = "pa_pie_torch";
 
     private CheckBoxPreference mPieMenu;
@@ -37,8 +38,10 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
     private CheckBoxPreference mPieKillTask;
     private CheckBoxPreference mPieActNotif;
     private CheckBoxPreference mPieActQs;
+    private CheckBoxPreference mPieGesture;
     private CheckBoxPreference mPieScreenShot;
     private CheckBoxPreference mPieTorch;
+    private CheckBoxPreference mPieOmniSwitch;
 
     private ContentResolver mResolver;
 
@@ -92,6 +95,14 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
         mPieTorch = (CheckBoxPreference) prefSet.findPreference(PA_PIE_TORCH);
         mPieTorch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_TORCH, 0) == 1);
+
+        mPieGesture = (CheckBoxPreference) prefSet.findPreference(PA_PIE_GESTURE);
+        mPieGesture.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_GESTURE, 0) == 1);
+
+        mPieOmniSwitch = (CheckBoxPreference) prefSet.findPreference(PA_PIE_OMNISWITCH);
+        mPieOmniSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_OMNISWITCH, 0) == 1);
     }
 
     @Override
@@ -127,6 +138,12 @@ public class PieTargets extends SettingsPreferenceFragment implements OnPreferen
         } else if (preference == mPieTorch) {
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.PIE_TORCH, mPieTorch.isChecked() ? 1 : 0);
+        } else if (preference == mPieGesture) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PIE_GESTURE, mPieGesture.isChecked() ? 1 : 0);
+        } else if (preference == mPieOmniSwitch) {
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PIE_OMNISWITCH, mPieOmniSwitch.isChecked() ? 1 : 0);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
 
