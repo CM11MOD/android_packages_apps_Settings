@@ -567,7 +567,11 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             Settings.Global.putInt(getContentResolver(),
                     Settings.Global.POWER_NOTIFICATIONS_VIBRATE,
                     (Boolean) objValue ? 1 : 0);
-
+        }
+        if (preference == mVolumePanelTimeout) {
+            int volumePanelTimeout = (Integer) objValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.VOLUME_PANEL_TIMEOUT, volumePanelTimeout * 1000);
         }
         if (PREF_LESS_NOTIFICATION_SOUNDS.equals(key)) {
             final int val = Integer.valueOf((String) objValue);
