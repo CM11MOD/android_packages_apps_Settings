@@ -242,7 +242,7 @@ public class StorageVolumePreferenceCategory extends PreferenceCategory
                     getTitle()));
             addPreference(mMountTogglePreference);
         }
-        if (isRemovable && isUsbStorage) {
+        if (mIsRemovable && mIsUsbStorage) {
             mMountTogglePreference.setKey(KEY_UNMOUNT_USB);
         }
 
