@@ -279,13 +279,44 @@ public class PAPieControl extends SettingsPreferenceFragment implements
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.PIE_CONTROLS), false,
                     this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.PIE_GRAVITY), false,
+                    this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_SHOW), false,
+                    this);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            update();
             updateEnabledState();
         }
 
+        void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            int pieOn = Settings.System.getInt(resolver,
+                Settings.System.PIE_CONTROLS, 0);
+            int navbarOn = Settings.System.getInt(resolver,
+                Settings.System.NAVIGATION_BAR_SHOW, 1);
+            int pieGravity = Settings.System.getInt(resolver,
+                Settings.System.PIE_GRAVITY, 2);
+
+            try {
+                if (SlimActions.isNavBarDefault(getActivity())) {
+                    if (SlimActions.isNavBarEnabled(getActivity()) && (pieOn == 1 && pieGravity == 3)) {
+                            Settings.System.putInt(resolver,
+                                Settings.System.NAVIGATION_BAR_SHOW, 0);
+                    }
+                    if (!SlimActions.isNavBarEnabled(getActivity()) && (pieGravity != 3 || pieOn == 0)) {
+                        Settings.System.putInt(resolver,
+                            Settings.System.NAVIGATION_BAR_SHOW, 1);
+                    }
+                }
+            } catch (Exception ex) {
+            }
+        }
     }
 
     private void updateEnabledState() {
