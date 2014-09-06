@@ -113,7 +113,7 @@ public class NavbarSettings extends SettingsPreferenceFragment implements
                 ActionBar.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER_VERTICAL | Gravity.END));
         mEnabledSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.NAVIGATION_BAR_SHOW, 0) == 1);
+                Settings.System.NAVIGATION_BAR_SHOW, 1) == 1);
     }
 
     @Override
