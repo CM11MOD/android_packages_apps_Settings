@@ -207,10 +207,8 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
         boolean showCmImeSwitcher = getResources().getBoolean(
                 com.android.internal.R.bool.config_show_cmIMESwitcher);
         if (!showCmImeSwitcher) {
-            Preference pref = findPreference(Settings.System.STATUS_BAR_IME_SWITCHER);
-            if (pref != null) {
-                getPreferenceScreen().removePreference(pref);
-            }
+            getPreferenceScreen().removePreference(
+                        findPreference(Settings.System.STATUS_BAR_IME_SWITCHER));
         }
 
         // Spell Checker
