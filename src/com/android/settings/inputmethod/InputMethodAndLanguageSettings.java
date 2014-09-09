@@ -200,6 +200,8 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
             if (!isHighTouchSensitivitySupported()) {
                 pointerSettingsCategory.removePreference(mHighTouchSensitivity);
                 mHighTouchSensitivity = null;
+            } else {
+                mHighTouchSensitivity.setChecked(HighTouchSensitivity.isEnabled());
             }
         }
 
@@ -394,8 +396,9 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                         chkPref.isChecked() ? 1 : 0);
                 return true;
             }
-        } else if (preference == mHighTouchSensitivity) {
-            return HighTouchSensitivity.setEnabled(mHighTouchSensitivity.isChecked());
+            if (preference == mHighTouchSensitivity) {
+                return HighTouchSensitivity.setEnabled(mHighTouchSensitivity.isChecked());
+            }
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
