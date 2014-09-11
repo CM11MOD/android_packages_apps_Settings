@@ -273,11 +273,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mTouchwakeTimeout.setEnabled(false);
             mTouchwakeTimeout.setSummary(R.string.kernel_does_not_support);
         } else {
-            boolean b = Boolean.valueOf(Utils.fileReadOneLine(FILE_TOUCHWAKE_ENABLE));
+            mTouchwakeEnable.setChecked(Settings.System.getInt(resolver,
+                        Settings.System.TOUCH_WAKE, 0) == 1);
+            mTouchwakeEnable.setOnPreferenceChangeListener(this);
+
             int i1 = Integer.parseInt(Utils.fileReadOneLine(FILE_TOUCHWAKE_TIMEOUT));
             int i2 = (i1 / 1000);
-            mTouchwakeEnable.setChecked(b);
-            mTouchwakeEnable.setOnPreferenceChangeListener(this);
             mTouchwakeTimeout.setValue(i2);
             mTouchwakeTimeout.setOnPreferenceChangeListener(this);
         }
@@ -598,7 +599,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     (Boolean) objValue ? 1 : 0);
         }
         if (preference == mTouchwakeEnable) {
-            mTouchwakeEnable.setChecked((Boolean) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.TOUCH_WAKE,
+                    (Boolean) objValue ? 1 : 0);
             Utils.writeValue(FILE_TOUCHWAKE_ENABLE, (Boolean) objValue ? "1" : "0");
         }
         if (preference == mTouchwakeTimeout) {
