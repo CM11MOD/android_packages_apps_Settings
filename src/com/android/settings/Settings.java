@@ -592,6 +592,7 @@ public class Settings extends PreferenceActivity
         com.android.settings.pa.Halo.class.getName(),
         com.android.settings.pa.Hover.class.getName(),
         SmartCoverSettings.class.getName(),
+        com.android.settings.wifi.WifiApSettings.class.getName(),
     };
 
     @Override
@@ -1532,4 +1533,5 @@ public class Settings extends PreferenceActivity
     public static class HaloActivity extends Settings { /* empty */ }
     public static class HoverSettingsActivity extends Settings { /* empty */ }
     public static class GestureSettingsActivity extends Settings { /* empty */ }
+    public static class WifiApSettingsActivity extends Settings { /* empty */ }
 }
