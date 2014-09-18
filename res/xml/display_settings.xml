@@ -23,15 +23,6 @@
                 android:title="@string/screen_recorder_title"
                 android:fragment="com.android.settings.chameleonos.ScreenRecorderSettings" />
 
-        <PreferenceScreen
-                android:key="wifi_display"
-                android:title="@string/wifi_display_settings_title"
-                android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
-
-    <PreferenceCategory
-        android:key="general_category_option"
-        android:title="@string/general_category_title" />
-
         <com.android.settings.BrightnessPreference
                 android:title="@string/brightness"
                 android:persistent="false"/>
@@ -59,28 +50,6 @@
                 android:targetPackage="com.android.settings"
                 android:targetClass="com.android.settings.ScreenColorSettings" />
         </PreferenceScreen>
-
-        <CheckBoxPreference
-            android:key="adaptive_backlight"
-            android:title="@string/adaptive_backlight_title"
-            android:summary="@string/adaptive_backlight_summary"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:key="sunlight_enhancement"
-            android:title="@string/sunlight_enhancement_title"
-            android:summary="@string/sunlight_enhancement_summary"
-            android:defaultValue="true" />
-
-        <CheckBoxPreference
-            android:key="color_enhancement"
-            android:title="@string/color_enhancement_title"
-            android:summary="@string/color_enhancement_summary"
-            android:defaultValue="true" />
-
-    <PreferenceCategory
-        android:key="category_display_option"
-        android:title="@string/category_display_title" />
 
         <PreferenceScreen
                 android:key="wallpaper"
@@ -110,6 +79,17 @@
                 android:title="@string/title_font_size"
                 android:summary="@string/summary_font_size"
                 android:dialogTitle="@string/dialog_title_font_size" />
+
+        <PreferenceScreen
+                android:key="wifi_display"
+                android:title="@string/wifi_display_settings_title"
+                android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
+
+        <CheckBoxPreference
+                android:key="adaptive_backlight"
+                android:title="@string/adaptive_backlight_title"
+                android:summary="@string/adaptive_backlight_summary"
+                android:defaultValue="true" />
 
         <!-- DeviceParts Device Specific Display settings -->
         <Preference
@@ -173,6 +153,18 @@
                 android:key="wakeup_when_plugged_unplugged"
                 android:title="@string/wakeup_when_plugged_unplugged_title"
                 android:summary="@string/wakeup_when_plugged_unplugged_summary"
+                android:defaultValue="true" />
+
+           <CheckBoxPreference
+                android:key="sunlight_enhancement"
+                android:title="@string/sunlight_enhancement_title"
+                android:summary="@string/sunlight_enhancement_summary"
+                android:defaultValue="true" />
+
+           <CheckBoxPreference
+                android:key="color_enhancement"
+                android:title="@string/color_enhancement_title"
+                android:summary="@string/color_enhancement_summary"
                 android:defaultValue="true" />
 
             <CheckBoxPreference
