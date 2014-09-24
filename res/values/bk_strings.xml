@@ -1490,12 +1490,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="show_4g_for_lte_title">Use 4G icon on LTE</string>
     <string name="show_4g_for_lte_summary">Show 4G network indicator icon instead of LTE icon</string>
 
-    <!-- User Selectable Tether Networks-->
-    <string name="tether_usb_network_summary">Press to change USB Network</string>
-    <string name="tether_usb_network_text">USB Tether Network</string>
-    <string name="tether_user_network_default">Use System Default</string>
-    <string name="tether_wifi_network_text">WiFi Tether Network</string>
-
     <!-- Notification carrier and wifi label color-->
     <string name="wifi_carrier_label_color_title">Carrier and wifi label</string>
 
