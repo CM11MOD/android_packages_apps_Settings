@@ -77,7 +77,6 @@ import com.android.settings.util.Helpers;
 
 import com.android.internal.util.slim.DeviceUtils;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
-import com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference;
 
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
@@ -87,7 +86,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_CARRIER = "status_bar_carrier";
     private static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
     private static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
-    private static final String STATUSBAR_CARRIER_LOGO = "status_bar_carrier_logo";
     private static final String STATUS_BAR_BRIGHTNESS = "statusbar_brightness_slider";
     private static final String SIGNAL_STYLE = "signal_style";
     private static final String HIDE_SIGNAL = "hide_signal";
@@ -100,7 +98,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceScreen mClockStyle;
     private CheckBoxPreference mStatusBarCarrier;
     private PreferenceScreen mCustomStatusBarCarrierLabel;
-    private SystemSettingCheckBoxPreference mStatusbarLogo;
     private CheckBoxPreference mStatusbarSliderPreference;
     private CheckBoxPreference mStatusBarNetworkActivity;
     private ColorPickerPreference mCarrierColorPicker;
@@ -139,11 +136,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarCarrier = (CheckBoxPreference) findPreference(STATUS_BAR_CARRIER);
         mStatusBarCarrier.setChecked((Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_CARRIER, 0) == 1));
-
-        mStatusbarLogo = (SystemSettingCheckBoxPreference) findPreference(STATUSBAR_CARRIER_LOGO);
-        if (Utils.isWifiOnly(getActivity())) {
-            prefSet.removePreference(mStatusbarLogo);
-        }
 
         mCarrierColorPicker = (ColorPickerPreference) prefSet.findPreference(STATUS_BAR_CARRIER_COLOR);
         mCarrierColorPicker.setOnPreferenceChangeListener(this);
