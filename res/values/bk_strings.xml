@@ -1569,4 +1569,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="smart_cover_wake_summary">Wakeup device when the lid opens</string>
     <string name="smart_cover_sleep_title">Put to sleep</string>
     <string name="smart_cover_sleep_summary">Put the device to sleep when the lid closes</string>
+
+    <!-- Force expand notifications -->
+    <string name="notification_force_expand_title">Force expanded notification</string>
+    <string name="notification_force_expand_summary">Force expanded notifications if supported</string>
 </resources>
