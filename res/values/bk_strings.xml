@@ -1609,4 +1609,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="ticker_disabled_title">Disable notification ticker</string>
     <string name="ticker_disabled_summary">Don\'t scroll text from incoming notifications in the status bar</string>
 
+    <!-- Wifi connection notifications -->
+    <string name="wifi_notify_changed_networks">Wi\u2011Fi connected notification</string>
+    <string name="notify_changed_networks_default">Off (default)</string>
+    <string name="notify_changed_networks_toast">Toast</string>
+    <string name="notify_changed_networks_notification">Notification</string>
+    <string name="notify_changed_networks_notification_sound">Notification with sound</string>
 </resources>
