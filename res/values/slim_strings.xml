@@ -1108,14 +1108,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="recent_panel_lefty_mode_title">Show Slim recent on the left edge</string>
     <string name="recent_panel_lefty_mode_summary">Show recent apps panel on the left edge.</string>
 
-    <!-- Density Changer -->
-    <string name="custom_density_title">Custom lcd density</string>
-    <string name="set_custom_density_title">Set custom density</string>
-    <string name="set_custom_density_set">Set</string>
-    <string name="current_density">"Current density: "</string>
-    <string name="new_density">"New density: "</string>
-    <string name="density_change_warning">Note: Changing density will close all running apps!</string>
-
     <!-- App moving -->
     <string name="app_moving_enable">Enable app moving</string>
     <string name="app_moving_disable">Disable app moving</string>
