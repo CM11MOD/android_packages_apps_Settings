@@ -4,6 +4,29 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
     <PreferenceCategory
+        android:key="category_light_options"
+        android:title="@string/display_category_light_options_title" >
+
+        <PreferenceScreen
+            android:key="battery_light"
+            android:title="@string/battery_light_title"
+            android:icon="@drawable/ic_dt_battery"
+            android:fragment="com.android.settings.slim.notificationlight.BatteryLightSettings" />
+
+        <PreferenceScreen
+            android:key="notification_light"
+            android:icon="@drawable/ic_dt_led"
+            android:title="@string/notification_light_title"
+            android:fragment="com.android.settings.slim.notificationlight.NotificationLightSettings" />
+
+        <CheckBoxPreference
+            android:key="notification_pulse"
+            android:title="@string/notification_pulse_title"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="lockscreen_notifications"
         android:title="@string/lockscreen_notifications_settings" />
 
@@ -48,4 +71,5 @@
         android:title="@string/block_notifications_title"
         android:summary="@string/block_notifications_summary"
         android:fragment="com.android.settings.cyanogenmod.SpamList" />
+
 </PreferenceScreen>

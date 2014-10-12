@@ -111,37 +111,16 @@
                 android:targetClass="com.slim.device.settings.ScreenOffGestureSettings" />
         </Preference>
 
-    <PreferenceCategory
-        android:key="category_animation_options"
-        android:title="@string/display_category_animation_options_title" >
-
-        <ListPreference
-            android:key="system_power_crt_mode"
-            android:dialogTitle="@string/system_power_crt_mode_dialog_title"
-            android:title="@string/system_power_crt_mode_title"
-            android:entries="@array/entries_system_power_crt_mode"
-            android:entryValues="@array/values_system_power_crt_mode" />
-
-    </PreferenceCategory>
-
         <PreferenceCategory
-            android:key="category_light_options"
-            android:title="@string/display_category_light_options_title" >
+            android:key="category_animation_options"
+            android:title="@string/display_category_animation_options_title" >
 
-            <PreferenceScreen
-                android:key="battery_light"
-                android:title="@string/battery_light_title"
-                android:fragment="com.android.settings.slim.notificationlight.BatteryLightSettings" />
-
-            <CheckBoxPreference
-                android:key="notification_pulse"
-                android:title="@string/notification_pulse_title"
-                android:persistent="false" />
-
-            <PreferenceScreen
-                android:key="notification_light"
-                android:title="@string/notification_light_title"
-                android:fragment="com.android.settings.slim.notificationlight.NotificationLightSettings" />
+            <ListPreference
+                android:key="system_power_crt_mode"
+                android:dialogTitle="@string/system_power_crt_mode_dialog_title"
+                android:title="@string/system_power_crt_mode_title"
+                android:entries="@array/entries_system_power_crt_mode"
+                android:entryValues="@array/values_system_power_crt_mode" />
 
         </PreferenceCategory>
 
