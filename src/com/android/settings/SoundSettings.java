@@ -108,6 +108,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
     private static final int MSG_UPDATE_NOTIFICATION_SUMMARY = 2;
 
     private static final String KEY_SAFE_HEADSET_VOLUME = "safe_headset_volume";
+    private static final String KEY_SAFE_HEADSET_VOLUME_RESTORE = "safe_headset_volume_restore";
     private static final String KEY_CONVERT_SOUND_TO_VIBRATE =
             Settings.System.NOTIFICATION_CONVERT_SOUND_TO_VIBRATION;
     private static final String KEY_VIBRATE_DURING_CALLS =
@@ -154,6 +155,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mVolBtnMusicCtrl;
     private CheckBoxPreference mSafeHeadsetVolume;
+    private CheckBoxPreference mSafeHeadsetRestore;
     private CheckBoxPreference mPowerSounds;
     private CheckBoxPreference mPowerSoundsVibrate;
     private Preference mPowerSoundsRingtone;
@@ -219,6 +221,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
         }
 
         mSafeHeadsetVolume = (CheckBoxPreference) findPreference(KEY_SAFE_HEADSET_VOLUME);
+        mSafeHeadsetRestore = (CheckBoxPreference) findPreference(KEY_SAFE_HEADSET_VOLUME_RESTORE);
         mVolumePanelTimeout = (SliderPreference) findPreference(KEY_VOLUME_PANEL_TIMEOUT);
         mVolumeOverlay = (ListPreference) findPreference(KEY_VOLUME_OVERLAY);
 
@@ -226,6 +229,7 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             // device with fixed volume policy, do not display volumes submenu
             getPreferenceScreen().removePreference(findPreference(KEY_RING_VOLUME));
             getPreferenceScreen().removePreference(findPreference(KEY_SAFE_HEADSET_VOLUME));
+            getPreferenceScreen().removePreference(findPreference(KEY_SAFE_HEADSET_VOLUME_RESTORE));
             getPreferenceScreen().removePreference(findPreference(KEY_VOLUME_OVERLAY));
             getPreferenceScreen().removePreference(findPreference(KEY_VOLUME_PANEL_TIMEOUT));
         } else {
@@ -239,6 +243,10 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             mSafeHeadsetVolume.setChecked(Settings.System.getInt(getContentResolver(),
                     Settings.System.SAFE_HEADSET_VOLUME, 1) != 0);
             mSafeHeadsetVolume.setOnPreferenceChangeListener(this);
+
+            mSafeHeadsetRestore.setChecked(Settings.System.getInt(getContentResolver(),
+                    Settings.System.SAFE_HEADSET_VOLUME_RESTORE, 1) != 0);
+            mSafeHeadsetRestore.setOnPreferenceChangeListener(this);
 
             int statusVolumePanelTimeout = Settings.System.getInt(resolver,
 	        		Settings.System.VOLUME_PANEL_TIMEOUT, 3000);
@@ -556,6 +564,11 @@ public class SoundSettings extends SettingsPreferenceFragment implements
             } else {
                 showDialogInner(DLG_SAFE_HEADSET_VOLUME);
             }
+        }
+        if (KEY_SAFE_HEADSET_VOLUME_RESTORE.equals(key)) {
+            Settings.System.putInt(getContentResolver(),
+                Settings.System.SAFE_HEADSET_VOLUME_RESTORE,
+                (Boolean) objValue ? 1 : 0);
         }
         if (KEY_POWER_NOTIFICATIONS.equals(key)) {
             Settings.Global.putInt(getContentResolver(),

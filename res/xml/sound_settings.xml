@@ -30,6 +30,11 @@
             android:defaultValue="true" />
 
         <CheckBoxPreference
+            android:key="safe_headset_volume_restore"
+            android:title="@string/safe_headset_volume_restore_title"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
             android:key="button_headsethook_launch_voice"
             android:title="@string/button_headsethook_launch_voice_title"
             android:summary="@string/button_headsethook_launch_voice_summary"

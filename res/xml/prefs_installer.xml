@@ -26,7 +26,8 @@
             android:key="persist_file_xposed"
             android:dependency="enable_persist"
             android:title="@string/persist_file_xposed"
-            android:summary="@string/persist_file_xposed_summary" />
+            android:summary="@string/persist_file_xposed_summary"
+            android:defaultValue="true" />
 
     </PreferenceCategory>
 
