@@ -35,12 +35,23 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/notification_drawer_title" />
+        android:title="@string/title_weather" >
 
         <PreferenceScreen
             android:key="weather"
             android:fragment="com.android.settings.aokp.Weather"
             android:title="@string/title_weather"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/notification_drawer_title" />
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="force_expanded_notifications"
+            android:title="@string/notification_force_expand_title"
+            android:summary="@string/notification_force_expand_summary"
+            android:defaultValue="false" />
 
         <Preference
             android:fragment="com.android.settings.slim.NotificationDrawerStyle"
