@@ -23,6 +23,7 @@
     <!-- Device specific settings -->
     <string name="chronus_title">LockClock</string>
     <string name="device_settings_title">Device options</string>
+    <string name="category_advancetools_title">Advanced tools</string>
     <string name="category_presets_title">Presets</string>
     <string name="category_general_title">General settings</string>
     <string name="category_display_title">Display options</string>

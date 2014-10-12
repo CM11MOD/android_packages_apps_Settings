@@ -18,28 +18,76 @@
         android:title="@string/display_settings"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-        <PreferenceScreen
+        <PreferenceCategory
+            android:key="advance_tools"
+            android:title="@string/category_advancetools_title" >
+
+            <PreferenceScreen
                 android:key="screen_recorder"
                 android:title="@string/screen_recorder_title"
                 android:fragment="com.android.settings.chameleonos.ScreenRecorderSettings" />
 
-        <com.android.settings.BrightnessPreference
+            <PreferenceScreen
+                android:key="wifi_display"
+                android:title="@string/wifi_display_settings_title"
+                android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:key="presets"
+            android:title="@string/category_presets_title" >
+
+            <com.android.settings.BrightnessPreference
                 android:title="@string/brightness"
                 android:persistent="false"/>
 
-        <com.android.settings.hardware.DisplayColor
+            <com.android.settings.hardware.DisplayColor
                 android:key="color_calibration"
                 android:title="@string/color_calibration_title"
                 android:dialogTitle="@string/color_calibration_title"
                 android:summary="@string/color_calibration_summary"
                 android:persistent="false" />
 
-        <com.android.settings.hardware.DisplayGamma
+            <com.android.settings.hardware.DisplayGamma
                 android:key="gamma_tuning"
                 android:title="@string/gamma_tuning_title_head"
                 android:dialogTitle="@string/gamma_tuning_title_head"
                 android:summary="@string/gamma_tuning_summary_head"
                 android:persistent="false" />
+
+            <CheckBoxPreference
+                android:key="adaptive_backlight"
+                android:title="@string/adaptive_backlight_title"
+                android:summary="@string/adaptive_backlight_summary"
+                android:defaultValue="true" />
+
+            <CheckBoxPreference
+                android:key="sunlight_enhancement"
+                android:title="@string/sunlight_enhancement_title"
+                android:summary="@string/sunlight_enhancement_summary"
+                android:defaultValue="true" />
+
+            <CheckBoxPreference
+                android:key="color_enhancement"
+                android:title="@string/color_enhancement_title"
+                android:summary="@string/color_enhancement_summary"
+                android:defaultValue="true" />
+
+            <PreferenceScreen
+                android:key="display_rotation"
+                android:fragment="com.android.settings.slim.DisplayRotation"
+                android:title="@string/display_rotation_title" />
+
+            <ListPreference
+                android:key="screen_timeout"
+                android:title="@string/screen_timeout"
+                android:summary="@string/screen_timeout_summary"
+                android:persistent="false"
+                android:entries="@array/screen_timeout_entries"
+                android:entryValues="@array/screen_timeout_values" />
+
+        </PreferenceCategory>
 
         <PreferenceScreen
             android:persistent="false"
@@ -50,46 +98,6 @@
                 android:targetPackage="com.android.settings"
                 android:targetClass="com.android.settings.ScreenColorSettings" />
         </PreferenceScreen>
-
-        <PreferenceScreen
-                android:key="wallpaper"
-                android:title="@string/wallpaper_settings_title"
-                android:fragment="com.android.settings.WallpaperTypeSettings" />
-
-        <PreferenceScreen
-                android:key="display_rotation"
-                android:fragment="com.android.settings.slim.DisplayRotation"
-                android:title="@string/display_rotation_title" />
-
-        <ListPreference
-                android:key="screen_timeout"
-                android:title="@string/screen_timeout"
-                android:summary="@string/screen_timeout_summary"
-                android:persistent="false"
-                android:entries="@array/screen_timeout_entries"
-                android:entryValues="@array/screen_timeout_values" />
-
-        <PreferenceScreen
-                android:key="screensaver"
-                android:title="@string/screensaver_settings_title"
-                android:fragment="com.android.settings.DreamSettings" />
-
-        <com.android.settings.FontDialogPreference
-                android:key="font_size"
-                android:title="@string/title_font_size"
-                android:summary="@string/summary_font_size"
-                android:dialogTitle="@string/dialog_title_font_size" />
-
-        <PreferenceScreen
-                android:key="wifi_display"
-                android:title="@string/wifi_display_settings_title"
-                android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
-
-        <CheckBoxPreference
-                android:key="adaptive_backlight"
-                android:title="@string/adaptive_backlight_title"
-                android:summary="@string/adaptive_backlight_summary"
-                android:defaultValue="true" />
 
         <!-- DeviceParts Device Specific Display settings -->
         <Preference
@@ -112,6 +120,28 @@
         </Preference>
 
         <PreferenceCategory
+            android:key="style_options"
+            android:title="@string/style_title" >
+
+            <PreferenceScreen
+                android:key="wallpaper"
+                android:title="@string/wallpaper_settings_title"
+                android:fragment="com.android.settings.WallpaperTypeSettings" />
+
+            <PreferenceScreen
+                android:key="screensaver"
+                android:title="@string/screensaver_settings_title"
+                android:fragment="com.android.settings.DreamSettings" />
+
+            <com.android.settings.FontDialogPreference
+                android:key="font_size"
+                android:title="@string/title_font_size"
+                android:summary="@string/summary_font_size"
+                android:dialogTitle="@string/dialog_title_font_size" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
             android:key="category_animation_options"
             android:title="@string/display_category_animation_options_title" >
 
@@ -132,18 +162,6 @@
                 android:key="wakeup_when_plugged_unplugged"
                 android:title="@string/wakeup_when_plugged_unplugged_title"
                 android:summary="@string/wakeup_when_plugged_unplugged_summary"
-                android:defaultValue="true" />
-
-           <CheckBoxPreference
-                android:key="sunlight_enhancement"
-                android:title="@string/sunlight_enhancement_title"
-                android:summary="@string/sunlight_enhancement_summary"
-                android:defaultValue="true" />
-
-           <CheckBoxPreference
-                android:key="color_enhancement"
-                android:title="@string/color_enhancement_title"
-                android:summary="@string/color_enhancement_summary"
                 android:defaultValue="true" />
 
             <CheckBoxPreference
