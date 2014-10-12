@@ -1577,4 +1577,15 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Enable power menu -->
     <string name="lockscreen_enable_power_menu_title">Enable power menu</string>
     <string name="lockscreen_enable_power_menu_summary">Show power menu when screen is secure locked</string>
+
+    <!-- LCD Density Changer -->
+    <string name="lcd_density_title">Custom LCD Density</string>
+    <string name="custom_density_title">1.Custom lcd density</string>
+    <string name="custom_density_summary">Overrides the default display density (0 to disable, reboot to adopt changes)</string>
+    <string name="current_density">"Current Density: "</string>
+    <string name="clear_market_data_title">2. Clear market data</string>
+    <string name="clear_market_data_summary">Pressed if you ever have compatibility issues with the market</string>
+    <string name="clear_market_data_cleared">Market data cleared</string>
+    <string name="clear_market_data_donot_cleared">"Market data couldn't be cleared, please clear it yourself!"</string>
+    <string name="reboot_title">3. Reboot!</string>
 </resources>

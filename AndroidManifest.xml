@@ -1931,6 +1931,8 @@
 
         <activity android:name=".slim.UserInterface" />
 
+        <activity android:name=".slim.DensityChanger" />
+
         <activity android:name=".slim.HardwareKeysSettings"/>
 
         <activity android:name=".slim.SoundSteps"/>

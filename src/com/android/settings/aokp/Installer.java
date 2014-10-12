@@ -75,7 +75,7 @@ public class Installer extends AOKPPreferenceFragment {
         mPrefPersistEnable = (CheckBoxPreference) findPreference(PREF_PERSIST_ENABLE);
         mPrefPersistEnable.setChecked(mPersistEnable);
         mPrefPersistDensity = (CheckBoxPreference) findPreference(PREF_PERSIST_PROP_DENSITY);
-        mPrefPersistDensity.setChecked(mPersistProps.contains("persist.sys.lcd_density"));
+        mPrefPersistDensity.setChecked(mPersistProps.contains("persist.sf.lcd_density"));
         mPrefPersistHosts = (CheckBoxPreference) findPreference(PREF_PERSIST_FILE_HOSTS);
         mPrefPersistHosts.setChecked(mPersistFiles.contains("etc/hosts"));
         mPrefPersistXposed = (CheckBoxPreference) findPreference(PREF_PERSIST_FILE_XPOSED);
@@ -101,11 +101,11 @@ public class Installer extends AOKPPreferenceFragment {
         }
         if (preference == mPrefPersistDensity) {
             if (isChecked) {
-                if (!mPersistProps.contains("persist.sys.lcd_density")) {
-                    mPersistProps.add("persist.sys.lcd_density");
+                if (!mPersistProps.contains("persist.sf.lcd_density")) {
+                    mPersistProps.add("persist.sf.lcd_density");
                 }
             } else {
-                mPersistProps.remove("persist.sys.lcd_density");
+                mPersistProps.remove("persist.sf.lcd_density");
             }
             savePrefs();
             return true;

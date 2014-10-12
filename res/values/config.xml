@@ -96,4 +96,8 @@
          bypassing the need of busybox/su -->
     <bool name="config_isSystemApp">true</bool>
 
+    <!-- maximum value for the custom display density -->
+    <integer name="display_density_max">480</integer>
+    <!-- minimum value for the custom display density -->
+    <integer name="display_density_min">160</integer>
 </resources>

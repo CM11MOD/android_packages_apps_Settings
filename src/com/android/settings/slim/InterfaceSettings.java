@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.preference.PreferenceActivity;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
@@ -32,15 +33,39 @@ public class InterfaceSettings extends SettingsPreferenceFragment {
 
     private static final String TAG = "InterfaceSettings";
 
+    DensityChanger densityFragment;
+
+    Preference mLcdDensity;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.slim_interface_settings);
+
+        mLcdDensity = findPreference("lcd_density");
+        String currentProperty = SystemProperties.get("persist.sf.lcd_density");
+        try {
+            int newDensityValue = Integer.parseInt(currentProperty);
+        } catch (Exception e) {
+            getPreferenceScreen().removePreference(mLcdDensity);
+        }
+        mLcdDensity.setSummary(getResources().getString(R.string.current_density) + currentProperty + "DPI");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            Preference preference) {
+        if (preference == mLcdDensity) {
+            ((PreferenceActivity) getActivity())
+            .startPreferenceFragment(new DensityChanger(), true);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
