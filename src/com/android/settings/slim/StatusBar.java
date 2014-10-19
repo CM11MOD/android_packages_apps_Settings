@@ -171,7 +171,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         if (mShowLTE != null) {
             mShowLTE.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.STATUSBAR_SIGNAL_SHOW_4G_FOR_LTE,
-                0) == 1);
+                1) == 1);
                 mShowLTE.setOnPreferenceChangeListener(this);
             if (!DeviceUtils.deviceSupportsLte(getActivity())) {
                 mSignalCategory.removePreference(findPreference(KEY_4G_SHOW_LTE));

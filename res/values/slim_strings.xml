@@ -849,7 +849,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="title_tile_batterysaver">BatterySaver mode</string>
     <string name="title_tile_weather">Weather</string>
     <string name="title_tile_compass">Compass</string>
-    <string name="title_tile_hover">HOVER</string>
+    <string name="title_tile_hover">Hover</string>
     <string name="title_tile_halo">Halo</string>
     <string name="title_tile_gesture">Gesture Panel</string>
     <string name="dynamic_tile_ime_switcher">IME switcher</string>
