@@ -304,15 +304,21 @@ public class PAPieControl extends SettingsPreferenceFragment implements
                 Settings.System.PIE_GRAVITY, 2);
 
             try {
-                if (SlimActions.isNavBarDefault(getActivity())) {
-                    if (SlimActions.isNavBarEnabled(getActivity()) && (pieOn == 1 && pieGravity == 3)) {
+                if (SlimActions.isNavBarDefault(getActivity())
+                        && SlimActions.isNavBarEnabled(getActivity())
+                        && (pieOn == 1 && pieGravity == 3)) {
                             Settings.System.putInt(resolver,
                                 Settings.System.NAVIGATION_BAR_SHOW, 0);
-                    }
-                    if (!SlimActions.isNavBarEnabled(getActivity()) && (pieGravity != 3 || pieOn == 0)) {
-                        Settings.System.putInt(resolver,
-                            Settings.System.NAVIGATION_BAR_SHOW, 1);
-                    }
+                } else {
+                    // Do Nothing
+                }
+                if (SlimActions.isNavBarDefault(getActivity())
+                        && !SlimActions.isNavBarEnabled(getActivity())
+                        && (pieGravity != 3 || pieOn == 0)) {
+                            Settings.System.putInt(resolver,
+                                Settings.System.NAVIGATION_BAR_SHOW, 1);
+                } else {
+                    // Do Nothing
                 }
             } catch (Exception ex) {
             }
