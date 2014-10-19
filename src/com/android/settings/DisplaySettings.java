@@ -92,6 +92,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_COLOR_SETTINGS = "screencolor_settings";
     private static final String KEY_DISPLAY_COLOR = "color_calibration";
     private static final String KEY_DISPLAY_GAMMA = "gamma_tuning";
+    private static final String KEY_CATEGORY_PRESETS = "presets";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
     private static final int SCREEN_TIMEOUT_NEVER  = Integer.MAX_VALUE;
@@ -106,6 +107,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private ListPreference mCrtMode;
     private CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
     private PreferenceCategory mWakeUpOptions;
+    private PreferenceCategory mPresets;
     private SwitchPreference mTouchwakeEnable;
     private SeekBarPreference2 mTouchwakeTimeout;
     private PreferenceScreen mScreenColorSettings;
@@ -161,22 +163,36 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         mFontSizePref.setOnPreferenceChangeListener(this);
         mFontSizePref.setOnPreferenceClickListener(this);
 
+        mPresets = (PreferenceCategory) prefSet.findPreference(KEY_CATEGORY_PRESETS);
+
         mAdaptiveBacklight = (CheckBoxPreference) findPreference(KEY_ADAPTIVE_BACKLIGHT);
         if (!isAdaptiveBacklightSupported()) {
-            getPreferenceScreen().removePreference(mAdaptiveBacklight);
+            mPresets.removePreference(mAdaptiveBacklight);
             mAdaptiveBacklight = null;
         }
 
         mSunlightEnhancement = (CheckBoxPreference) findPreference(KEY_SUNLIGHT_ENHANCEMENT);
         if (!isSunlightEnhancementSupported()) {
-            getPreferenceScreen().removePreference(mSunlightEnhancement);
+            mPresets.removePreference(mSunlightEnhancement);
             mSunlightEnhancement = null;
         }
 
         mColorEnhancement = (CheckBoxPreference) findPreference(KEY_COLOR_ENHANCEMENT);
         if (!isColorEnhancementSupported()) {
-            getPreferenceScreen().removePreference(mColorEnhancement);
+            mPresets.removePreference(mColorEnhancement);
             mColorEnhancement = null;
+        }
+
+        if (!DisplayColor.isSupported()) {
+            mPresets.removePreference(findPreference(KEY_DISPLAY_COLOR));
+        }
+        if (!DisplayGamma.isSupported()) {
+            mPresets.removePreference(findPreference(KEY_DISPLAY_GAMMA));
+        }
+
+        mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
+        if (!isPostProcessingSupported()) {
+            mPresets.removePreference(mScreenColorSettings);
         }
 
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
@@ -251,18 +267,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             mCrtMode.setOnPreferenceChangeListener(this);
         } else if (animationOptions != null) {
             prefSet.removePreference(animationOptions);
-        }
-
-        if (!DisplayColor.isSupported()) {
-            getPreferenceScreen().removePreference(findPreference(KEY_DISPLAY_COLOR));
-        }
-        if (!DisplayGamma.isSupported()) {
-            getPreferenceScreen().removePreference(findPreference(KEY_DISPLAY_GAMMA));
-        }
-
-        mScreenColorSettings = (PreferenceScreen) findPreference(KEY_SCREEN_COLOR_SETTINGS);
-        if (!isPostProcessingSupported()) {
-            getPreferenceScreen().removePreference(mScreenColorSettings);
         }
 
         Utils.updatePreferenceToSpecificActivityFromMetaDataOrRemove(getActivity(),
