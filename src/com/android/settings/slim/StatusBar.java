@@ -105,7 +105,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private String mCustomStatusBarCarrierLabelText;
     private ListPreference mDbmStyletyle;
     private CheckBoxPreference mHideSignal;
-    private ColorPickerPreference mSignalColor;
 
     private PreferenceGroup mSignalCategory;
     private CheckBoxPreference mShowLTE;
@@ -150,9 +149,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mDbmStyletyle.setValue(Integer.toString(Settings.System.getInt(getActivity()
                 .getContentResolver(), Settings.System.STATUSBAR_SIGNAL_TEXT,
                 0)));
-
-        mSignalColor = (ColorPickerPreference) findPreference("signal_color");
-        mSignalColor.setOnPreferenceChangeListener(this);
 
         mHideSignal = (CheckBoxPreference) findPreference("hide_signal");
         mHideSignal.setChecked(Settings.System.getInt(getActivity()
@@ -226,7 +222,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         Settings.System.putInt(getContentResolver(), Settings.System.STATUSBAR_SIGNAL_TEXT, 0);
         Settings.System.putInt(getContentResolver(), Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, 0);
         Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CARRIER_COLOR, DEFAULT_STATUS_ICON_COLOR);
-        Settings.System.putInt(getContentResolver(), Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR, DEFAULT_STATUS_ICON_COLOR);
 
         mStatusBarCarrier.setChecked(false);
         mHideSignal.setChecked(false);
@@ -235,7 +230,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                 0)));
         mStatusbarSliderPreference.setChecked(false);
         mCarrierColorPicker.setNewPreviewColor(DEFAULT_STATUS_ICON_COLOR);
-        mSignalColor.setNewPreviewColor(DEFAULT_STATUS_ICON_COLOR);
     }
 
     private void updateCustomLabelTextSummary() {
@@ -311,14 +305,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int val = Integer.parseInt((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_SIGNAL_TEXT, val);
-            return true;
-        } else if (preference == mSignalColor) {
-            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
-                    .valueOf(newValue)));
-            preference.setSummary(hex);
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR, intHex);
             return true;
         } else if (preference == mStatusBarNetworkActivity) {
             boolean value = (Boolean) newValue;

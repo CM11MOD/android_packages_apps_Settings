@@ -59,6 +59,7 @@ public class StatusBarNotifSystemIcons extends SettingsPreferenceFragment implem
     private static final String STATUS_BAR_DATA_COLOR = "status_bar_data_color";
     private static final String STATUS_BAR_AIRPLANE_COLOR = "status_bar_airplane_color";
     private static final String STATUS_BAR_VOLUME_COLOR = "status_bar_volume_color";
+    private static final String STATUS_BAR_TEXT_COLOR = "signal_color";
 
     private static final int DEFAULT_ICON_COLOR = 0xffffffff;
     private static final int DEFAULT_TEXT_COLOR = 0xffffffff;
@@ -79,6 +80,7 @@ public class StatusBarNotifSystemIcons extends SettingsPreferenceFragment implem
     private ColorPickerPreference mStatusBarDataColor;
     private ColorPickerPreference mStatusBarAirplaneColor;
     private ColorPickerPreference mStatusBarVolumeColor;
+    private ColorPickerPreference mSignalColor;
 
     private ContentResolver mResolver;
 
@@ -169,6 +171,15 @@ public class StatusBarNotifSystemIcons extends SettingsPreferenceFragment implem
         hexColor = String.format("#%08x", (0xffffffff & intColor));
         mStatusBarVolumeColor.setSummary(hexColor);
         mStatusBarVolumeColor.setOnPreferenceChangeListener(this);
+
+        mSignalColor = (ColorPickerPreference) findPreference(STATUS_BAR_TEXT_COLOR);
+        intColor = Settings.System.getInt(mResolver,
+                Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR,
+                DEFAULT_TEXT_COLOR);
+        mSignalColor.setNewPreviewColor(intColor);
+        hexColor = String.format("#%08x", (0xffffffff & intColor));
+        mSignalColor.setSummary(hexColor);
+        mSignalColor.setOnPreferenceChangeListener(this);
 
         mTextColor =
                 (ColorPickerPreference) findPreference(PREF_STATUS_BAR_NOTIF_TEXT_COLOR);
@@ -308,6 +319,14 @@ public class StatusBarNotifSystemIcons extends SettingsPreferenceFragment implem
                 Settings.System.STATUS_BAR_VOLUME_COLOR, intHex);
             preference.setSummary(hex);
     	    return true;
+        } else if (preference == mSignalColor) {
+            hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(mResolver,
+                    Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR, intHex);
+            return true;
         }
         return false;
     }
@@ -372,6 +391,9 @@ public class StatusBarNotifSystemIcons extends SettingsPreferenceFragment implem
                             Settings.System.putInt(getOwner().mResolver,
                                     Settings.System.STATUS_BAR_WIFI_COLOR,
                                     DEFAULT_ICON_COLOR);
+                            Settings.System.putInt(getOwner().mResolver,
+                                    Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR,
+                                    DEFAULT_TEXT_COLOR);
                             getOwner().refreshSettings();
                         }
                     })

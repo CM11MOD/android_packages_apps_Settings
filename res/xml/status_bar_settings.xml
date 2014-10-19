@@ -92,11 +92,6 @@
             android:key="signal_style"
             android:title="@string/signal_style" />
 
-        <net.margaritov.preference.colorpicker.ColorPickerPreference
-            android:key="signal_color"
-            android:title="@string/signal_color_title"
-            android:defaultValue="0xffffffff" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
