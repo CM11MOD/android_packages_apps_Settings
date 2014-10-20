@@ -1589,4 +1589,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="clear_market_data_cleared">Market data cleared</string>
     <string name="clear_market_data_donot_cleared">"Market data couldn't be cleared, please clear it yourself!"</string>
     <string name="reboot_title">3. Reboot!</string>
+
+    <!-- Disable forced navbar when keyboard is showing during immersive mode -->
+    <string name="disable_forced_navbar_title">Disable forced navigation bar</string>
+    <string name="disable_forced_navbar_summary">Disable navigation bar when keyboard shows during immersive mode</string>
 </resources>
