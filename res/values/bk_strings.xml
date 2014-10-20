@@ -1593,4 +1593,10 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <!-- Disable forced navbar when keyboard is showing during immersive mode -->
     <string name="disable_forced_navbar_title">Disable forced navigation bar</string>
     <string name="disable_forced_navbar_summary">Disable navigation bar when keyboard shows during immersive mode</string>
+
+    <!-- Immersive mode gestures -->
+    <string name="disable_system_gestures_title">System gestures</string>
+    <string name="disable_system_gestures_off">Enabled (default)</string>
+    <string name="disable_system_gestures_navbar">Disable navigation bar gesture</string>
+    <string name="disable_system_gestures_statusbar">Disable statusbar gesture</string>
 </resources>
