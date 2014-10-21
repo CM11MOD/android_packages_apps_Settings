@@ -17,6 +17,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
+        android:key="expanded_desktop_category"
+        android:fragment="com.android.settings.slim.fragments.PowerMenuSettings"
+        android:title="@string/power_menu_expanded_desktop" />
+
+    <PreferenceScreen
         android:fragment="com.android.settings.slim.PowerMenuStyle"
         android:key="power_menu_style"
         android:title="@string/style_title"
@@ -27,56 +32,5 @@
         android:title="@string/lockscreen_enable_power_menu_title"
         android:summary="@string/lockscreen_enable_power_menu_summary"
         android:defaultValue="false" />
-
-    <PreferenceCategory
-            android:key="expanded_desktop_category"
-            android:title="@string/power_menu_expanded_desktop" >
-
-            <ListPreference
-                android:key="expanded_desktop"
-                android:title="@string/expanded_desktop_style"
-                android:entries="@array/expanded_desktop_style_entries"
-                android:entryValues="@array/expanded_desktop_style_values"
-                android:persistent="false" />
-
-            <com.android.settings.slim.SystemSettingListPreference
-                android:key="disable_system_gestures"
-                android:title="@string/disable_system_gestures_title"
-                android:dialogTitle="@string/disable_system_gestures_title"
-                android:entries="@array/disable_system_gestures_entries"
-                android:entryValues="@array/disable_system_gestures_values"
-                android:summary="%s"
-                android:defaultValue="0" />
-
-            <CheckBoxPreference
-                android:key="expanded_desktop_no_navbar"
-                android:title="@string/expanded_desktop_no_nav_bar"
-                android:persistent="true" />
-
-            <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-                android:key="expanded_desktop_system_bars_visibility"
-                android:title="@string/expanded_desktop_system_bars_visibility"
-                android:summary="@string/expanded_desktop_system_bars_visibility_summary"
-                android:defaultValue="false" />
-
-            <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-                android:key="disable_forced_navbar"
-                android:title="@string/disable_forced_navbar_title"
-                android:summary="@string/disable_forced_navbar_summary"
-                android:defaultValue="false" />
-
-            <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-                android:key="disable_immersive_message"
-                android:title="@string/disable_immersive_message_title"
-                android:summary="@string/disable_immersive_message_summary"
-                android:defaultValue="false" />
-
-            <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-                android:key="edge_service_for_gestures"
-                android:title="@string/edge_gesture_service_title"
-                android:summary="@string/edge_gesture_service_summary"
-                android:defaultValue="0"/>
-
-    </PreferenceCategory>
 
 </PreferenceScreen>
