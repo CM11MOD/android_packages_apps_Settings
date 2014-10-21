@@ -423,6 +423,7 @@
     <string name="expanded_desktop_style">Expanded desktop statusbar tweak</string>
     <string name="expanded_desktop_status_bar">Status bar visible</string>
     <string name="expanded_desktop_no_status_bar">Status bar hidden</string>
+    <string name="expanded_desktop_no_nav_bar">Nav bar hidden</string>
 
     <!-- Pie controls -->
     <string name="pie_help_title">Help</string>

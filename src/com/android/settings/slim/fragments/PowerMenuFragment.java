@@ -69,8 +69,10 @@ public class PowerMenuFragment extends SettingsPreferenceFragment implements
 
         try {
             boolean hasNavBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
+            boolean NavBarEnabled = Settings.System.getInt(getContentResolver(),
+                Settings.System.NAVIGATION_BAR_SHOW, 0) == 1;
 
-            if (hasNavBar) {
+            if (hasNavBar || NavBarEnabled ) {
                 mExpandedDesktopPref.setOnPreferenceChangeListener(this);
                 mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
                 updateExpandedDesktop(expandedDesktopValue);
