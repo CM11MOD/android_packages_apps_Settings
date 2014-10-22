@@ -1248,4 +1248,6 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="heads_up_time_out_never">Nunca</string>
     <string name="heads_up_switch_label">Habilitar notificaciones "heads up"</string>
 
+    <string name="heads_up_bg_color_title">Color de fondo</string>
+    <string name="heads_up_text_color_title">Color de texto</string>
 </resources>

@@ -63,6 +63,12 @@
         android:defaultValue="0x00ffffff"
         alphaSlider="true" />
 
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:key="heads_up_text_color"
+        android:title="@string/heads_up_text_color_title"
+        android:defaultValue="0"
+        alphaSlider="true" />
+
     <PreferenceCategory
             android:title="@string/heads_up_dnd_title"
             android:key="dnd_applications_list">

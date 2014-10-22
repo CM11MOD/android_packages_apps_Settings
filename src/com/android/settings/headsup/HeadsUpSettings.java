@@ -77,6 +77,7 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
     private static final String PREF_HEADS_UP_TIME_OUT = "heads_up_time_out";
     private static final String PREF_HEADS_UP_GRAVITY = "heads_up_gravity";
     private static final String HEADS_UP_BG_COLOR = "heads_up_bg_color";
+    private static final String HEADS_UP_TEXT_COLOR = "heads_up_text_color";
 
     private CheckBoxPreference mHeadsUpExpanded;
     private CheckBoxPreference mHeadsUpShowUpdates;
@@ -92,6 +93,7 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
     private Preference mAddBlacklistPref;
 
     private ColorPickerPreference mHeadsUpBgColor;
+    private ColorPickerPreference mHeadsUpTextColor;
 
     private String mDndPackageList;
     private String mBlacklistPackageList;
@@ -100,6 +102,7 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
 
     private static final int MENU_RESET = Menu.FIRST;
     private static final int DEFAULT_BACKGROUND_COLOR = 0x00ffffff;
+    private static final int DEFAULT_TEXT_COLOR = 0xffffffff;
 
     private Switch mActionBarSwitch;
     private HeadsUpEnabler mHeadsUpEnabler;
@@ -174,6 +177,20 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
             mHeadsUpBgColor.setSummary(hexColor);
         }
         mHeadsUpBgColor.setNewPreviewColor(intColor);
+
+        // Heads Up text color
+        mHeadsUpTextColor =
+                (ColorPickerPreference) findPreference(HEADS_UP_TEXT_COLOR);
+        mHeadsUpTextColor.setOnPreferenceChangeListener(this);
+        final int intTextColor = Settings.System.getInt(getContentResolver(),
+                Settings.System.HEADS_UP_TEXT_COLOR, 0x00000000);
+        String hexTextColor = String.format("#%08x", (0x00000000 & intTextColor));
+        if (hexTextColor.equals("#00000000")) {
+            mHeadsUpTextColor.setSummary(R.string.trds_default_color);
+        } else {
+            mHeadsUpTextColor.setSummary(hexTextColor);
+        }
+        mHeadsUpTextColor.setNewPreviewColor(intTextColor);
 
         mDndPrefList = (PreferenceGroup) findPreference("dnd_applications_list");
         mDndPrefList.setOrderingAsAdded(false);
@@ -314,6 +331,19 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(),
                     Settings.System.HEADS_UP_BG_COLOR,
                     intHex);
+            return true;
+        } else if (preference == mHeadsUpTextColor) {
+            String hexText = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            if (hexText.equals("#00000000")) {
+                preference.setSummary(R.string.trds_default_color);
+            } else {
+                preference.setSummary(hexText);
+            }
+            int intHexText = ColorPickerPreference.convertToColorInt(hexText);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.HEADS_UP_TEXT_COLOR,
+                    intHexText);
             return true;
         }
         return false;
@@ -629,5 +659,9 @@ public class HeadsUpSettings extends SettingsPreferenceFragment
                 Settings.System.HEADS_UP_BG_COLOR, DEFAULT_BACKGROUND_COLOR);
         mHeadsUpBgColor.setNewPreviewColor(DEFAULT_BACKGROUND_COLOR);
         mHeadsUpBgColor.setSummary(R.string.trds_default_color);
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.HEADS_UP_TEXT_COLOR, 0);
+        mHeadsUpTextColor.setNewPreviewColor(DEFAULT_TEXT_COLOR);
+        mHeadsUpTextColor.setSummary(R.string.trds_default_color);
     }
 }
