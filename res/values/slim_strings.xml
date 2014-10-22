@@ -100,15 +100,15 @@
     <string name="battery_light_medium_color_title">Medium charge</string>
     <string name="battery_light_full_color_title">Fully charged</string>
 
-    <!-- Wi-Fi region code settings-->
-    <string name="wifi_setting_countrycode_title">Wi-Fi region code</string>
-    <!-- Wi-Fi settings screen, setting summary for setting the Wi-Fi frequency band [CHAR LIMIT=50]. -->
-    <string name="wifi_setting_countrycode_summary">Specify the region code for Wi-Fi</string>
-    <!-- Wi-Fi settings screen, error message when the frequency band could not be set [CHAR LIMIT=50]. -->
+    <!-- Wi\u2011Fi region code settings-->
+    <string name="wifi_setting_countrycode_title">Wi\u2011Fi region code</string>
+    <!-- Wi\u2011Fi settings screen, setting summary for setting the Wi\u2011Fi frequency band [CHAR LIMIT=50]. -->
+    <string name="wifi_setting_countrycode_summary">Specify the region code for Wi\u2011Fi</string>
+    <!-- Wi\u2011Fi settings screen, error message when the frequency band could not be set [CHAR LIMIT=50]. -->
     <string name="wifi_setting_countrycode_error">There was a problem setting the region code.</string>
-    <!-- Wi-Fi settings disables message if Wi-Fi is off-->
-    <string name="wifi_setting_countrycode_disabled">Enable Wi-Fi to change this option.</string>
-    <!-- Wi-Fi forget all networks -->
+    <!-- Wi\u2011Fi settings disables message if Wi\u2011Fi is off-->
+    <string name="wifi_setting_countrycode_disabled">Enable Wi\u2011Fi to change this option.</string>
+    <!-- Wi\u2011Fi forget all networks -->
     <string name="wifi_menu_forget_all">Forget all networks</string>
 
     <!-- Status bar -->
@@ -446,7 +446,7 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="notification_hide_labels_title">Hide notification labels</string>
     <string name="notification_hide_labels_disable">Show all labels</string>
     <string name="notification_hide_labels_carrier">Hide Carrier label</string>
-    <string name="notification_hide_labels_wifi">Hide Wi-Fi label</string>
+    <string name="notification_hide_labels_wifi">Hide Wi\u2011Fi label</string>
     <string name="notification_hide_labels_all">Hide all labels</string>
     <string name="notification_hide_labels_text">in the notification panel</string>
 
@@ -562,9 +562,9 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="quiet_hours_off">Quiet hours disabled</string>
     <string name="quiet_hours_forced">Quiet hours is always on</string>
     <string name="quiet_hours_times_warning">Times cannot overlap: setting to closest possible time</string>
-    <string name="quiet_hours_wifi">Require a Wi-Fi connection</string>
-    <string name="quiet_hours_wifi_on">Wi-Fi must be connected</string>
-    <string name="quiet_hours_wifi_off">Wi-Fi can be in any state</string>
+    <string name="quiet_hours_wifi">Require a Wi\u2011Fi connection</string>
+    <string name="quiet_hours_wifi_on">Wi\u2011Fi must be connected</string>
+    <string name="quiet_hours_wifi_off">Wi\u2011Fi can be in any state</string>
     <string name="quiet_hours_charging">Require device to be plugged in</string>
     <string name="quiet_hours_charging_off">Device charging can be in any state</string>
     <string name="quiet_hours_charging_on">Device must be charging</string>
@@ -826,8 +826,8 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="title_tile_settings">Settings</string>
     <string name="title_tile_sound">Sound</string>
     <string name="title_tile_sync">Sync</string>
-    <string name="title_tile_wifiap">Wi-Fi AP</string>
-    <string name="title_tile_wifi">Wi-Fi</string>
+    <string name="title_tile_wifiap">Wi\u2011Fi AP</string>
+    <string name="title_tile_wifi">Wi\u2011Fi</string>
     <string name="title_tile_user">User switcher</string>
     <string name="title_tile_network_adb">ADB over network</string>
     <string name="title_tile_networkmode">Network mode</string>

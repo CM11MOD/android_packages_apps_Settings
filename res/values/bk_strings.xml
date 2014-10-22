@@ -789,8 +789,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="telo_radio_options_category">Screen on configuration</string>
     <string name="telo_radio_lte_title">LTE</string>
     <string name="telo_radio_lte_summary">Select this option if you use LTE (4G).</string>
-    <string name="telo_radio_2g_wifi_title">2G on Wi-Fi</string>
-    <string name="telo_radio_2g_wifi_title_summary">When Wi-Fi is connected network mode is switched to 2G.</string>
+    <string name="telo_radio_2g_wifi_title">2G on Wi\u2011Fi</string>
+    <string name="telo_radio_2g_wifi_title_summary">When Wi\u2011Fi is connected network mode is switched to 2G.</string>
     <string name="telo_radio_2g_screenoff_category">Screen off configuration</string>
     <string name="telo_radio_2g_screenoff_title">2G with screen off</string>
     <string name="telo_radio_2g_screenoff_summary">The device will switch to 2G when the screen is off.</string>
@@ -1102,7 +1102,7 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="battery_saver_title">Battery saver mode</string>
     <string name="battery_saver_disabled_notice">Enable to Launch Battery Saver Mode</string>
     <string name="pref_battery_saver_enable_title">BatterySaver</string>
-    <string name="pref_battery_saver_enable_summary">This will automatically manage your device battery usage and switch your network to user-defined power saving mode or normal mode depending on mobile data and Wi-Fi connection states</string>
+    <string name="pref_battery_saver_enable_summary">This will automatically manage your device battery usage and switch your network to user-defined power saving mode or normal mode depending on mobile data and Wi\u2011Fi connection states</string>
     <string name="pref_battery_saver_enable_no_mobiledata_summary">This will automatically manage your device battery usage to user-defined</string>
     <string name="pref_battery_saver_normal_mode_title">Normal network mode</string>
     <string name="pref_battery_saver_power_saving_mode_title">Power saving network mode</string>
@@ -1122,8 +1122,8 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="pref_battery_saver_data_summary">Disable mobile data connection when power saving activated</string>
     <string name="pref_battery_saver_location_title">Disable gps</string>
     <string name="pref_battery_saver_location_summary">Disable gps connection when power saving activated</string>
-    <string name="pref_battery_saver_wifi_title">Disable Wi-Fi</string>
-    <string name="pref_battery_saver_wifi_summary">Disable Wi-Fi connection when power saving activated</string>
+    <string name="pref_battery_saver_wifi_title">Disable Wi\u2011Fi</string>
+    <string name="pref_battery_saver_wifi_summary">Disable Wi\u2011Fi connection when power saving activated</string>
     <string name="pref_battery_saver_led_title">Disable LED</string>
     <string name="pref_battery_saver_led_summary">Disable LED notification when power saving activated</string>
     <string name="pref_battery_saver_vibrate_title">Disable vibrate</string>

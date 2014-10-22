@@ -15,9 +15,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Wi-Fi SSID string limits -->
+    <!-- Wi\u2011Fi SSID string limits -->
     <string name="wifi_ssid_input_limit">SSID exceeds maximum length</string>
-    <!-- Wi-Fi P2P string limits -->
+    <!-- Wi\u2011Fi P2P string limits -->
     <string name="p2p_device_name_input_limit">P2P name exceeds maximum length</string>
 
     <string name="increasing_ring_title">Ascending ringtone</string>
@@ -44,7 +44,7 @@
     <string name="profile_trigger_configure">Configure trigger</string>
     <string name="profile_triggers">Triggers</string>
     <string name="profile_trigger_filter_all">All triggers</string>
-    <string name="profile_trigger_filter_wifi">Wi-Fi triggers</string>
+    <string name="profile_trigger_filter_wifi">Wi\u2011Fi triggers</string>
     <string name="profile_trigger_filter_bluetooth">Bluetooth triggers</string>
     <string name="profile_write_nfc_tag">Write to NFC tag</string>
     <string name="profile_write_touch_tag">Touch tag to write</string>
@@ -144,8 +144,8 @@
     <string name="profile_airplanemode_title">Airplane mode</string>
 
     <!-- Connection override toggles (not all are used at this time ) -->
-    <string name="toggleWifi">Wi-Fi</string>
-    <string name="toggleWifiAp">Portable Wi-Fi hotspot</string>
+    <string name="toggleWifi">Wi\u2011Fi</string>
+    <string name="toggleWifiAp">Portable Wi\u2011Fi hotspot</string>
     <string name="toggleBluetooth">Bluetooth</string>
     <string name="toggleGPS">GPS</string>
     <string name="toggleData">Mobile Data</string>
@@ -373,7 +373,7 @@
     <string name="adb_notify_summary">Display a notification when USB debugging is connected</string>
     <!-- Android debugging over WiFi -->
     <string name="adb_over_network">ADB over network</string>
-    <string name="adb_over_network_summary">Enable TCP/IP debugging over network interfaces (Wi-Fi, USB networks). This setting is reset on reboot</string>
+    <string name="adb_over_network_summary">Enable TCP/IP debugging over network interfaces (Wi\u2011Fi, USB networks). This setting is reset on reboot</string>
     <!-- Warning for Adb over Network -->
     <string name="adb_over_network_warning">WARNING: When ADB over network is enabled, your phone is open for intrusions on all connected networks, including GSM data network!\n\nOnly use this feature when you are connected on trusted networks.\n\nDo you really want to enable this function?</string>
     <!-- Hostname setting -->
@@ -499,13 +499,13 @@
     <string name="title_widget_order">Widget button order</string>
     <string name="summary_widget_order">View or change the order of the buttons</string>
     <string name="title_buttons">Buttons</string>
-    <string name="title_toggle_wifi">Toggle Wi-Fi</string>
+    <string name="title_toggle_wifi">Toggle Wi\u2011Fi</string>
     <string name="title_toggle_bluetooth">Toggle Bluetooth</string>
     <string name="title_toggle_gps">Toggle GPS</string>
     <string name="title_toggle_sound">Toggle Sound</string>
     <string name="title_toggle_brightness">Toggle Brightness</string>
     <string name="title_toggle_sync">Toggle Sync</string>
-    <string name="title_toggle_wifiap">Toggle Wi-Fi AP</string>
+    <string name="title_toggle_wifiap">Toggle Wi\u2011Fi AP</string>
     <string name="title_toggle_screentimeout">Toggle Screen timeout</string>
     <string name="title_toggle_mobiledata">Toggle Mobile data</string>
     <string name="title_toggle_lockscreen">Toggle Lock screen</string>
@@ -563,7 +563,7 @@
     <string name="custom_runtime_warning_message">ART is not supported by CyanogenMod. This setting is included for experimentation only and has the potential to cause instability, crashes, data loss or prevent the proper boot of your device. Visit &lt;a href=\"http://source.android.com/devices/tech/dalvik/art.html\"&gt;Introducing ART&lt;/a&gt; for more information.&lt;br/&gt;&lt;br/&gt;We request you do not file bug reports if you have enabled ART as your runtime.&lt;br/&gt;&lt;br/&gt;Are you sure you want to reboot to change runtime from <xliff:g id="old" example="libdvm.so">%1$s</xliff:g> to <xliff:g id="new" example="libart.so">%2$s</xliff:g>?</string>
 
     <!-- GPS download data over wi-fi only -->
-    <string name="gps_download_data_wifi_only">Download GPS assisted data only over Wi-Fi networks</string>
+    <string name="gps_download_data_wifi_only">Download GPS assisted data only over Wi\u2011Fi networks</string>
 
     <!-- Sizes for pattern lockscreen -->
     <string name="lock_pattern_size_3">3x3</string>
@@ -744,7 +744,7 @@
     <string name="app_ops_labels_notification_volume">Notification volume</string>
     <string name="app_ops_labels_bluetooth_volume">Bluetooth volume</string>
     <string name="app_ops_labels_keep_awake">Keep awake</string>
-    <string name="app_ops_labels_wifi_change">Wi-Fi change</string>
+    <string name="app_ops_labels_wifi_change">Wi\u2011Fi change</string>
     <string name="app_ops_labels_bluetooth_change">Bluetooth change</string>
     <string name="app_ops_labels_data_change">Data change</string>
     <string name="app_ops_labels_alarm_wakeup">Wake up</string>
@@ -883,7 +883,7 @@
     <string name="profile_action_disabled">Disable</string>
     <string name="profile_action_enable">Enable</string>
 
-    <string name="profile_tabs_wifi">Wi-Fi</string>
+    <string name="profile_tabs_wifi">Wi\u2011Fi</string>
     <string name="profile_tabs_bluetooth">Bluetooth</string>
     <string name="profile_tabs_nfc">NFC</string>
 
@@ -894,7 +894,7 @@
     <string name="profile_setup_actions_title_config">Reconfigure actions</string>
 
     <string name="no_bluetooth_triggers">No Bluetooth triggers available</string>
-    <string name="no_wifi_triggers">No Wi-Fi triggers available</string>
+    <string name="no_wifi_triggers">No Wi\u2011Fi triggers available</string>
 
     <string name="profile_setup_setup_triggers_description">Please select triggers which will activate this profile</string>
     <string name="profile_setup_actions_description">Now configure what happens when the profile is activated</string>
