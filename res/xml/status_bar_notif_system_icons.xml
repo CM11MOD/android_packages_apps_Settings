@@ -35,13 +35,13 @@
             android:defaultValue="false" />
 
         <CheckBoxPreference
-            android:key="statusbar_hide_alarm_icon"
+            android:key="status_bar_show_notif_count"
             android:title="@string/status_bar_notif_count_title"
             android:summary="@string/status_bar_notif_count_summary"
             android:defaultValue="false" />
 
         <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
-            android:key="alarm_icon_preference"
+            android:key="statusbar_hide_alarm_icon"
             android:title="@string/alarm_icon_preference_title"
             android:summary="@string/alarm_icon_preference_summary"
             android:defaultValue="false" />
