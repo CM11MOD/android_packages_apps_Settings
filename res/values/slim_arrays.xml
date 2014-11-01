@@ -631,6 +631,7 @@
         <item>@string/shortcut_action_app</item>
         <item>@string/shortcut_action_keyguard_camera</item>
         <item>@string/shortcut_action_expanded_desktop</item>
+        <item>@string/shortcut_action_gesture</item>
         <item>@string/shortcut_action_navbar</item>
         <item>@string/shortcut_action_pie</item>
         <item>@string/shortcut_action_power_menu</item>
