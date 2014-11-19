@@ -83,16 +83,26 @@
                 settings:keywords="@string/keywords_display_cast_screen"
                 android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
 
-         <PreferenceCategory
-             android:key="category_wakeup_options"
-             android:title="@string/display_category_wakeup_options_title" >
+        <PreferenceScreen
+                android:key="advanced_display_prefs"
+                android:title="@string/advanced_settings">
+
+                <SwitchPreference
+                    android:key="double_tap_wake_gesture"
+                    android:title="@string/double_tap_to_wake_title" />
+
+        </PreferenceScreen>
+
+        <PreferenceCategory
+            android:key="category_wakeup_options"
+            android:title="@string/display_category_wakeup_options_title" >
 
             <SwitchPreference
-                android:key="wakeup_when_plugged_unplugged"
-                android:title="@string/wakeup_when_plugged_unplugged_title"
-                android:summary="@string/wakeup_when_plugged_unplugged_summary"
-                android:defaultValue="true"
-                android:persistent="false" />
+                    android:key="wakeup_when_plugged_unplugged"
+                    android:title="@string/wakeup_when_plugged_unplugged_title"
+                    android:summary="@string/wakeup_when_plugged_unplugged_summary"
+                    android:defaultValue="true"
+                    android:persistent="false" />
 
          </PreferenceCategory>
 
