@@ -291,6 +291,13 @@
     <header android:id="@+id/personal_section"
         android:title="@string/header_category_personal" />
 
+    <!-- ACCOUNTS section -->
+    <header
+        android:id="@+id/account_settings"
+        android:title="@string/account_settings"
+        android:icon="@drawable/ic_settings_accounts"
+        android:fragment="com.android.settings.accounts.AccountsSettings" />
+
     <!-- Voice Wakeup -->
     <header
         settings:excludeFromSearch="true"
@@ -314,6 +321,17 @@
         android:fragment="com.android.settings.inputmethod.InputMethodAndLanguageSettings"
         android:icon="@drawable/ic_settings_language"
         android:title="@string/language_settings" />
+
+    <!-- Superuser -->
+    <header
+        android:id="@+id/superuser"
+        android:icon="@drawable/ic_action_permission"
+        android:title="@string/superuser">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="eu.chainfire.supersu"
+            android:targetClass="eu.chainfire.supersu.MainActivity" />
+    </header>
 
     <!-- Apps Permissions -->
     <header
@@ -341,33 +359,9 @@
         android:title="@string/privacy_settings"
         android:id="@+id/privacy_settings" />
 
-    <!--  ACCOUNTS section -->
-    <header
-            android:id="@+id/account_settings"
-            android:title="@string/account_settings" />
-
-    <header
-            android:id="@+id/account_add"
-            android:title="@string/add_account_label"
-            android:icon="@drawable/ic_menu_add_dark">
-        <intent
-            android:action="android.settings.ADD_ACCOUNT_SETTINGS"/>
-    </header>
-
     <!-- SYSTEM -->
     <header android:id="@+id/system_section"
         android:title="@string/header_category_system" />
-
-    <!-- Superuser -->
-    <header
-        android:id="@+id/superuser"
-        android:icon="@drawable/ic_action_permission"
-        android:title="@string/superuser">
-        <intent
-            android:action="android.intent.action.MAIN"
-            android:targetPackage="eu.chainfire.supersu"
-            android:targetClass="eu.chainfire.supersu.MainActivity" />
-    </header>
 
     <!-- Date & Time -->
     <header
