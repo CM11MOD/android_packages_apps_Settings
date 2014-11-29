@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -86,6 +87,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_CARRIER = "status_bar_carrier";
     private static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
     private static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
+    private static final String NO_KEYGUARD_CARRIER = "no_carrier_label";
     private static final String STATUS_BAR_BRIGHTNESS = "statusbar_brightness_slider";
     private static final String SIGNAL_STYLE = "signal_style";
     private static final String HIDE_SIGNAL = "hide_signal";
@@ -98,6 +100,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private PreferenceScreen mClockStyle;
     private CheckBoxPreference mStatusBarCarrier;
     private PreferenceScreen mCustomStatusBarCarrierLabel;
+    private CheckBoxPreference mNoKeyguardCarrier;
     private CheckBoxPreference mStatusbarSliderPreference;
     private CheckBoxPreference mStatusBarNetworkActivity;
     private ColorPickerPreference mCarrierColorPicker;
@@ -135,6 +138,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarCarrier = (CheckBoxPreference) findPreference(STATUS_BAR_CARRIER);
         mStatusBarCarrier.setChecked((Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_CARRIER, 0) == 1));
+
+        mNoKeyguardCarrier = (CheckBoxPreference) findPreference(NO_KEYGUARD_CARRIER);
+        mNoKeyguardCarrier.setChecked(Settings.System.getIntForUser(resolver,
+                Settings.System.NO_CARRIER_LABEL, 0, UserHandle.USER_CURRENT_OR_SELF) == 1);
 
         mCarrierColorPicker = (ColorPickerPreference) prefSet.findPreference(STATUS_BAR_CARRIER_COLOR);
         mCarrierColorPicker.setOnPreferenceChangeListener(this);
@@ -310,6 +317,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             boolean value = (Boolean) newValue;
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+            return true;
+        } else if (preference == mNoKeyguardCarrier) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                Settings.System.NO_CARRIER_LABEL, value ? 1 : 0);
             return true;
         }
         return false;

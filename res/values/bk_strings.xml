@@ -1615,4 +1615,6 @@ Paranoid PIE control is wavely based on simple navigation to expanded desktop. S
     <string name="notify_changed_networks_toast">Toast</string>
     <string name="notify_changed_networks_notification">Notification</string>
     <string name="notify_changed_networks_notification_sound">Notification with sound</string>
+
+    <string name="no_carrier_on_keyguard_title">Hide carrier in lockscreen</string>
 </resources>
